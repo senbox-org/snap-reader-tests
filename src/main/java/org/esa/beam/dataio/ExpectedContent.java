@@ -74,7 +74,7 @@ public class ExpectedContent {
 
     private ExpectedMetadata[] createExpectedMetadata(Product product, Random random) {
         final MetadataElement metadataRoot = product.getMetadataRoot();
-        final List<ExpectedMetadata> expectedMetadata = new ArrayList<ExpectedMetadata>();
+        final List<ExpectedMetadata> expectedMetadata = new ArrayList<>();
         if (metadataRoot.getNumElements() > 0 || metadataRoot.getNumAttributes() > 0) {
             while(expectedMetadata.size() < 2) {
                 MetadataElement currentElem = metadataRoot;
@@ -100,7 +100,7 @@ public class ExpectedContent {
 
     private ExpectedMask[] createExpectedMasks(Product product) {
         final ProductNodeGroup<Mask> maskGroup = product.getMaskGroup();
-        final List<ExpectedMask> expectedMasks = new ArrayList<ExpectedMask>();
+        final List<ExpectedMask> expectedMasks = new ArrayList<>();
         for (int i = 0; i < maskGroup.getNodeCount(); i++) {
             final Mask mask = maskGroup.get(i);
             // exclude pins and gcp masks; they are only temporarily created (for the normal test case)

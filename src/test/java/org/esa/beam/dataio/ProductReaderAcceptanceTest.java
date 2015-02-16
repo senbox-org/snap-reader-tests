@@ -61,11 +61,11 @@ import static org.junit.Assert.*;
 @RunWith(ReaderTestRunner.class)
 public class ProductReaderAcceptanceTest {
 
-    private static final String PROPERTYNAME_DATA_DIR = "beam.reader.tests.data.dir";
-    private static final String PROPERTYNAME_FAIL_ON_MISSING_DATA = "beam.reader.tests.failOnMissingData";
-    private static final String PROPERTYNAME_FAIL_ON_INTENDED = "beam.reader.tests.failOnMultipleIntendedReaders";
-    private static final String PROPERTYNAME_LOG_FILE_PATH = "beam.reader.tests.log.file";
-    private static final String PROPERTYNAME_CASS_NAME = "beam.reader.tests.class.name";
+    private static final String PROPERTYNAME_DATA_DIR = "snap.reader.tests.data.dir";
+    private static final String PROPERTYNAME_FAIL_ON_MISSING_DATA = "snap.reader.tests.failOnMissingData";
+    private static final String PROPERTYNAME_FAIL_ON_INTENDED = "snap.reader.tests.failOnMultipleIntendedReaders";
+    private static final String PROPERTYNAME_LOG_FILE_PATH = "snap.reader.tests.log.file";
+    private static final String PROPERTYNAME_CASS_NAME = "snap.reader.tests.class.name";
     private static final boolean FAIL_ON_MISSING_DATA = Boolean.parseBoolean(System.getProperty(PROPERTYNAME_FAIL_ON_MISSING_DATA, "true"));
     private static final String INDENT = "\t";
     private static final ProductList testProductList = new ProductList();

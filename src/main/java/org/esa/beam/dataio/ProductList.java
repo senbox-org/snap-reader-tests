@@ -29,7 +29,7 @@ class ProductList implements Iterable<TestProduct> {
     private ArrayList<TestProduct> testProducts;
 
     ProductList() {
-        this.testProducts = new ArrayList<TestProduct>();
+        this.testProducts = new ArrayList<>();
     }
 
     TestProduct getById(String id) {

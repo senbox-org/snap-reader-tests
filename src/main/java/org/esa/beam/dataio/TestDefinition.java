@@ -32,13 +32,13 @@ class TestDefinition {
     private final List<ExpectedDataset> expectedDatasetsList;
 
     TestDefinition() {
-        testProducts = new ArrayList<TestProduct>();
-        expectedDatasetsMap = new HashMap<String, ExpectedDataset>();
-        expectedDatasetsList = new ArrayList<ExpectedDataset>();
+        testProducts = new ArrayList<>();
+        expectedDatasetsMap = new HashMap<>();
+        expectedDatasetsList = new ArrayList<>();
     }
 
     List<String> getDecodableProductIds() {
-        final ArrayList<String> result = new ArrayList<String>();
+        final ArrayList<String> result = new ArrayList<>();
 
         for (ExpectedDataset dataset : expectedDatasetsList) {
             DecodeQualification decodeQualification = dataset.getDecodeQualification();

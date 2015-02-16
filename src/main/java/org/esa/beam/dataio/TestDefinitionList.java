@@ -25,7 +25,7 @@ class TestDefinitionList implements Iterable<TestDefinition> {
     private ArrayList<TestDefinition> testReaders;
 
     TestDefinitionList() {
-        testReaders = new ArrayList<TestDefinition>();
+        testReaders = new ArrayList<>();
     }
 
     void add(TestDefinition testDefinition) {

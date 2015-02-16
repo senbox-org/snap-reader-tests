@@ -39,7 +39,7 @@ class ExpectedPixel {
     }
 
     static ArrayList<Point2D> createPointList(Product product, Random random) {
-        ArrayList<Point2D> pointList = new ArrayList<Point2D>();
+        ArrayList<Point2D> pointList = new ArrayList<>();
         if (product.getPinGroup().getNodeCount() > 0) {
             final PlacemarkGroup pinGroup = product.getPinGroup();
             for (int i = 0; i < pinGroup.getNodeCount(); i++) {

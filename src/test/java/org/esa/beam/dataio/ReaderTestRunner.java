@@ -25,7 +25,7 @@ import java.util.Locale;
 
 public class ReaderTestRunner extends BlockJUnit4ClassRunner {
 
-    private static final String PROPERTYNAME_EXECUTE_READER_TESTS = "beam.reader.tests.execute";
+    private static final String PROPERTYNAME_EXECUTE_READER_TESTS = "snap.reader.tests.execute";
     private boolean runAcceptanceTests;
     private Class<?> clazz;
 
