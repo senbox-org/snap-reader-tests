@@ -18,6 +18,7 @@
     <properties>
         <seadas-reader.version>1.5.6</seadas-reader.version>
         <jackson.version>2.2.2</jackson.version>
+        <smos-reader.version>5.0.0-SNAPSHOT</smos-reader.version>
     </properties>
 
     <dependencies>
@@ -205,6 +206,19 @@
             <version>${snap.version}</version>
             <type>test-jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.esa.smostbx</groupId>
+            <artifactId>smos-reader</artifactId>
+            <version>${smos-reader.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.esa.smostbx</groupId>
+            <artifactId>smos-reader</artifactId>
+            <version>${smos-reader.version}</version>
+            <type>test-jar</type>
+        </dependency>
+
+
     </dependencies>
 
     <build>
