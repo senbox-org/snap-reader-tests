@@ -209,10 +209,6 @@
             <type>test-jar</type>
         </dependency>
 
-<!-- todo (mp) -
-    smos reader is currently not working as dependency
-    the modules smos-dgg and smos-lsmask net to be unpacked.
-    Because the TiledFileMultiLevelSource needs a directory.
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-reader</artifactId>
@@ -224,7 +220,6 @@
             <version>${smos-reader.version}</version>
             <type>test-jar</type>
         </dependency>
--->
 
     </dependencies>
 
