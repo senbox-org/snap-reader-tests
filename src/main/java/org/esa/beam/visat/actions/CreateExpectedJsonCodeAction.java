@@ -17,60 +17,54 @@ import org.esa.beam.framework.dataio.DecodeQualification;
 import org.esa.beam.framework.dataio.ProductReader;
 import org.esa.beam.framework.dataio.ProductReaderPlugIn;
 import org.esa.beam.framework.datamodel.Product;
-import org.esa.beam.framework.ui.command.CommandEvent;
-import org.esa.beam.framework.ui.command.ExecCommand;
-import org.esa.beam.util.logging.BeamLogManager;
-import org.esa.beam.visat.VisatApp;
+import org.esa.snap.rcp.SnapApp;
+import org.esa.snap.rcp.SnapDialogs;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionRegistration;
 
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * @author Marco Peters
  */
-public class CreateExpectedJsonCodeCommand extends ExecCommand {
+@ActionID(category = "Testing", id = "org.esa.beam.visat.actions.CreateExpectedJsonCodeAction")
+@ActionRegistration(displayName = "Copy Expected JSON Code to Clipboard", lazy = true)
+@ActionReference(path = "Menu/Tools/Testing")
+public class CreateExpectedJsonCodeAction implements ActionListener {
 
     public static final String LF = System.getProperty("line.separator");
-    private final Clipboard clipboard;
+    public static final Logger LOG = Logger.getLogger(CreateExpectedJsonCodeAction.class.getName());
+    private Clipboard clipboard;
+    private final Product product;
 
-
-    public CreateExpectedJsonCodeCommand() {
-        this(Toolkit.getDefaultToolkit().getSystemClipboard());
-    }
-
-    CreateExpectedJsonCodeCommand(Clipboard clipboard) {
-        if (clipboard == null) {
-            final String msg = "Clipboard instance is <null>. Not able to create JSON code.";
-            BeamLogManager.getSystemLogger().severe(msg);
-            VisatApp.getApp().showErrorDialog(msg);
-        }
-        this.clipboard = clipboard;
+    public CreateExpectedJsonCodeAction(Product product) {
+        this.product = product;
     }
 
     @Override
-    public void actionPerformed(CommandEvent event) {
-        if (VisatApp.getApp().getSelectedProduct() != null) {
-            run(VisatApp.getApp().getSelectedProduct());
-        }
-    }
-
-    private void run(final Product product) {
-        final Window window = VisatApp.getApp().getApplicationWindow();
+    public void actionPerformed(ActionEvent event) {
+        final Window window = SnapApp.getDefault().getMainFrame();
         final ProgressMonitorSwingWorker worker = new ProgressMonitorSwingWorker(window, "Extracting Expected Content") {
             @Override
             protected Void doInBackground(ProgressMonitor pm) throws Exception {
                 pm.beginTask("Collecting data...", ProgressMonitor.UNKNOWN);
                 try {
-                    fillClipboardWithJsonCode(product, new Random(123546));
+                    fillClipboardWithJsonCode(new Random(123546));
                 } catch (Exception e) {
                     e.printStackTrace();
-                    BeamLogManager.getSystemLogger().severe(e.getMessage());
-                    VisatApp.getApp().showErrorDialog(e.getMessage());
+                    LOG.
+                            severe(e.getMessage());
+                    SnapDialogs.showError(e.getMessage());
                 } finally {
                     pm.done();
                 }
@@ -81,13 +75,20 @@ public class CreateExpectedJsonCodeCommand extends ExecCommand {
 
     }
 
-    void fillClipboardWithJsonCode(Product product, Random random) throws IOException {
-        final String jsonCode = createJsonCode(product, random);
-        StringSelection clipboardContent = new StringSelection(jsonCode);
-        clipboard.setContents(clipboardContent, clipboardContent);
+    private Clipboard getClipboard() {
+        if (clipboard == null) {
+            clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        }
+        return clipboard;
     }
 
-    String createJsonCode(Product product, Random random) throws IOException {
+    void fillClipboardWithJsonCode(Random random) throws IOException {
+        final String jsonCode = createJsonCode(random);
+        StringSelection clipboardContent = new StringSelection(jsonCode);
+        getClipboard().setContents(clipboardContent, clipboardContent);
+    }
+
+    String createJsonCode(Random random) throws IOException {
         final ExpectedContent expectedContent = new ExpectedContent(product, random);
         ExpectedDataset expectedDataset = new ExpectedDataset();
         expectedDataset.setId(generateID(product));
@@ -131,6 +132,10 @@ public class CreateExpectedJsonCodeCommand extends ExecCommand {
         prettyPrinter.indentArraysWith(indenter);
         prettyPrinter.indentObjectsWith(indenter);
         return writer.with(prettyPrinter);
+    }
+
+    public void setClipboard(Clipboard clipboard) {
+        this.clipboard = clipboard;
     }
 
 

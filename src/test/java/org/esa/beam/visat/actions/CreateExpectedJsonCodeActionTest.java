@@ -42,7 +42,7 @@ import static org.mockito.Mockito.*;
  * @author Marco Peters
  */
 @RunWith(HeadlessTestRunner.class)
-public class CreateExpectedJsonCodeCommandTest {
+public class CreateExpectedJsonCodeActionTest {
 
     private static final String JSON_CODE_RESOURCE = "EXPECTED_JSON_CODE.json";
     private static final String JSON_CODE_PINS_RESOURCE = "EXPECTED_JSON_PINS_CODE.json";
@@ -113,7 +113,7 @@ public class CreateExpectedJsonCodeCommandTest {
     }
 
     private static String loadJSONCode(String jsonCodeResource) throws IOException {
-        final InputStream resourceAsStream = CreateExpectedJsonCodeCommandTest.class.getResourceAsStream(jsonCodeResource);
+        final InputStream resourceAsStream = CreateExpectedJsonCodeActionTest.class.getResourceAsStream(jsonCodeResource);
 
         final InputStreamReader reader = new InputStreamReader(resourceAsStream);
         BufferedReader r = new BufferedReader(reader);
@@ -131,15 +131,15 @@ public class CreateExpectedJsonCodeCommandTest {
 
     @Test
     public void testCreatedJson() throws Exception {
-        final CreateExpectedJsonCodeCommand jsonCodeCommand = new CreateExpectedJsonCodeCommand();
+        final CreateExpectedJsonCodeAction jsonCodeCommand = new CreateExpectedJsonCodeAction(product);
         final Random mock = createMockedRandom();
-        final String actualJsonCode = jsonCodeCommand.createJsonCode(product, mock);
+        final String actualJsonCode = jsonCodeCommand.createJsonCode(mock);
         assertEquals(EXPECTED_JSON_CODE, actualJsonCode);
     }
 
     @Test
     public void testCreatedJsonWith_Pins() throws Exception {
-        final CreateExpectedJsonCodeCommand jsonCodeCommand = new CreateExpectedJsonCodeCommand();
+        final CreateExpectedJsonCodeAction jsonCodeCommand = new CreateExpectedJsonCodeAction(product);
         GeoCoding geoCoding = product.getGeoCoding();
         PixelPos pinPos1 = new PixelPos(3, 7);
         Placemark pin1 = Placemark.createPointPlacemark(PinDescriptor.getInstance(), "P1", "L1", "T1", pinPos1,
@@ -150,15 +150,16 @@ public class CreateExpectedJsonCodeCommandTest {
         product.getPinGroup().add(pin1);
         product.getPinGroup().add(pin2);
 
-        final String actualJsonCode = jsonCodeCommand.createJsonCode(product, new Random(12345));
+        final String actualJsonCode = jsonCodeCommand.createJsonCode(new Random(12345));
         assertEquals(EXPECTED_JSON_PINS_CODE, actualJsonCode);
     }
 
     @Test
     public void testFillClipboardWithJsonCode() throws Exception {
         final Clipboard clipboard = new Clipboard("testClipboard");
-        final CreateExpectedJsonCodeCommand jsonCodeCommand = new CreateExpectedJsonCodeCommand(clipboard);
-        jsonCodeCommand.fillClipboardWithJsonCode(product, createMockedRandom());
+        final CreateExpectedJsonCodeAction jsonCodeCommand = new CreateExpectedJsonCodeAction(product);
+        jsonCodeCommand.setClipboard(clipboard);
+        jsonCodeCommand.fillClipboardWithJsonCode(createMockedRandom());
 
         assertTrue(clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor));
 
@@ -169,7 +170,7 @@ public class CreateExpectedJsonCodeCommandTest {
 
     @Test
     public void testIdGeneration() throws Exception {
-        final CreateExpectedJsonCodeCommand jsonCodeCommand = new CreateExpectedJsonCodeCommand();
+        final CreateExpectedJsonCodeAction jsonCodeCommand = new CreateExpectedJsonCodeAction(product);
         final Product testProduct = new Product("blah test.1", "d", 3, 3);
         assertEquals("blah_test_1", jsonCodeCommand.generateID(testProduct));
         testProduct.setName("B  L..A H");
@@ -189,16 +190,16 @@ public class CreateExpectedJsonCodeCommandTest {
 
     @Test
     public void testJsonWriter() throws Exception {
-        ObjectWriter jsonWriter = CreateExpectedJsonCodeCommand.getConfiguredJsonWriter();
+        ObjectWriter jsonWriter = CreateExpectedJsonCodeAction.getConfiguredJsonWriter();
         ExpectedMetadata expectedMetadata = new ExpectedMetadata();
         expectedMetadata.setPath("DSD/DSD.21/Name");
         expectedMetadata.setValue("");
         StringWriter writer = new StringWriter(500);
         jsonWriter.writeValue(writer, expectedMetadata);
 
-        String expectedString = "{" + CreateExpectedJsonCodeCommand.LF +
-                          "    \"path\": \"DSD/DSD.21/Name\"," + CreateExpectedJsonCodeCommand.LF +
-                          "    \"value\": \"\"" + CreateExpectedJsonCodeCommand.LF +
+        String expectedString = "{" + CreateExpectedJsonCodeAction.LF +
+                          "    \"path\": \"DSD/DSD.21/Name\"," + CreateExpectedJsonCodeAction.LF +
+                          "    \"value\": \"\"" + CreateExpectedJsonCodeAction.LF +
                           "}";
         String actualString = writer.getBuffer().toString();
         assertEquals(expectedString, actualString);
