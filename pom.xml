@@ -14,6 +14,8 @@
 
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <snap.version>2.0.0-SNAPSHOT</snap.version>
         <netbeans.version>RELEASE802</netbeans.version>
         <seadas-reader.version>1.5.6</seadas-reader.version>
