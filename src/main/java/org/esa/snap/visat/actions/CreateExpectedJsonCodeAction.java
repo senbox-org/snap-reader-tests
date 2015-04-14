@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 /**
  * @author Marco Peters
  */
-@ActionID(category = "Testing", id = "org.esa.beam.visat.actions.CreateExpectedJsonCodeAction")
+@ActionID(category = "Testing", id = "org.esa.snap.visat.actions.CreateExpectedJsonCodeAction")
 @ActionRegistration(displayName = "Copy Expected JSON Code to Clipboard", lazy = true)
 @ActionReference(path = "Menu/Tools/Testing")
 public class CreateExpectedJsonCodeAction implements ActionListener {
