@@ -271,6 +271,18 @@
             <type>test-jar</type>
         </dependency>
 
+        <dependency>
+            <groupId>org.esa.smostbx</groupId>
+            <artifactId>smos-ee2netcdf</artifactId>
+            <version>${smos-reader.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.esa.smostbx</groupId>
+            <artifactId>smos-ee2netcdf</artifactId>
+            <version>${smos-reader.version}</version>
+            <type>test-jar</type>
+        </dependency>
+
     </dependencies>
 
     <repositories>
