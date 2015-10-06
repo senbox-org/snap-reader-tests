@@ -1,7 +1,7 @@
 package org.esa.snap.dataio;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.esa.snap.framework.dataio.DecodeQualification;
+import org.esa.snap.core.dataio.DecodeQualification;
 import org.esa.snap.util.StringUtils;
 
 public class ExpectedDataset {

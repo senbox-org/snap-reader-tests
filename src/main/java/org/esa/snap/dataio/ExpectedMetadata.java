@@ -1,8 +1,8 @@
 package org.esa.snap.dataio;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.esa.snap.framework.datamodel.MetadataAttribute;
-import org.esa.snap.framework.datamodel.MetadataElement;
+import org.esa.snap.core.datamodel.MetadataAttribute;
+import org.esa.snap.core.datamodel.MetadataElement;
 
 /**
  * @author Marco Peters

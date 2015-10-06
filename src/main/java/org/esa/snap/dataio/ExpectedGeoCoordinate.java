@@ -1,8 +1,8 @@
 package org.esa.snap.dataio;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.esa.snap.framework.datamodel.GeoPos;
-import org.esa.snap.framework.datamodel.PixelPos;
+import org.esa.snap.core.datamodel.GeoPos;
+import org.esa.snap.core.datamodel.PixelPos;
 
 /**
  * @author Marco Peters

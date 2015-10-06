@@ -1,8 +1,8 @@
 package org.esa.snap.dataio;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.esa.snap.framework.datamodel.PlacemarkGroup;
-import org.esa.snap.framework.datamodel.Product;
+import org.esa.snap.core.datamodel.PlacemarkGroup;
+import org.esa.snap.core.datamodel.Product;
 
 import java.awt.Point;
 import java.awt.geom.Point2D;

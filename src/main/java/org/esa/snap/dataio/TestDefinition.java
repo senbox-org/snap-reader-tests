@@ -16,8 +16,8 @@
 
 package org.esa.snap.dataio;
 
-import org.esa.snap.framework.dataio.DecodeQualification;
-import org.esa.snap.framework.dataio.ProductReaderPlugIn;
+import org.esa.snap.core.dataio.DecodeQualification;
+import org.esa.snap.core.dataio.ProductReaderPlugIn;
 
 import java.util.ArrayList;
 import java.util.HashMap;

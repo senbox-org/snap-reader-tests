@@ -1,19 +1,19 @@
 package org.esa.snap.dataio;
 
 
-import org.esa.snap.framework.datamodel.Band;
-import org.esa.snap.framework.datamodel.FlagCoding;
-import org.esa.snap.framework.datamodel.GeoCoding;
-import org.esa.snap.framework.datamodel.GeoPos;
-import org.esa.snap.framework.datamodel.IndexCoding;
-import org.esa.snap.framework.datamodel.Mask;
-import org.esa.snap.framework.datamodel.MetadataAttribute;
-import org.esa.snap.framework.datamodel.MetadataElement;
-import org.esa.snap.framework.datamodel.PixelPos;
-import org.esa.snap.framework.datamodel.Product;
-import org.esa.snap.framework.datamodel.ProductNodeGroup;
-import org.esa.snap.framework.datamodel.SampleCoding;
-import org.esa.snap.framework.datamodel.TiePointGrid;
+import org.esa.snap.core.datamodel.Band;
+import org.esa.snap.core.datamodel.FlagCoding;
+import org.esa.snap.core.datamodel.GeoCoding;
+import org.esa.snap.core.datamodel.GeoPos;
+import org.esa.snap.core.datamodel.IndexCoding;
+import org.esa.snap.core.datamodel.Mask;
+import org.esa.snap.core.datamodel.MetadataAttribute;
+import org.esa.snap.core.datamodel.MetadataElement;
+import org.esa.snap.core.datamodel.PixelPos;
+import org.esa.snap.core.datamodel.Product;
+import org.esa.snap.core.datamodel.ProductNodeGroup;
+import org.esa.snap.core.datamodel.SampleCoding;
+import org.esa.snap.core.datamodel.TiePointGrid;
 import org.esa.snap.util.StringUtils;
 import org.junit.Assert;
 

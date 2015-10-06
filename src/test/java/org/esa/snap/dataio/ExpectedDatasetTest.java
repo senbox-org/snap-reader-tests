@@ -1,6 +1,6 @@
 package org.esa.snap.dataio;
 
-import org.esa.snap.framework.dataio.DecodeQualification;
+import org.esa.snap.core.dataio.DecodeQualification;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

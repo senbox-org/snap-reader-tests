@@ -3,7 +3,7 @@ package org.esa.snap.dataio;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.esa.snap.framework.datamodel.Mask;
+import org.esa.snap.core.datamodel.Mask;
 
 import java.awt.Color;
 

@@ -2,7 +2,7 @@ package org.esa.snap.dataio;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.esa.snap.framework.datamodel.Band;
+import org.esa.snap.core.datamodel.Band;
 import org.esa.snap.util.StringUtils;
 
 import java.awt.geom.Point2D;
