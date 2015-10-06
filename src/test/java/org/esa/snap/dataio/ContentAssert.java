@@ -14,7 +14,7 @@ import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.ProductNodeGroup;
 import org.esa.snap.core.datamodel.SampleCoding;
 import org.esa.snap.core.datamodel.TiePointGrid;
-import org.esa.snap.util.StringUtils;
+import org.esa.snap.core.util.StringUtils;
 import org.junit.Assert;
 
 import java.util.ArrayList;
