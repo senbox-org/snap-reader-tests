@@ -15,10 +15,10 @@ import static org.junit.Assert.*;
  */
 public class ColorSerializerDeserializerTest {
 
-    private static final String JSON_CONTENT_RGB = "{\"name\":\"maskName\",\"type\":\"Mask$BandMathsType\",\"color\":\"0,255,255\",\"description\":\"describing the mask\"}";
+    private static final String JSON_CONTENT_RGB = "{\"name\":\"maskName\",\"type\":\"org.esa.snap.core.datamodel.Mask$BandMathsType\",\"color\":\"0,255,255\",\"description\":\"describing the mask\"}";
     private static final ExpectedMask EXPECTED_MASK_RGB = new ExpectedMask("maskName", Mask.BandMathsType.class,
                                                                            Color.CYAN, "describing the mask");
-    private static final String JSON_CONTENT_RGBA = "{\"name\":\"maskName\",\"type\":\"Mask$BandMathsType\",\"color\":\"101,25,0,120\",\"description\":\"describing the mask\"}";
+    private static final String JSON_CONTENT_RGBA = "{\"name\":\"maskName\",\"type\":\"org.esa.snap.core.datamodel.Mask$BandMathsType\",\"color\":\"101,25,0,120\",\"description\":\"describing the mask\"}";
     private static final ExpectedMask EXPECTED_MASK_RGBA = new ExpectedMask("maskName", Mask.BandMathsType.class,
                                                                             new Color(101, 25, 0, 120), "describing the mask");
 
