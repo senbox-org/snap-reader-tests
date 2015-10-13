@@ -28,7 +28,7 @@ class ExpectedGeoCoding {
     ExpectedGeoCoding(Product product, Random random) {
         this();
         final ArrayList<Point2D> pointList = ExpectedPixel.createPointList(product, random);
-        final GeoCoding geoCoding = product.getGeoCoding();
+        final GeoCoding geoCoding = product.getSceneGeoCoding();
         coordinates = new ExpectedGeoCoordinate[pointList.size()];
         for (int i = 0; i < pointList.size(); i++) {
             Point2D point = pointList.get(i);

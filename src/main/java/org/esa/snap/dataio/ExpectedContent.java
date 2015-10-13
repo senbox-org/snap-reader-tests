@@ -92,7 +92,7 @@ public class ExpectedContent {
     }
 
     private ExpectedGeoCoding createExpectedGeoCoding(Product product, Random random) {
-        if (product.getGeoCoding() != null) {
+        if (product.getSceneGeoCoding() != null) {
             return new ExpectedGeoCoding(product, random);
         }
         return null;
