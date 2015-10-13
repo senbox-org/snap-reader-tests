@@ -65,7 +65,7 @@ class ContentAssert {
     private static void testExpectedGeoCoding(ExpectedContent expectedContent, String productId, Product product) {
         if (expectedContent.isGeoCodingSet()) {
             final ExpectedGeoCoding expectedGeoCoding = expectedContent.getGeoCoding();
-            final GeoCoding geoCoding = product.getGeoCoding();
+            final GeoCoding geoCoding = product.getSceneGeoCoding();
             assertNotNull(productId + " has no GeoCoding", geoCoding);
 
             final Double reverseAccuracy = expectedGeoCoding.getReverseAccuracy();

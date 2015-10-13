@@ -73,7 +73,7 @@ public class CreateExpectedJsonCodeActionTest {
         product = new Product("Hans Wurst", "T", WIDTH, HEIGHT);
         product.setStartTime(ProductData.UTC.parse("23-AUG-1983 12:10:10"));
         product.setEndTime(ProductData.UTC.parse("23-AUG-1983 12:14:41"));
-        product.setGeoCoding(new CrsGeoCoding(DefaultGeographicCRS.WGS84, WIDTH, HEIGHT, 0.0, 0.0, 1.0, -1.0));
+        product.setSceneGeoCoding(new CrsGeoCoding(DefaultGeographicCRS.WGS84, WIDTH, HEIGHT, 0.0, 0.0, 1.0, -1.0));
         ProductReader readerMock = Mockito.mock(ProductReader.class);
         ProductReaderPlugIn plugInMock = Mockito.mock(ProductReaderPlugIn.class);
         Mockito.when(readerMock.getReaderPlugIn()).thenReturn(plugInMock);
@@ -140,7 +140,7 @@ public class CreateExpectedJsonCodeActionTest {
     @Test
     public void testCreatedJsonWith_Pins() throws Exception {
         final CreateExpectedJsonCodeAction jsonCodeCommand = new CreateExpectedJsonCodeAction(product);
-        GeoCoding geoCoding = product.getGeoCoding();
+        GeoCoding geoCoding = product.getSceneGeoCoding();
         PixelPos pinPos1 = new PixelPos(3, 7);
         Placemark pin1 = Placemark.createPointPlacemark(PinDescriptor.getInstance(), "P1", "L1", "T1", pinPos1,
                                                         geoCoding.getGeoPos(pinPos1, null), geoCoding);
