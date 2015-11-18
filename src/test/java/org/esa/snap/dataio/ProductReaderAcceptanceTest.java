@@ -31,7 +31,9 @@ import org.esa.snap.core.util.StopWatch;
 import org.esa.snap.core.util.SystemUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
 
 import java.awt.Rectangle;
@@ -56,7 +58,11 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.StreamHandler;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+
+import static org.junit.Assert.fail;
 
 @RunWith(ReaderTestRunner.class)
 public class ProductReaderAcceptanceTest {
@@ -75,6 +81,9 @@ public class ProductReaderAcceptanceTest {
     private static Logger logger;
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy HH:mm", Locale.ENGLISH);
     private static final Calendar CALENDAR = GregorianCalendar.getInstance(TimeZone.getTimeZone("UTC"), Locale.ENGLISH);
+
+    @Rule
+    public ErrorCollector errorCollector = new ErrorCollector();
 
     @BeforeClass
     public static void initialize() throws Exception {
@@ -105,12 +114,15 @@ public class ProductReaderAcceptanceTest {
                         intendedPlugins.add(testDefinition.getProductReaderPlugin());
                     }
                 }
-                if (intendedPlugins.size() > 1) {
+                boolean hasMoreThanPlugin = intendedPlugins.size() > 1;
+                if (hasMoreThanPlugin) {
                     logger.info(INDENT + testProduct.getId());
                     for (ProductReaderPlugIn intendedPlugin : intendedPlugins) {
                         logger.info(INDENT + INDENT + intendedPlugin.getClass().getName());
                     }
                     duplicates = true;
+                    String reason = "more than one 'INTENDED' reader " + testProduct.getId();
+                    errorCollector.checkThat(reason, intendedPlugins.size() <= 1, is(true));
                 }
             }
         }
@@ -146,8 +158,8 @@ public class ProductReaderAcceptanceTest {
                     final DecodeQualification decodeQualification = productReaderPlugin.getDecodeQualification(productFile);
                     stopWatch.stop();
 
-                    final String message = productReaderPlugin.getClass().getName() + ": " + testProduct.getId();
-                    assertEquals(message, expected, decodeQualification);
+                    final String reason = productReaderPlugin.getClass().getName() + ": " + testProduct.getId();
+                    errorCollector.checkThat(reason, expected, equalTo(decodeQualification));
                     if (stopWatch.getTimeDiff() > DECODE_QUALI_LOG_THRESHOLD) {
                         logger.info(INDENT + INDENT + stopWatch.getTimeDiffString() + " - [" + expected + "] " + testProduct.getId());
                     }
@@ -175,7 +187,8 @@ public class ProductReaderAcceptanceTest {
 
             for (String productId : intendedProductIds) {
                 final TestProduct testProduct = testProductList.getById(productId);
-                assertNotNull("Test file not defined for ID=" + productId, testProduct);
+                String reason = "Test file not defined for ID=" + productId;
+                errorCollector.checkThat(reason, testProduct, is(notNullValue()));
 
                 if (testProduct.exists()) {
                     final File testProductFile = getTestProductFile(testProduct);
@@ -185,6 +198,8 @@ public class ProductReaderAcceptanceTest {
                     final Product product = productReader.readProductNodes(testProductFile, null);
                     try {
                         assertExpectedContent(testDefinition, productId, product);
+                    } catch (Throwable t) {
+                        errorCollector.addError(t);
                     } finally {
                         if (product != null) {
                             product.dispose();
@@ -222,7 +237,7 @@ public class ProductReaderAcceptanceTest {
                     final String message = "ProductIO.readProduct " + testProduct.getId() + " caused an exception.\n" +
                             "Should only return NULL or a product instance but should not cause any exception.";
                     logger.log(Level.SEVERE, message, e);
-                    fail(message);
+                    errorCollector.addError(new Exception(message, e));
                 } finally {
                     if (product != null) {
                         product.dispose();
@@ -274,7 +289,8 @@ public class ProductReaderAcceptanceTest {
                             Band band0 = product.getBandAt(0);
                             stopWatch.start();
                             Stx stx = band0.getStx();
-                            assertNotNull(stx);
+                            errorCollector.checkThat("stx != null:" + testProduct.getId(), stx, is(notNullValue()));
+
                             stopWatch.stop();
                             getStxTime = stopWatch.getTimeDiffString();
                             DefaultViewport viewport = new DefaultViewport(new Rectangle(1000, 1000));
@@ -288,12 +304,12 @@ public class ProductReaderAcceptanceTest {
                                 for (int x = 0; x < numXTiles; x++) {
                                     for (int y = 0; y < numYTiles; y++) {
                                         Raster tileRaster = viewImage.getTile(x, y);
-                                        assertNotNull("tileRaster", tileRaster);
+                                        errorCollector.checkThat("tileRaster != null: " + testProduct.getId(), tileRaster, is(notNullValue()));
                                     }
                                 }
                             } else {
                                 Raster imageRaster = viewImage.getData();
-                                assertNotNull("imageRaster", imageRaster);
+                                errorCollector.checkThat("imageRaster != null: " + testProduct.getId(), imageRaster, is(notNullValue()));
                             }
                             stopWatch.stop();
                             getViewDataTime = stopWatch.getTimeDiffString();
@@ -308,7 +324,7 @@ public class ProductReaderAcceptanceTest {
                 } catch (Exception e) {
                     final String message = "Product reading " + testProduct.getId() + " caused an exception.";
                     logger.log(Level.SEVERE, message, e);
-                    fail(message);
+                    errorCollector.addError(new Exception(message, e));
                 } finally {
                     if (product != null) {
                         product.dispose();
@@ -341,14 +357,15 @@ public class ProductReaderAcceptanceTest {
         return DecodeQualification.UNABLE;
     }
 
-    private static File getTestProductFile(TestProduct testProduct) {
+    private File getTestProductFile(TestProduct testProduct) {
         final String relativePath = testProduct.getRelativePath();
         final File testProductFile = new File(dataRootDir, relativePath);
-        assertTrue(testProductFile.exists());
+
+        errorCollector.checkThat("testProductFile exist " + testProduct.getId(), is(true));
         return testProductFile;
     }
 
-    private static void logProductNotExistent(int indention, TestProduct testProduct) {
+    private void logProductNotExistent(int indention, TestProduct testProduct) {
         final StringBuilder sb = new StringBuilder();
         for (int i = 0; i < indention; i++) {
             sb.append(INDENT);
