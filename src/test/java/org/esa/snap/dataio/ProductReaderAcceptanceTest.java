@@ -361,7 +361,7 @@ public class ProductReaderAcceptanceTest {
         final String relativePath = testProduct.getRelativePath();
         final File testProductFile = new File(dataRootDir, relativePath);
 
-        errorCollector.checkThat("testProductFile exist " + testProduct.getId(), is(true));
+        errorCollector.checkThat("testProductFile exist " + testProduct.getId(), testProductFile.exists(), is(true));
         return testProductFile;
     }
 
