@@ -183,10 +183,9 @@ class ContentAssert {
 
     private static void testExpectedBand(String productId, ExpectedBand expectedBand, Product product) {
         final Band band = product.getBand(expectedBand.getName());
-        assertNotNull("missing band '" + expectedBand.getName() + " in product '" + product.getFileLocation(), band);
+        assertNotNull("missing band '" + expectedBand.getName() + " in product '" + productId, band);
 
         final String assertMessagePrefix = productId + " " + band.getName();
-
         if (expectedBand.isDescriptionSet()) {
             Assert.assertEquals(assertMessagePrefix + " Description", expectedBand.getDescription(), band.getDescription());
         }
