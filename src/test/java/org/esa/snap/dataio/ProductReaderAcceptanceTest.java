@@ -164,7 +164,7 @@ public class ProductReaderAcceptanceTest {
                         testCounter++;
                     }else if(!DecodeQualification.UNABLE.equals(decodeQualification)){
                         logger.info(INDENT + INDENT + productReaderPlugin.getClass().getSimpleName() + ": " +
-                                    "Can read "+ testProduct.getId() +"["+decodeQualification+"] but it is not defined in tests");
+                                    "Can read " + testProduct.getId() + "[" + decodeQualification + "] but it is not defined in tests");
                     }
                 } else {
                     logProductNotExistent(2, testProduct);
