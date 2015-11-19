@@ -58,11 +58,8 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.StreamHandler;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-
-import static org.junit.Assert.fail;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 @RunWith(ReaderTestRunner.class)
 public class ProductReaderAcceptanceTest {
@@ -157,13 +154,18 @@ public class ProductReaderAcceptanceTest {
                     stopWatch.start();
                     final DecodeQualification decodeQualification = productReaderPlugin.getDecodeQualification(productFile);
                     stopWatch.stop();
-
-                    final String reason = productReaderPlugin.getClass().getName() + ": " + testProduct.getId();
-                    errorCollector.checkThat(reason, expected, equalTo(decodeQualification));
-                    if (stopWatch.getTimeDiff() > DECODE_QUALI_LOG_THRESHOLD) {
-                        logger.info(INDENT + INDENT + stopWatch.getTimeDiffString() + " - [" + expected + "] " + testProduct.getId());
+                    final boolean decodeQualificationIsDefined = expected != null;
+                    if (decodeQualificationIsDefined) {
+                        final String reason = productReaderPlugin.getClass().getName() + ": " + testProduct.getId();
+                        errorCollector.checkThat(reason, decodeQualification, equalTo(expected));
+                        if (stopWatch.getTimeDiff() > DECODE_QUALI_LOG_THRESHOLD) {
+                            logger.info(INDENT + INDENT + stopWatch.getTimeDiffString() + " - [" + expected + "] " + testProduct.getId());
+                        }
+                        testCounter++;
+                    }else if(!DecodeQualification.UNABLE.equals(decodeQualification)){
+                        logger.info(INDENT + INDENT + productReaderPlugin.getClass().getSimpleName() + ": " +
+                                    "Can read "+ testProduct.getId() +"["+decodeQualification+"] but it is not defined in tests");
                     }
-                    testCounter++;
                 } else {
                     logProductNotExistent(2, testProduct);
                 }
@@ -354,7 +356,7 @@ public class ProductReaderAcceptanceTest {
         if (expectedDataset != null) {
             return expectedDataset.getDecodeQualification();
         }
-        return DecodeQualification.UNABLE;
+        return null;
     }
 
     private File getTestProductFile(TestProduct testProduct) {
