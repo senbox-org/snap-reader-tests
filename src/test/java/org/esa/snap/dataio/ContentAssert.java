@@ -17,6 +17,8 @@ import org.esa.snap.core.datamodel.TiePointGrid;
 import org.esa.snap.core.util.StringUtils;
 import org.junit.Assert;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -185,42 +187,49 @@ class ContentAssert {
         final Band band = product.getBand(expectedBand.getName());
         assertNotNull("missing band '" + expectedBand.getName() + " in product '" + productId, band);
 
-        final String assertMessagePrefix = productId + " " + band.getName();
+        final String messagePrefix = productId + " " + band.getName();
         if (expectedBand.isDescriptionSet()) {
-            Assert.assertEquals(assertMessagePrefix + " Description", expectedBand.getDescription(), band.getDescription());
+            Assert.assertEquals(messagePrefix + " Description", expectedBand.getDescription(), band.getDescription());
         }
 
         if (expectedBand.isGeophysicalUnitSet()) {
-            Assert.assertEquals(assertMessagePrefix + " Unit", expectedBand.getGeophysicalUnit(), band.getUnit());
+            Assert.assertEquals(messagePrefix + " Unit", expectedBand.getGeophysicalUnit(), band.getUnit());
         }
 
         if (expectedBand.isNoDataValueSet()) {
             final double expectedNDValue = Double.parseDouble(expectedBand.getNoDataValue());
-            Assert.assertEquals(assertMessagePrefix + " NoDataValue", expectedNDValue, band.getGeophysicalNoDataValue(), 1e-6);
+            Assert.assertEquals(messagePrefix + " NoDataValue", expectedNDValue, band.getGeophysicalNoDataValue(), 1e-6);
         }
 
         if (expectedBand.isNoDataValueUsedSet()) {
             final boolean expectedNDUsedValue = Boolean.parseBoolean(expectedBand.isNoDataValueUsed());
-            Assert.assertEquals(assertMessagePrefix + " NoDataValueUsed", expectedNDUsedValue, band.isNoDataValueUsed());
+            Assert.assertEquals(messagePrefix + " NoDataValueUsed", expectedNDUsedValue, band.isNoDataValueUsed());
         }
 
         if (expectedBand.isSpectralWavelengthSet()) {
             final float expectedSpectralWavelength = Float.parseFloat(expectedBand.getSpectralWavelength());
-            Assert.assertEquals(assertMessagePrefix + " SpectralWavelength", expectedSpectralWavelength, band.getSpectralWavelength(), 1e-6);
+            Assert.assertEquals(messagePrefix + " SpectralWavelength", expectedSpectralWavelength, band.getSpectralWavelength(), 1e-6);
         }
 
         if (expectedBand.isSpectralBandWidthSet()) {
             final float expectedSpectralBandwidth = Float.parseFloat(expectedBand.getSpectralBandwidth());
-            Assert.assertEquals(assertMessagePrefix + " SpectralBandWidth", expectedSpectralBandwidth, band.getSpectralBandwidth(), 1e-6);
+            Assert.assertEquals(messagePrefix + " SpectralBandWidth", expectedSpectralBandwidth, band.getSpectralBandwidth(), 1e-6);
         }
 
         final ExpectedPixel[] expectedPixel = expectedBand.getExpectedPixels();
         for (ExpectedPixel pixel : expectedPixel) {
-            float bandValue = band.getSampleFloat(pixel.getX(), pixel.getY());
-            if (!band.isPixelValid(pixel.getX(), pixel.getY())) {
-                bandValue = Float.NaN;
+            try {
+                float bandValue = band.getSampleFloat(pixel.getX(), pixel.getY());
+                if (!band.isPixelValid(pixel.getX(), pixel.getY())) {
+                    bandValue = Float.NaN;
+                }
+                Assert.assertEquals(messagePrefix + " Pixel(" + pixel.getX() + "," + pixel.getY() + ")", pixel.getValue(), bandValue, 1e-6);
+            } catch (Exception e) {
+                final StringWriter stackTraceWriter = new StringWriter();
+                e.printStackTrace(new PrintWriter(stackTraceWriter));
+                Assert.fail(messagePrefix + " Pixel(" + pixel.getX() + "," + pixel.getY() + ") - caused " + e.getClass().getSimpleName() + "\n" +
+                            stackTraceWriter.toString());
             }
-            Assert.assertEquals(assertMessagePrefix + " Pixel(" + pixel.getX() + "," + pixel.getY() + ")", pixel.getValue(), bandValue, 1e-6);
         }
     }
 
@@ -239,7 +248,7 @@ class ContentAssert {
         for (ExpectedMask expectedMask : expectedMasks) {
             final String expectedName = expectedMask.getName();
             final Mask actualMask = actualMaskGroup.get(expectedName);
-            final String msgPrefix = productId + " Mask '" + expectedName;
+            final String msgPrefix = productId + " Mask '" + expectedName + "' ";
             assertNotNull(msgPrefix + "' does not exist", actualMask);
             assertEqualMasks(msgPrefix, expectedMask, actualMask);
         }
