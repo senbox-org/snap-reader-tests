@@ -18,7 +18,7 @@ import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.dataio.ExpectedContent;
 import org.esa.snap.dataio.ExpectedDataset;
 import org.esa.snap.rcp.SnapApp;
-import org.esa.snap.rcp.SnapDialogs;
+import org.esa.snap.rcp.util.Dialogs;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
@@ -64,7 +64,7 @@ public class CreateExpectedJsonCodeAction implements ActionListener {
                     e.printStackTrace();
                     LOG.
                             severe(e.getMessage());
-                    SnapDialogs.showError(e.getMessage());
+                    Dialogs.showError(e.getMessage());
                 } finally {
                     pm.done();
                 }
