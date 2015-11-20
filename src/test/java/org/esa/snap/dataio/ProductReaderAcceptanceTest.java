@@ -201,7 +201,7 @@ public class ProductReaderAcceptanceTest {
                     try {
                         assertExpectedContent(testDefinition, productId, product);
                     } catch (Throwable t) {
-                        final Throwable error = new Throwable("productId - " + productId);
+                        final Throwable error = new Throwable("[" + productId + "] " + t.getMessage());
                         error.initCause(t);
                         errorCollector.addError(error);
                     } finally {
