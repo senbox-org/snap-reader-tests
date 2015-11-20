@@ -15,8 +15,11 @@ import org.esa.snap.core.datamodel.ProductNodeGroup;
 import org.esa.snap.core.datamodel.SampleCoding;
 import org.esa.snap.core.datamodel.TiePointGrid;
 import org.esa.snap.core.util.StringUtils;
+import org.geotools.geometry.DirectPosition2D;
 import org.junit.Assert;
+import org.opengis.referencing.operation.MathTransform;
 
+import java.awt.geom.AffineTransform;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -218,16 +221,34 @@ class ContentAssert {
 
         final ExpectedPixel[] expectedPixel = expectedBand.getExpectedPixels();
         for (ExpectedPixel pixel : expectedPixel) {
+            int pixelX = pixel.getX();
+            int pixelY = pixel.getY();
+            String pixelString = " Pixel(" + pixel.getX() + "," + pixel.getY() + ")";
             try {
-                float bandValue = band.getSampleFloat(pixel.getX(), pixel.getY());
-                if (!band.isPixelValid(pixel.getX(), pixel.getY())) {
+                if (product.isMultiSizeProduct() && product.isSceneCrsASharedModelCrs()) {
+                    // todo - [multiSize] it is not generic enough but sufficient for now (mp - 20151120)
+                    final MathTransform sceneI2mTransform = product.getSceneGeoCoding().getImageToMapTransform();
+                    final AffineTransform bandM2iTransform = band.getImageToModelTransform().createInverse();
+
+                    final DirectPosition2D sceneModelPos = new DirectPosition2D();
+                    sceneI2mTransform.transform(new DirectPosition2D(pixelX, pixelY), sceneModelPos);
+                    final DirectPosition2D bandImagePos = new DirectPosition2D();
+                    bandM2iTransform.transform(sceneModelPos, bandImagePos);
+                    pixelX = (int) Math.floor(bandImagePos.getX());
+                    pixelY = (int) Math.floor(bandImagePos.getY());
+                    pixelString = pixelString + " transf(" + pixelX + "," + pixelY + ")";
+                }
+                float bandValue;
+                if (band.isPixelValid(pixelX, pixelY)) {
+                    bandValue = band.getSampleFloat(pixelX, pixelY);
+                } else {
                     bandValue = Float.NaN;
                 }
-                Assert.assertEquals(messagePrefix + " Pixel(" + pixel.getX() + "," + pixel.getY() + ")", pixel.getValue(), bandValue, 1e-6);
+                Assert.assertEquals(messagePrefix + pixelString, pixel.getValue(), bandValue, 1e-6);
             } catch (Exception e) {
                 final StringWriter stackTraceWriter = new StringWriter();
                 e.printStackTrace(new PrintWriter(stackTraceWriter));
-                Assert.fail(messagePrefix + " Pixel(" + pixel.getX() + "," + pixel.getY() + ") - caused " + e.getClass().getSimpleName() + "\n" +
+                Assert.fail(messagePrefix + pixelString + "- caused " + e.getClass().getSimpleName() + "\n" +
                             stackTraceWriter.toString());
             }
         }
