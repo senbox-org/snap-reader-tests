@@ -226,10 +226,10 @@ class ContentAssert {
 
     private static void assertEqualMasks(String msgPrefix, ExpectedMask expectedMask, Mask actualMask) {
         assertEquals(msgPrefix + " Type", expectedMask.getType(), actualMask.getImageType().getClass());
-        assertEquals(expectedMask.getColor(), actualMask.getImageColor());
+        assertEquals(msgPrefix + " Color", expectedMask.getColor(), actualMask.getImageColor());
         final String expectedMaskDescription = expectedMask.getDescription();
         if (StringUtils.isNotNullAndNotEmpty(expectedMaskDescription)) {
-            assertEquals(expectedMaskDescription, actualMask.getDescription());
+            assertEquals(msgPrefix + " Description",expectedMaskDescription, actualMask.getDescription());
         }
     }
 
