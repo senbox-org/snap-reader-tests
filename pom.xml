@@ -20,7 +20,7 @@
         <netbeans.version>RELEASE802</netbeans.version>
         <seadas-reader.version>1.5.7</seadas-reader.version>
         <jackson.version>2.2.2</jackson.version>
-        <smos-reader.version>5.0.0</smos-reader.version>
+        <smos.version>5.1.0-SNAPSHOT</smos.version>
     </properties>
 
     <dependencies>
@@ -262,24 +262,24 @@
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-reader</artifactId>
-            <version>${smos-reader.version}</version>
+            <version>${smos.version}</version>
         </dependency>
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-reader</artifactId>
-            <version>${smos-reader.version}</version>
+            <version>${smos.version}</version>
             <type>test-jar</type>
         </dependency>
 
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-ee2netcdf</artifactId>
-            <version>${smos-reader.version}</version>
+            <version>${smos.version}</version>
         </dependency>
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-ee2netcdf</artifactId>
-            <version>${smos-reader.version}</version>
+            <version>${smos.version}</version>
             <type>test-jar</type>
         </dependency>
 
