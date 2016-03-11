@@ -225,7 +225,7 @@ class ContentAssert {
             int pixelY = pixel.getY();
             String pixelString = " Pixel(" + pixel.getX() + "," + pixel.getY() + ")";
             try {
-                if (product.isMultiSizeProduct() && product.isSceneCrsASharedModelCrs()) {
+                if (product.isMultiSize() && product.isSceneCrsASharedModelCrs()) {
                     // todo - [multiSize] it is not generic enough but sufficient for now (mp - 20151120)
                     final MathTransform sceneI2mTransform = product.getSceneGeoCoding().getImageToMapTransform();
                     final AffineTransform bandM2iTransform = band.getImageToModelTransform().createInverse();
