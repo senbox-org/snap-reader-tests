@@ -18,7 +18,7 @@
 
         <snap.version>4.0.0-SNAPSHOT</snap.version>
         <netbeans.version>RELEASE802</netbeans.version>
-        <seadas-reader.version>1.5.7</seadas-reader.version>
+        <seadas-reader.version>1.5.8-SNAPSHOT</seadas-reader.version>
         <jackson.version>2.2.2</jackson.version>
         <smos.version>5.2.0-SNAPSHOT</smos.version>
     </properties>
