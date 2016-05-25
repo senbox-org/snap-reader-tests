@@ -10,7 +10,9 @@
     <packaging>nbm</packaging>
 
     <name>SNAP Product Reader Integration Tests</name>
-    <description>Creates and copies template JSON code to the clipboard for further use in the SNAP reader acceptance tests.</description>
+    <description>Creates and copies template JSON code to the clipboard for further use in the SNAP reader acceptance
+        tests.
+    </description>
 
 
     <properties>
@@ -64,6 +66,7 @@
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-core</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
@@ -96,77 +99,91 @@
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-binning</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-binning</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.snap.seadas</groupId>
             <artifactId>seadas-reader</artifactId>
             <version>${seadas-reader.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.snap.seadas</groupId>
             <artifactId>seadas-reader</artifactId>
             <version>${seadas-reader.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-envisat-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-envisat-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-geotiff</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-geotiff</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-getasse30-dem</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-getasse30-dem</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-csv-dataio</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-csv-dataio</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-netcdf</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-netcdf</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
 
@@ -174,88 +191,104 @@
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-alos-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-alos-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-atsr-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-atsr-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-avhrr-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-avhrr-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-chris-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-chris-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-landsat-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-landsat-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-merisl3-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-merisl3-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-modis-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-modis-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-spot-vgt-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-spot-vgt-reader</artifactId>
             <version>${snap.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
 
@@ -263,11 +296,13 @@
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-reader</artifactId>
             <version>${smos.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-reader</artifactId>
             <version>${smos.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
 
@@ -275,11 +310,13 @@
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-ee2netcdf</artifactId>
             <version>${smos.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-ee2netcdf</artifactId>
             <version>${smos.version}</version>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
 
@@ -300,6 +337,7 @@
             </snapshots>
         </repository>
     </repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>snap-repo-public</id>
@@ -364,6 +402,16 @@
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <version>3.14</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>nbm</goal>
+                            <goal>cluster</goal>
+                            <goal>autoupdate</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
