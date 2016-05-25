@@ -468,7 +468,7 @@ public class ProductReaderAcceptanceTest {
 
         for (ProductReaderPlugIn readerPlugIn : readerPlugIns) {
             final Class<? extends ProductReaderPlugIn> readerPlugInClass = readerPlugIn.getClass();
-            if (className != null && !readerPlugInClass.getName().equals(className)) {
+            if (className != null && !readerPlugInClass.getName().startsWith(className)) {
                 continue;
             }
 
