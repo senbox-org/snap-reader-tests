@@ -76,7 +76,7 @@ public class ExpectedContent {
         final MetadataElement metadataRoot = product.getMetadataRoot();
         final List<ExpectedMetadata> expectedMetadata = new ArrayList<>();
         if (metadataRoot.getNumElements() > 0 || metadataRoot.getNumAttributes() > 0) {
-            while(expectedMetadata.size() < 2) {
+            while (expectedMetadata.size() < 10) {
                 MetadataElement currentElem = metadataRoot;
                 while (currentElem != null && currentElem.getNumElements() > 0) {
                     currentElem = currentElem.getElementAt((int) (currentElem.getNumElements() * random.nextFloat()));
@@ -98,6 +98,7 @@ public class ExpectedContent {
         return null;
     }
 
+
     private ExpectedMask[] createExpectedMasks(Product product) {
         final ProductNodeGroup<Mask> maskGroup = product.getMaskGroup();
         final List<ExpectedMask> expectedMasks = new ArrayList<>();
@@ -108,9 +109,9 @@ public class ExpectedContent {
                 expectedMasks.add(new ExpectedMask(mask));
             }
         }
-        if(expectedMasks.size() > 0) {
+        if (expectedMasks.size() > 0) {
             return expectedMasks.toArray(new ExpectedMask[expectedMasks.size()]);
-        }else {
+        } else {
             return null;
         }
     }
