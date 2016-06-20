@@ -162,9 +162,9 @@ public class ProductReaderAcceptanceTest {
                             logger.info(INDENT + INDENT + stopWatch.getTimeDiffString() + " - [" + expected + "] " + testProduct.getId());
                         }
                         testCounter++;
-                    }else if(!DecodeQualification.UNABLE.equals(decodeQualification)){
+                    } else if (!DecodeQualification.UNABLE.equals(decodeQualification)) {
                         logger.info(INDENT + INDENT + productReaderPlugin.getClass().getSimpleName() + ": " +
-                                    "Can read " + testProduct.getId() + "[" + decodeQualification + "] but it is not defined in tests");
+                                            "Can read " + testProduct.getId() + "[" + decodeQualification + "] but it is not defined in tests");
                     }
                 } else {
                     logProductNotExistent(2, testProduct);
@@ -195,7 +195,8 @@ public class ProductReaderAcceptanceTest {
                 if (testProduct.exists()) {
                     final File testProductFile = getTestProductFile(testProduct);
 
-                    final ProductReader productReader = testDefinition.getProductReaderPlugin().createReaderInstance();
+                    final ProductReader productReader =testDefinition.getProductReaderPlugin().createReaderInstance();
+
                     stopWatch.start();
                     final Product product = productReader.readProductNodes(testProductFile, null);
                     try {
@@ -260,10 +261,10 @@ public class ProductReaderAcceptanceTest {
     public void testProductReadTimes() throws Exception {
         logInfoWithStars("Testing product read times");
         logger.info(String.format("%s%s - %s - %s - %s", INDENT,
-                " findReader ",
-                " readNodes  ",
-                "   getStx   ",
-                " getViewData"));
+                                  " findReader ",
+                                  " readNodes  ",
+                                  "   getStx   ",
+                                  " getViewData"));
         final StopWatch stopWatchTotal = new StopWatch();
         stopWatchTotal.start();
         int testCounter = 0;
@@ -278,6 +279,7 @@ public class ProductReaderAcceptanceTest {
                     //product = ProductIO.readProduct(testProductFile);
                     // method inlined for detailed time measuring
                     final ProductReader productReader = ProductIO.getProductReaderForInput(testProductFile);
+
                     stopWatch.stop();
                     String findProductReaderTime = stopWatch.getTimeDiffString();
 
@@ -294,13 +296,11 @@ public class ProductReaderAcceptanceTest {
                             stopWatch.start();
                             Stx stx = band0.getStx();
                             errorCollector.checkThat("stx != null:" + testProduct.getId(), stx, is(notNullValue()));
-
                             stopWatch.stop();
                             getStxTime = stopWatch.getTimeDiffString();
                             DefaultViewport viewport = new DefaultViewport(new Rectangle(1000, 1000));
                             int viewLevel = ImageLayer.getLevel(band0.getSourceImage().getModel(), viewport);
                             RenderedImage viewImage = band0.getSourceImage().getImage(viewLevel);
-
                             stopWatch.start();
                             final int numXTiles = viewImage.getNumXTiles();
                             final int numYTiles = viewImage.getNumYTiles();
@@ -320,11 +320,11 @@ public class ProductReaderAcceptanceTest {
                         }
                     }
                     logger.info(String.format("%s%s - %s - %s - %s - %s", INDENT,
-                            findProductReaderTime,
-                            readProductNodesTime,
-                            getStxTime,
-                            getViewDataTime,
-                            testProduct.getId()));
+                                              findProductReaderTime,
+                                              readProductNodesTime,
+                                              getStxTime,
+                                              getViewDataTime,
+                                              testProduct.getId()));
                 } catch (Exception e) {
                     final String message = "Product reading " + testProduct.getId() + " caused an exception.";
                     logger.log(Level.SEVERE, message, e);

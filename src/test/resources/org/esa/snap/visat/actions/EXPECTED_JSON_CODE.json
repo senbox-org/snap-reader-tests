@@ -27,6 +27,8 @@
             {
                 "name": "band_1",
                 "description": "description_1",
+                "bandWidth": 10,
+                "bandHeight": 20,
                 "geophysicalUnit": "abc",
                 "noDataValue": "1.0",
                 "noDataValueUsed": "true",
@@ -48,6 +50,8 @@
             {
                 "name": "band_2",
                 "description": "description_2",
+                "bandWidth": 10,
+                "bandHeight": 20,
                 "geophysicalUnit": "m/w^2",
                 "noDataValue": "0.0",
                 "noDataValueUsed": "false",
@@ -71,6 +75,38 @@
             {
                 "path": "test_1/ABC[3]/Name",
                 "value": "ABC_3"
+            },
+            {
+                "path": "test_2/attrib[2]",
+                "value": "def"
+            },
+            {
+                "path": "test_2/attrib[2]",
+                "value": "def"
+            },
+            {
+                "path": "test_2/attrib[2]",
+                "value": "def"
+            },
+            {
+                "path": "test_2/attrib[2]",
+                "value": "def"
+            },
+            {
+                "path": "test_2/attrib[2]",
+                "value": "def"
+            },
+            {
+                "path": "test_2/attrib[2]",
+                "value": "def"
+            },
+            {
+                "path": "test_2/attrib[2]",
+                "value": "def"
+            },
+            {
+                "path": "test_2/attrib[2]",
+                "value": "def"
             },
             {
                 "path": "test_2/attrib[2]",

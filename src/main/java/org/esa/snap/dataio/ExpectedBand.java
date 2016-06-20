@@ -1,6 +1,7 @@
 package org.esa.snap.dataio;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.esa.snap.core.datamodel.Band;
 import org.esa.snap.core.util.StringUtils;
@@ -9,12 +10,17 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 class ExpectedBand {
 
     @JsonProperty(required = true)
     private String name;
     @JsonProperty
     private String description;
+    @JsonProperty
+    private Integer bandWidth;
+    @JsonProperty
+    private Integer bandHeight;
     @JsonProperty
     private String geophysicalUnit;
     @JsonProperty
@@ -36,6 +42,8 @@ class ExpectedBand {
         this();
         this.name = band.getName();
         this.description = band.getDescription();
+        this.bandWidth = band.getRasterWidth();
+        this.bandHeight = band.getRasterHeight();
         this.geophysicalUnit = band.getUnit();
         this.noDataValue = String.valueOf(band.getGeophysicalNoDataValue());
         this.noDataValueUsed = String.valueOf(band.isNoDataValueUsed());
@@ -45,12 +53,15 @@ class ExpectedBand {
     }
 
     private ExpectedPixel[] createExpectedPixels(Band band, Random random) {
-        ArrayList<Point2D> pointList = ExpectedPixel.createPointList(band.getProduct(), random);
+        ArrayList<Point2D> pointList = ExpectedPixel.createPointList(band.getProduct(), band, random);
+
         final ExpectedPixel[] expectedPixels = new ExpectedPixel[pointList.size()];
         for (int i = 0; i < expectedPixels.length; i++) {
             final Point2D point = pointList.get(i);
+
             final int x = (int) point.getX();
             final int y = (int) point.getY();
+
             final float value = band.isPixelValid(x, y) ? band.getSampleFloat(x, y) : Float.NaN;
             expectedPixels[i] = new ExpectedPixel(x, y, value);
         }
@@ -67,6 +78,24 @@ class ExpectedBand {
 
     boolean isDescriptionSet() {
         return StringUtils.isNotNullAndNotEmpty(description);
+    }
+
+    int getBandWidth() {
+        return bandWidth;
+    }
+
+    @JsonIgnoreProperties
+    public boolean isBandWidthSet() {
+        return bandWidth != null;
+    }
+
+    int getBandHeight() {
+        return bandHeight;
+    }
+
+    @JsonIgnoreProperties()
+    public boolean isBandHeightSet() {
+        return bandHeight != null;
     }
 
     String getGeophysicalUnit() {

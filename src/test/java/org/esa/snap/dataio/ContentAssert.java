@@ -89,9 +89,9 @@ class ContentAssert {
                 if (reverseAccuracy >= 0) {
                     final PixelPos actualPixelPos = geoCoding.getPixelPos(actualGeoPos, null);
                     assertEquals(productId + " Pixel.X at GeoPos(" + actualGeoPos.getLat() + "," + actualGeoPos.getLon() + ")",
-                            expectedPixelPos.getX(), actualPixelPos.getX(), reverseAccuracy);
+                                 expectedPixelPos.getX(), actualPixelPos.getX(), reverseAccuracy);
                     assertEquals(productId + " Pixel.Y at GeoPos(" + actualGeoPos.getLat() + "," + actualGeoPos.getLon() + ")",
-                            expectedPixelPos.getY(), actualPixelPos.getY(), reverseAccuracy);
+                                 expectedPixelPos.getY(), actualPixelPos.getY(), reverseAccuracy);
                 }
             }
         }
@@ -116,12 +116,12 @@ class ContentAssert {
             final MetadataAttribute actualSample = actualSampleCoding.getAttribute(expectedSampleName);
             assertNotNull(msgPrefix + " sample '" + expectedSampleName + "' does not exist", actualSample);
             assertEquals(msgPrefix + " sample '" + expectedSampleName + "' Value",
-                    expectedSample.getValue(), actualSample.getData().getElemUInt());
+                         expectedSample.getValue(), actualSample.getData().getElemUInt());
 
             final String expectedSampleDescription = expectedSample.getDescription();
             if (StringUtils.isNotNullAndNotEmpty(expectedSampleDescription)) {
                 assertEquals(msgPrefix + " sample '" + expectedSampleName + "' Description",
-                        expectedSampleDescription, actualSample.getDescription());
+                             expectedSampleDescription, actualSample.getDescription());
             }
         }
     }
@@ -195,6 +195,14 @@ class ContentAssert {
             Assert.assertEquals(messagePrefix + " Description", expectedBand.getDescription(), band.getDescription());
         }
 
+        if (expectedBand.isBandWidthSet()) {
+            Assert.assertEquals(messagePrefix + " BandWidth", expectedBand.getBandWidth(), band.getRasterWidth());
+        }
+
+        if (expectedBand.isBandHeightSet()) {
+            Assert.assertEquals(messagePrefix + " BandHeight", expectedBand.getBandHeight(), band.getRasterHeight());
+        }
+
         if (expectedBand.isGeophysicalUnitSet()) {
             Assert.assertEquals(messagePrefix + " Unit", expectedBand.getGeophysicalUnit(), band.getUnit());
         }
@@ -225,19 +233,6 @@ class ContentAssert {
             int pixelY = pixel.getY();
             String pixelString = " Pixel(" + pixel.getX() + "," + pixel.getY() + ")";
             try {
-                if (product.isMultiSize() && product.isSceneCrsASharedModelCrs()) {
-                    // todo - [multiSize] it is not generic enough but sufficient for now (mp - 20151120)
-                    final MathTransform sceneI2mTransform = product.getSceneGeoCoding().getImageToMapTransform();
-                    final AffineTransform bandM2iTransform = band.getImageToModelTransform().createInverse();
-
-                    final DirectPosition2D sceneModelPos = new DirectPosition2D();
-                    sceneI2mTransform.transform(new DirectPosition2D(pixelX, pixelY), sceneModelPos);
-                    final DirectPosition2D bandImagePos = new DirectPosition2D();
-                    bandM2iTransform.transform(sceneModelPos, bandImagePos);
-                    pixelX = (int) Math.floor(bandImagePos.getX());
-                    pixelY = (int) Math.floor(bandImagePos.getY());
-                    pixelString = pixelString + " transf(" + pixelX + "," + pixelY + ")";
-                }
                 float bandValue;
                 if (band.isPixelValid(pixelX, pixelY)) {
                     bandValue = band.getSampleFloat(pixelX, pixelY);
@@ -249,7 +244,7 @@ class ContentAssert {
                 final StringWriter stackTraceWriter = new StringWriter();
                 e.printStackTrace(new PrintWriter(stackTraceWriter));
                 Assert.fail(messagePrefix + pixelString + "- caused " + e.getClass().getSimpleName() + "\n" +
-                            stackTraceWriter.toString());
+                                    stackTraceWriter.toString());
             }
         }
     }
@@ -259,7 +254,7 @@ class ContentAssert {
         assertEquals(msgPrefix + " Color", expectedMask.getColor(), actualMask.getImageColor());
         final String expectedMaskDescription = expectedMask.getDescription();
         if (StringUtils.isNotNullAndNotEmpty(expectedMaskDescription)) {
-            assertEquals(msgPrefix + " Description",expectedMaskDescription, actualMask.getDescription());
+            assertEquals(msgPrefix + " Description", expectedMaskDescription, actualMask.getDescription());
         }
     }
 
