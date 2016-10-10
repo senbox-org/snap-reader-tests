@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <snap.version>5.0.0-SNAPSHOT</snap.version>
-        <netbeans.version>RELEASE81</netbeans.version>
+        <netbeans.version>RELEASE82</netbeans.version>
         <seadas-reader.version>1.5.8</seadas-reader.version>
         <jackson.version>2.2.2</jackson.version>
         <smos.version>5.3.0-SNAPSHOT</smos.version>
