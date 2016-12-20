@@ -420,7 +420,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-                <version>3.14</version>
+                <version>4.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
