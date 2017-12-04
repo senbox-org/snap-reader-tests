@@ -83,8 +83,8 @@ class ContentAssert {
                 final GeoPos expectedGeoPos = coordinate.getGeoPos();
                 final GeoPos actualGeoPos = geoCoding.getGeoPos(expectedPixelPos, null);
                 final String message = productId + " GeoPos at Pixel(" + expectedPixelPos.getX() + "," + expectedPixelPos.getY() + ")";
-                assertEquals(message, expectedGeoPos.getLat(), actualGeoPos.getLat(), 1e-6);
-                assertEquals(message, expectedGeoPos.getLon(), actualGeoPos.getLon(), 1e-6);
+                assertEquals(message, expectedGeoPos.getLat(), actualGeoPos.getLat(), computeAssertDelta(expectedGeoPos.getLat()));
+                assertEquals(message, expectedGeoPos.getLon(), actualGeoPos.getLon(), computeAssertDelta(expectedGeoPos.getLon()));
 
                 if (reverseAccuracy >= 0) {
                     final PixelPos actualPixelPos = geoCoding.getPixelPos(actualGeoPos, null);
@@ -162,19 +162,19 @@ class ContentAssert {
         }
 
         if (expectedTiePointGrid.isOffsetXSet()) {
-            assertEquals(assertMessagePrefix + " OffsetX", expectedTiePointGrid.getOffsetX(), tiePointGrid.getOffsetX(), 1e-6);
+            assertEquals(assertMessagePrefix + " OffsetX", expectedTiePointGrid.getOffsetX(), tiePointGrid.getOffsetX(), computeAssertDelta(expectedTiePointGrid.getOffsetX()));
         }
 
         if (expectedTiePointGrid.isOffsetYSet()) {
-            assertEquals(assertMessagePrefix + " OffsetY", expectedTiePointGrid.getOffsetY(), tiePointGrid.getOffsetY(), 1e-6);
+            assertEquals(assertMessagePrefix + " OffsetY", expectedTiePointGrid.getOffsetY(), tiePointGrid.getOffsetY(), computeAssertDelta(expectedTiePointGrid.getOffsetY()));
         }
 
         if (expectedTiePointGrid.isSubSamplingXSet()) {
-            assertEquals(assertMessagePrefix + " SubSamplingX", expectedTiePointGrid.getSubSamplingX(), tiePointGrid.getSubSamplingX(), 1e-6);
+            assertEquals(assertMessagePrefix + " SubSamplingX", expectedTiePointGrid.getSubSamplingX(), tiePointGrid.getSubSamplingX(), computeAssertDelta(expectedTiePointGrid.getSubSamplingX()));
         }
 
         if (expectedTiePointGrid.isSubSamplingYSet()) {
-            assertEquals(assertMessagePrefix + " SubSamplingY", expectedTiePointGrid.getSubSamplingY(), tiePointGrid.getSubSamplingY(), 1e-6);
+            assertEquals(assertMessagePrefix + " SubSamplingY", expectedTiePointGrid.getSubSamplingY(), tiePointGrid.getSubSamplingY(), computeAssertDelta(expectedTiePointGrid.getSubSamplingY()));
         }
         final ExpectedPixel[] expectedPixel = expectedTiePointGrid.getExpectedPixels();
         for (ExpectedPixel pixel : expectedPixel) {
@@ -182,7 +182,7 @@ class ContentAssert {
             if (!tiePointGrid.isPixelValid(pixel.getX(), pixel.getY())) {
                 bandValue = Float.NaN;
             }
-            Assert.assertEquals(assertMessagePrefix + " Pixel(" + pixel.getX() + "," + pixel.getY() + ")", pixel.getValue(), bandValue, 1e-6);
+            Assert.assertEquals(assertMessagePrefix + " Pixel(" + pixel.getX() + "," + pixel.getY() + ")", pixel.getValue(), bandValue, computeAssertDelta(pixel.getValue()));
         }
     }
 
@@ -209,7 +209,7 @@ class ContentAssert {
 
         if (expectedBand.isNoDataValueSet()) {
             final double expectedNDValue = Double.parseDouble(expectedBand.getNoDataValue());
-            Assert.assertEquals(messagePrefix + " NoDataValue", expectedNDValue, band.getGeophysicalNoDataValue(), 1e-6);
+            Assert.assertEquals(messagePrefix + " NoDataValue", expectedNDValue, band.getGeophysicalNoDataValue(), computeAssertDelta(expectedNDValue));
         }
 
         if (expectedBand.isNoDataValueUsedSet()) {
@@ -219,12 +219,12 @@ class ContentAssert {
 
         if (expectedBand.isSpectralWavelengthSet()) {
             final float expectedSpectralWavelength = Float.parseFloat(expectedBand.getSpectralWavelength());
-            Assert.assertEquals(messagePrefix + " SpectralWavelength", expectedSpectralWavelength, band.getSpectralWavelength(), 1e-6);
+            Assert.assertEquals(messagePrefix + " SpectralWavelength", expectedSpectralWavelength, band.getSpectralWavelength(), computeAssertDelta(expectedSpectralWavelength));
         }
 
         if (expectedBand.isSpectralBandWidthSet()) {
             final float expectedSpectralBandwidth = Float.parseFloat(expectedBand.getSpectralBandwidth());
-            Assert.assertEquals(messagePrefix + " SpectralBandWidth", expectedSpectralBandwidth, band.getSpectralBandwidth(), 1e-6);
+            Assert.assertEquals(messagePrefix + " SpectralBandWidth", expectedSpectralBandwidth, band.getSpectralBandwidth(), computeAssertDelta(expectedSpectralBandwidth));
         }
 
         final ExpectedPixel[] expectedPixel = expectedBand.getExpectedPixels();
@@ -239,7 +239,7 @@ class ContentAssert {
                 } else {
                     bandValue = Float.NaN;
                 }
-                Assert.assertEquals(messagePrefix + pixelString, pixel.getValue(), bandValue, 1e-6);
+                Assert.assertEquals(messagePrefix + pixelString, pixel.getValue(), bandValue, computeAssertDelta(pixel.getValue()));
             } catch (Exception e) {
                 final StringWriter stackTraceWriter = new StringWriter();
                 e.printStackTrace(new PrintWriter(stackTraceWriter));
@@ -345,5 +345,12 @@ class ContentAssert {
             }
         }
         return tokens.toArray(new String[tokens.size()]);
+    }
+
+    private static double computeAssertDelta(double expectedValue) {
+        if((!Double.isFinite(expectedValue)) || (expectedValue == 0.0)) {
+            return 1e-6; //default value of delta
+        }
+        return (Math.abs(expectedValue) / 1e+6);
     }
 }
