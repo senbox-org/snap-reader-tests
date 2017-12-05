@@ -15,11 +15,8 @@ import org.esa.snap.core.datamodel.ProductNodeGroup;
 import org.esa.snap.core.datamodel.SampleCoding;
 import org.esa.snap.core.datamodel.TiePointGrid;
 import org.esa.snap.core.util.StringUtils;
-import org.geotools.geometry.DirectPosition2D;
 import org.junit.Assert;
-import org.opengis.referencing.operation.MathTransform;
 
-import java.awt.geom.AffineTransform;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -347,10 +344,13 @@ class ContentAssert {
         return tokens.toArray(new String[tokens.size()]);
     }
 
-    private static double computeAssertDelta(double expectedValue) {
-        if((!Double.isFinite(expectedValue)) || (expectedValue == 0.0)) {
+
+    static double computeAssertDelta(double expectedValue) {
+        if((!Double.isFinite(expectedValue)) || Math.abs(expectedValue) < 1) {
             return 1e-6; //default value of delta
         }
-        return (Math.abs(expectedValue) / 1e+6);
+        double delta = Math.abs(expectedValue) / 1e+6;
+        long rounded = Math.round((delta * 10e6));
+        return rounded / 10e6;
     }
 }
