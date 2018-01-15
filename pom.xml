@@ -20,9 +20,9 @@
 
         <snap.version>6.0.0</snap.version>
         <netbeans.version>RELEASE82</netbeans.version>
-        <seadas-reader.version>1.7-SNAPSHOT</seadas-reader.version>
+        <seadas-reader.version>1.7</seadas-reader.version>
         <jackson.version>2.2.2</jackson.version>
-        <smos.version>5.4.0</smos.version>
+        <smos.version>5.5.0</smos.version>
     </properties>
 
     <dependencies>
