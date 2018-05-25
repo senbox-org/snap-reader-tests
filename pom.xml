@@ -5,7 +5,7 @@
 
     <groupId>org.esa.snap</groupId>
     <artifactId>snap-reader-tests</artifactId>
-    <version>5.0.0</version>
+    <version>6.0.3-SNAPSHOT</version>
 
     <packaging>nbm</packaging>
 
@@ -18,11 +18,12 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <snap.version>5.0.0</snap.version>
+        <snap.version>6.0.3-SNAPSHOT</snap.version>
+        <s3tbx.version>6.0.4-SNAPSHOT</s3tbx.version>
         <netbeans.version>RELEASE82</netbeans.version>
-        <seadas-reader.version>1.6</seadas-reader.version>
+        <seadas-reader.version>1.7.2-SNAPSHOT</seadas-reader.version>
         <jackson.version>2.2.2</jackson.version>
-        <smos.version>5.3.0</smos.version>
+        <smos.version>5.5.1-SNAPSHOT</smos.version>
     </properties>
 
     <dependencies>
@@ -190,104 +191,104 @@
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-alos-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-alos-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-atsr-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-atsr-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-avhrr-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-avhrr-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-chris-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-chris-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-landsat-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-landsat-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-merisl3-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-merisl3-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-modis-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-modis-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-spot-vgt-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-spot-vgt-reader</artifactId>
-            <version>${snap.version}</version>
+            <version>${s3tbx.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
