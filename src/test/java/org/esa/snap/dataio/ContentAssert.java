@@ -99,15 +99,15 @@ class ContentAssert {
         for (ExpectedSampleCoding expectedFlagCoding : expectedContent.getFlagCodings()) {
             final String name = expectedFlagCoding.getName();
             final FlagCoding actualFlagCoding = flagCodingGroup.get(name);
-            final String msgPrefix = productId + " FlagCoding '" + name;
-            assertNotNull(msgPrefix + "' does not exist", flagCodingGroup.contains(name));
+            final String msgPrefix = productId + " FlagCoding '" + name +"'";
+            assertTrue(msgPrefix + " does not exist", flagCodingGroup.contains(name));
             assertEqualSampleCodings(msgPrefix, expectedFlagCoding, actualFlagCoding);
         }
     }
 
     private static void assertEqualSampleCodings(String msgPrefix, ExpectedSampleCoding expectedSampleCoding, SampleCoding actualSampleCoding) {
         final ExpectedSample[] expectedSamples = expectedSampleCoding.getSamples();
-        Assert.assertEquals(msgPrefix + "' number of samples", expectedSamples.length, actualSampleCoding.getNumAttributes());
+        Assert.assertEquals(msgPrefix + " number of samples", expectedSamples.length, actualSampleCoding.getNumAttributes());
         for (ExpectedSample expectedSample : expectedSamples) {
             final String expectedSampleName = expectedSample.getName();
             final MetadataAttribute actualSample = actualSampleCoding.getAttribute(expectedSampleName);
