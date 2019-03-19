@@ -26,19 +26,19 @@ import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 
-class ContentAssert {
+public class ContentAssert {
 
     private final ExpectedContent expectedContent;
     private final String productId;
     private final Product product;
 
-    ContentAssert(ExpectedContent expectedContent, String productId, Product product) {
+    public ContentAssert(ExpectedContent expectedContent, String productId, Product product) {
         this.expectedContent = expectedContent;
         this.productId = productId;
         this.product = product;
     }
 
-    void assertProductContent() {
+    public void assertProductContent() {
         assertExpectedProductProperties(expectedContent, productId, product);
         testExpectedGeoCoding(expectedContent, productId, product);
         testExpectedFlagCoding(expectedContent, productId, product);
@@ -68,7 +68,7 @@ class ContentAssert {
         if (expectedContent.isGeoCodingSet()) {
             final ExpectedGeoCoding expectedGeoCoding = expectedContent.getGeoCoding();
             final GeoCoding geoCoding = product.getSceneGeoCoding();
-            assertNotNull(productId + " has no GeoCoding", geoCoding);
+            Assert.assertNotNull(productId + " has no GeoCoding", geoCoding);
 
             final Double reverseAccuracy = expectedGeoCoding.getReverseAccuracy();
             final ExpectedGeoCoordinate[] coordinates = expectedGeoCoding.getCoordinates();
@@ -80,15 +80,15 @@ class ContentAssert {
                 final GeoPos expectedGeoPos = coordinate.getGeoPos();
                 final GeoPos actualGeoPos = geoCoding.getGeoPos(expectedPixelPos, null);
                 final String message = productId + " GeoPos at Pixel(" + expectedPixelPos.getX() + "," + expectedPixelPos.getY() + ")";
-                assertEquals(message, expectedGeoPos.getLat(), actualGeoPos.getLat(), computeAssertDelta(expectedGeoPos.getLat()));
-                assertEquals(message, expectedGeoPos.getLon(), actualGeoPos.getLon(), computeAssertDelta(expectedGeoPos.getLon()));
+                Assert.assertEquals(message, expectedGeoPos.getLat(), actualGeoPos.getLat(), computeAssertDelta(expectedGeoPos.getLat()));
+                Assert.assertEquals(message, expectedGeoPos.getLon(), actualGeoPos.getLon(), computeAssertDelta(expectedGeoPos.getLon()));
 
                 if (reverseAccuracy >= 0) {
                     final PixelPos actualPixelPos = geoCoding.getPixelPos(actualGeoPos, null);
-                    assertEquals(productId + " Pixel.X at GeoPos(" + actualGeoPos.getLat() + "," + actualGeoPos.getLon() + ")",
-                                 expectedPixelPos.getX(), actualPixelPos.getX(), reverseAccuracy);
-                    assertEquals(productId + " Pixel.Y at GeoPos(" + actualGeoPos.getLat() + "," + actualGeoPos.getLon() + ")",
-                                 expectedPixelPos.getY(), actualPixelPos.getY(), reverseAccuracy);
+                    Assert.assertEquals(productId + " Pixel.X at GeoPos(" + actualGeoPos.getLat() + "," + actualGeoPos.getLon() + ")",
+                                        expectedPixelPos.getX(), actualPixelPos.getX(), reverseAccuracy);
+                    Assert.assertEquals(productId + " Pixel.Y at GeoPos(" + actualGeoPos.getLat() + "," + actualGeoPos.getLon() + ")",
+                                        expectedPixelPos.getY(), actualPixelPos.getY(), reverseAccuracy);
                 }
             }
         }
@@ -100,7 +100,7 @@ class ContentAssert {
             final String name = expectedFlagCoding.getName();
             final FlagCoding actualFlagCoding = flagCodingGroup.get(name);
             final String msgPrefix = productId + " FlagCoding '" + name;
-            assertNotNull(msgPrefix + "' does not exist", flagCodingGroup.contains(name));
+            Assert.assertNotNull(msgPrefix + "' does not exist", flagCodingGroup.contains(name));
             assertEqualSampleCodings(msgPrefix, expectedFlagCoding, actualFlagCoding);
         }
     }
@@ -111,14 +111,14 @@ class ContentAssert {
         for (ExpectedSample expectedSample : expectedSamples) {
             final String expectedSampleName = expectedSample.getName();
             final MetadataAttribute actualSample = actualSampleCoding.getAttribute(expectedSampleName);
-            assertNotNull(msgPrefix + " sample '" + expectedSampleName + "' does not exist", actualSample);
-            assertEquals(msgPrefix + " sample '" + expectedSampleName + "' Value",
-                         expectedSample.getValue(), actualSample.getData().getElemUInt());
+            Assert.assertNotNull(msgPrefix + " sample '" + expectedSampleName + "' does not exist", actualSample);
+            Assert.assertEquals(msgPrefix + " sample '" + expectedSampleName + "' Value",
+                                expectedSample.getValue(), actualSample.getData().getElemUInt());
 
             final String expectedSampleDescription = expectedSample.getDescription();
             if (StringUtils.isNotNullAndNotEmpty(expectedSampleDescription)) {
-                assertEquals(msgPrefix + " sample '" + expectedSampleName + "' Description",
-                             expectedSampleDescription, actualSample.getDescription());
+                Assert.assertEquals(msgPrefix + " sample '" + expectedSampleName + "' Description",
+                                    expectedSampleDescription, actualSample.getDescription());
             }
         }
     }
@@ -129,7 +129,7 @@ class ContentAssert {
             final String name = expectedIndexCoding.getName();
             final IndexCoding actualIndexCoding = indexCodingGroup.get(name);
             final String msgPrefix = productId + " IndexCoding '" + name;
-            assertNotNull(msgPrefix + "' does not exist", actualIndexCoding);
+            Assert.assertNotNull(msgPrefix + "' does not exist", actualIndexCoding);
             assertEqualSampleCodings(msgPrefix, expectedIndexCoding, actualIndexCoding);
         }
     }
@@ -150,28 +150,28 @@ class ContentAssert {
 
     private static void testExpectedTiePointGrid(String productId, ExpectedTiePointGrid expectedTiePointGrid, Product product) {
         final TiePointGrid tiePointGrid = product.getTiePointGrid(expectedTiePointGrid.getName());
-        assertNotNull("missing tie-point grid '" + expectedTiePointGrid.getName() + " in product '" + product.getFileLocation(), tiePointGrid);
+        Assert.assertNotNull("missing tie-point grid '" + expectedTiePointGrid.getName() + " in product '" + product.getFileLocation(), tiePointGrid);
 
         final String assertMessagePrefix = productId + " " + tiePointGrid.getName();
 
         if (expectedTiePointGrid.isDescriptionSet()) {
-            assertEquals(assertMessagePrefix + " Description", expectedTiePointGrid.getDescription(), tiePointGrid.getDescription());
+            Assert.assertEquals(assertMessagePrefix + " Description", expectedTiePointGrid.getDescription(), tiePointGrid.getDescription());
         }
 
         if (expectedTiePointGrid.isOffsetXSet()) {
-            assertEquals(assertMessagePrefix + " OffsetX", expectedTiePointGrid.getOffsetX(), tiePointGrid.getOffsetX(), computeAssertDelta(expectedTiePointGrid.getOffsetX()));
+            Assert.assertEquals(assertMessagePrefix + " OffsetX", expectedTiePointGrid.getOffsetX(), tiePointGrid.getOffsetX(), computeAssertDelta(expectedTiePointGrid.getOffsetX()));
         }
 
         if (expectedTiePointGrid.isOffsetYSet()) {
-            assertEquals(assertMessagePrefix + " OffsetY", expectedTiePointGrid.getOffsetY(), tiePointGrid.getOffsetY(), computeAssertDelta(expectedTiePointGrid.getOffsetY()));
+            Assert.assertEquals(assertMessagePrefix + " OffsetY", expectedTiePointGrid.getOffsetY(), tiePointGrid.getOffsetY(), computeAssertDelta(expectedTiePointGrid.getOffsetY()));
         }
 
         if (expectedTiePointGrid.isSubSamplingXSet()) {
-            assertEquals(assertMessagePrefix + " SubSamplingX", expectedTiePointGrid.getSubSamplingX(), tiePointGrid.getSubSamplingX(), computeAssertDelta(expectedTiePointGrid.getSubSamplingX()));
+            Assert.assertEquals(assertMessagePrefix + " SubSamplingX", expectedTiePointGrid.getSubSamplingX(), tiePointGrid.getSubSamplingX(), computeAssertDelta(expectedTiePointGrid.getSubSamplingX()));
         }
 
         if (expectedTiePointGrid.isSubSamplingYSet()) {
-            assertEquals(assertMessagePrefix + " SubSamplingY", expectedTiePointGrid.getSubSamplingY(), tiePointGrid.getSubSamplingY(), computeAssertDelta(expectedTiePointGrid.getSubSamplingY()));
+            Assert.assertEquals(assertMessagePrefix + " SubSamplingY", expectedTiePointGrid.getSubSamplingY(), tiePointGrid.getSubSamplingY(), computeAssertDelta(expectedTiePointGrid.getSubSamplingY()));
         }
         final ExpectedPixel[] expectedPixel = expectedTiePointGrid.getExpectedPixels();
         for (ExpectedPixel pixel : expectedPixel) {
@@ -185,7 +185,7 @@ class ContentAssert {
 
     private static void testExpectedBand(String productId, ExpectedBand expectedBand, Product product) {
         final Band band = product.getBand(expectedBand.getName());
-        assertNotNull("missing band '" + expectedBand.getName() + " in product '" + productId, band);
+        Assert.assertNotNull("missing band '" + expectedBand.getName() + " in product '" + productId, band);
 
         final String messagePrefix = productId + " " + band.getName();
         if (expectedBand.isDescriptionSet()) {
@@ -247,11 +247,11 @@ class ContentAssert {
     }
 
     private static void assertEqualMasks(String msgPrefix, ExpectedMask expectedMask, Mask actualMask) {
-        assertEquals(msgPrefix + " Type", expectedMask.getType(), actualMask.getImageType().getClass());
-        assertEquals(msgPrefix + " Color", expectedMask.getColor(), actualMask.getImageColor());
+        Assert.assertEquals(msgPrefix + " Type", expectedMask.getType(), actualMask.getImageType().getClass());
+        Assert.assertEquals(msgPrefix + " Color", expectedMask.getColor(), actualMask.getImageColor());
         final String expectedMaskDescription = expectedMask.getDescription();
         if (StringUtils.isNotNullAndNotEmpty(expectedMaskDescription)) {
-            assertEquals(msgPrefix + " Description", expectedMaskDescription, actualMask.getDescription());
+            Assert.assertEquals(msgPrefix + " Description", expectedMaskDescription, actualMask.getDescription());
         }
     }
 
@@ -262,7 +262,7 @@ class ContentAssert {
             final String expectedName = expectedMask.getName();
             final Mask actualMask = actualMaskGroup.get(expectedName);
             final String msgPrefix = productId + " Mask '" + expectedName + "' ";
-            assertNotNull(msgPrefix + "' does not exist", actualMask);
+            Assert.assertNotNull(msgPrefix + "' does not exist", actualMask);
             assertEqualMasks(msgPrefix, expectedMask, actualMask);
         }
     }
@@ -275,7 +275,7 @@ class ContentAssert {
             if (matcher.matches()) {
                 elementName = matcher.group(1);
                 int elemIndex = Integer.parseInt(matcher.group(2)); // following XPath, the index is one based
-                assertTrue(msgPrefix + " Index must be >= 1", elemIndex >= 1);
+                Assert.assertTrue(msgPrefix + " Index must be >= 1", elemIndex >= 1);
                 final MetadataElement[] elements = element.getElements();
                 for (MetadataElement elem : elements) {
                     if (elem.getName().equals(elementName)) {
@@ -289,7 +289,7 @@ class ContentAssert {
             } else {
                 element = element.getElement(elementName);
             }
-            assertNotNull(msgPrefix + " Element '" + elementName + "' not found", element);
+            Assert.assertNotNull(msgPrefix + " Element '" + elementName + "' not found", element);
         }
         return element;
     }
@@ -300,7 +300,7 @@ class ContentAssert {
         if (matcher.matches()) {
             String attributeBaseName = matcher.group(1);
             int attribIndex = Integer.parseInt(matcher.group(2)); // following XPath, the index is one based
-            assertTrue(msgPrefix + " Index must be >= 1", attribIndex >= 1);
+            Assert.assertTrue(msgPrefix + " Index must be >= 1", attribIndex >= 1);
             final MetadataAttribute[] attributes = currentElement.getAttributes();
             for (MetadataAttribute attrib : attributes) {
                 if (attrib.getName().equals(attributeBaseName)) {
@@ -324,8 +324,8 @@ class ContentAssert {
             MetadataElement currentElement = getMetadataElement(msgPrefix, elementNames, product.getMetadataRoot());
             final String attributeName = pathTokens[pathTokens.length - 1];
             final MetadataAttribute attribute = getMetadataAttribute(msgPrefix, currentElement, attributeName);
-            assertNotNull(msgPrefix + " Attribute '" + attributeName + "' not found", attribute);
-            assertEquals(msgPrefix + " Value", expectedMetadata.getValue(), attribute.getData().getElemString());
+            Assert.assertNotNull(msgPrefix + " Attribute '" + attributeName + "' not found", attribute);
+            Assert.assertEquals(msgPrefix + " Value", expectedMetadata.getValue(), attribute.getData().getElemString());
 
         }
     }
