@@ -31,7 +31,7 @@ pipeline {
             }
             steps {
                 echo "Launch reader tests from ${env.JOB_NAME} from ${env.GIT_BRANCH}"
-                sh "mvn -Duser.home=/var/maven -Dsnap.userdir=/home/snap clean -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${params.dataPath} -Dsnap.reader.tests.class.name=${params.classPathFilter} -Dsnap.reader.tests.failOnMissingData=true test"
+                sh "mvn -Duser.home=/var/maven -Dsnap.userdir=/home/snap -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${params.dataPath} -Dsnap.reader.tests.class.name=${params.classPathFilter} -Dsnap.reader.tests.failOnMissingData=true clean test deploy"
             }
         }
     }
