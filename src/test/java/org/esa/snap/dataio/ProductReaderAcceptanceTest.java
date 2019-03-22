@@ -20,6 +20,8 @@ package org.esa.snap.dataio;
 import com.bc.ceres.glayer.support.ImageLayer;
 import com.bc.ceres.grender.support.DefaultViewport;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nitf.NITFObject;
+import org.esa.s2tbx.dataio.NativeLibraryLoader;
 import org.esa.snap.core.dataio.DecodeQualification;
 import org.esa.snap.core.dataio.ProductIO;
 import org.esa.snap.core.dataio.ProductReader;
@@ -95,6 +97,13 @@ public class ProductReaderAcceptanceTest {
 
         createGlobalProductList();
         GDALDistributionInstaller.install();
+
+        try {
+            String path = NITFObject.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            NativeLibraryLoader.loadLibrary(path, "nitf.jni-c");
+        } catch (Throwable e) {
+            throw new UnsatisfiedLinkError(e.getMessage());
+        }
     }
 
     @AfterClass
