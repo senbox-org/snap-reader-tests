@@ -26,12 +26,13 @@ pipeline {
             agent {
                 docker {
                     image "snap-build-server.tilaa.cloud/maven:3.6.0-jdk-8"
-                    args "-v /data/ssd/testData/:/data/ssd/testData/ -e MAVEN_CONFIG=/var/maven/.m2 -v /opt/maven/.m2/settings.xml:/home/snap/.m2/settings.xml"
+                    args "-v /data/ssd/testData/:/data/ssd/testData/ -e MAVEN_CONFIG=/var/maven/.m2 -v /opt/maven/.m2/settings.xml:/var/maven/.m2/settings.xml"
                 }
             }
             steps {
                 echo "Launch reader tests from ${env.JOB_NAME} from ${env.GIT_BRANCH}"
-                sh "mvn -Duser.home=/home/snap/ -Dsnap.userdir=/home/snap -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${params.dataPath} -Dsnap.reader.tests.class.name=${params.classPathFilter} -Dsnap.reader.tests.failOnMissingData=true clean test deploy"
+                sh "/opt/scripts/setUpLibraries.sh"
+                sh "export LD_LIBRARY_PATH=. && mvn -Duser.home=/var/maven -Dsnap.userdir=/home/snap -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${params.dataPath} -Dsnap.reader.tests.class.name=${params.classPathFilter} -Dsnap.reader.tests.failOnMissingData=true clean test"
             }
         }
     }
