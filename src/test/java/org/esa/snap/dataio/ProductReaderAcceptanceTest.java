@@ -57,9 +57,11 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.StreamHandler;
+import org.esa.s2tbx.dataio.gdal.activator.*;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+
 
 @RunWith(ReaderTestRunner.class)
 public class ProductReaderAcceptanceTest {
