@@ -97,13 +97,6 @@ public class ProductReaderAcceptanceTest {
 
         createGlobalProductList();
         GDALDistributionInstaller.install();
-
-        try {
-            String path = NITFObject.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-            NativeLibraryLoader.loadLibrary(path, "nitf.jni-c");
-        } catch (Throwable e) {
-            throw new UnsatisfiedLinkError(e.getMessage());
-        }
     }
 
     @AfterClass
