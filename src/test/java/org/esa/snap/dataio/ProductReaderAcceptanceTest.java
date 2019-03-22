@@ -92,6 +92,7 @@ public class ProductReaderAcceptanceTest {
         loadProductReaderTestDefinitions();
 
         createGlobalProductList();
+        GDALDistributionInstaller.install();
     }
 
     @AfterClass
