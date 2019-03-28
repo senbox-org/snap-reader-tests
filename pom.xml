@@ -5,7 +5,7 @@
 
     <groupId>org.esa.snap</groupId>
     <artifactId>snap-reader-tests</artifactId>
-    <version>6.0.3-SNAPSHOT</version>
+    <version>6.0.7-SNAPSHOT</version>
 
     <packaging>nbm</packaging>
 
@@ -18,13 +18,13 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <snap.version>6.0.7-SNAPSHOT</snap.version>
+        <snap.version>6.0.8-SNAPSHOT</snap.version>
         <s3tbx.version>6.0.6-SNAPSHOT</s3tbx.version>
         <s2tbx.version>6.0.5-SNAPSHOT</s2tbx.version>
         <netbeans.version>RELEASE82</netbeans.version>
         <seadas-reader.version>1.7.2-SNAPSHOT</seadas-reader.version>
-        <jackson.version>2.2.2</jackson.version>
-        <smos.version>5.5.1-SNAPSHOT</smos.version>
+        <jackson.version>2.9.8</jackson.version>
+       <!-- <smos.version>5.5.1-SNAPSHOT</smos.version>-->
     </properties>
 
     <dependencies>
@@ -477,6 +477,7 @@
             <type>test-jar</type>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-reader</artifactId>
@@ -504,7 +505,7 @@
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
-
+-->
     </dependencies>
 
     <repositories>
