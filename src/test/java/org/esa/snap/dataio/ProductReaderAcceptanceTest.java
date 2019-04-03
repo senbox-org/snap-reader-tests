@@ -20,6 +20,8 @@ package org.esa.snap.dataio;
 import com.bc.ceres.glayer.support.ImageLayer;
 import com.bc.ceres.grender.support.DefaultViewport;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nitf.NITFObject;
+import org.esa.s2tbx.dataio.NativeLibraryLoader;
 import org.esa.snap.core.dataio.DecodeQualification;
 import org.esa.snap.core.dataio.ProductIO;
 import org.esa.snap.core.dataio.ProductReader;
@@ -57,9 +59,11 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.StreamHandler;
+import org.esa.s2tbx.dataio.gdal.activator.*;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+
 
 @RunWith(ReaderTestRunner.class)
 public class ProductReaderAcceptanceTest {
@@ -92,6 +96,7 @@ public class ProductReaderAcceptanceTest {
         loadProductReaderTestDefinitions();
 
         createGlobalProductList();
+        GDALDistributionInstaller.install();
     }
 
     @AfterClass
