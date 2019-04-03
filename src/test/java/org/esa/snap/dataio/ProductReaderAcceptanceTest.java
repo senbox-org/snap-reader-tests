@@ -20,6 +20,7 @@ package org.esa.snap.dataio;
 import com.bc.ceres.glayer.support.ImageLayer;
 import com.bc.ceres.grender.support.DefaultViewport;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.esa.s2tbx.dataio.gdal.activator.GDALDistributionInstaller;
 import org.esa.snap.core.dataio.DecodeQualification;
 import org.esa.snap.core.dataio.ProductIO;
 import org.esa.snap.core.dataio.ProductReader;
@@ -92,6 +93,8 @@ public class ProductReaderAcceptanceTest {
         loadProductReaderTestDefinitions();
 
         createGlobalProductList();
+
+        GDALDistributionInstaller.install();
     }
 
     @AfterClass
