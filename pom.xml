@@ -5,7 +5,7 @@
 
     <groupId>org.esa.snap</groupId>
     <artifactId>snap-reader-tests</artifactId>
-    <version>6.0.7-SNAPSHOT</version>
+    <version>6.0.8-SNAPSHOT</version>
 
     <packaging>nbm</packaging>
 
@@ -21,12 +21,12 @@
         <snap.version>6.0.0</snap.version>
         <netbeans.version>RELEASE82</netbeans.version>
 
-        <snap.test.version>6.0.0</snap.test.version>
-        <s3tbx.test.version>6.0.0</s3tbx.test.version>
-        <s2tbx.test.version>6.0.0</s2tbx.test.version>
-        <seadas-reader.test.version>1.7.2</seadas-reader.test.version>
+        <snap.test.version>6.0.10-SNAPSHOT</snap.test.version>
+        <s3tbx.test.version>6.0.7-SNAPSHOT</s3tbx.test.version>
+        <s2tbx.test.version>6.0.5-SNAPSHOT</s2tbx.test.version>
+        <seadas-reader.test.version>1.8-SNAPSHOT</seadas-reader.test.version>
         <jackson.version>2.9.8</jackson.version>
-       <!-- <smos.version>5.5.1-SNAPSHOT</smos.version>-->
+        <smos.test.version>5.5.1-SNAPSHOT</smos.test.version>
     </properties>
 
     <dependencies>
@@ -479,17 +479,17 @@
             <type>test-jar</type>
         </dependency>
 
-        <!--
+        <!-- SMOS -->
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-reader</artifactId>
-            <version>${smos.version}</version>
+            <version>${smos.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-reader</artifactId>
-            <version>${smos.version}</version>
+            <version>${smos.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
@@ -497,17 +497,17 @@
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-ee2netcdf</artifactId>
-            <version>${smos.version}</version>
+            <version>${smos.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-ee2netcdf</artifactId>
-            <version>${smos.version}</version>
+            <version>${smos.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
--->
+
     </dependencies>
 
     <repositories>
@@ -650,6 +650,11 @@
                 <configuration>
                     <allowSnapshots>true</allowSnapshots> <!-- in general allow them -->
                     <properties>
+                        <property>
+                            <name>smos.test.version</name>
+                            <banSnapshots>false</banSnapshots>
+                            <version>[5.0.0,5.9.9)</version>
+                        </property>
                         <property>
                             <name>s2tbx.test.version</name>
                             <banSnapshots>false</banSnapshots>
