@@ -32,7 +32,16 @@ pipeline {
             steps {
                 echo "Launch reader tests from ${env.JOB_NAME} from ${env.GIT_BRANCH}"
                 sh "/opt/scripts/setUpLibraries.sh"
-                sh "export LD_LIBRARY_PATH=. && mvn -Duser.home=/var/maven -Dsnap.userdir=/home/snap -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${params.dataPath} -Dsnap.reader.tests.class.name=${params.classPathFilter} -Dsnap.reader.tests.failOnMissingData=true clean test"
+                echo "######### Launch mvn version ######### | tee -a ./readerTest-${env.BUILD_NUMBER}.log"
+                sh "mvn versions:update-properties -Dincludes=org.esa.* | tee -a ./readerTest-${env.BUILD_NUMBER}.log"
+                echo "######### Launch reader tests ######### | tee -a ./readerTest-${env.BUILD_NUMBER}.log"
+                sh "export LD_LIBRARY_PATH=. && mvn -Duser.home=/var/maven -Dsnap.userdir=/home/snap -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${params.dataPath} -Dsnap.reader.tests.class.name=${params.classPathFilter} -Dsnap.reader.tests.failOnMissingData=true clean test | tee -a ./readerTest-${env.BUILD_NUMBER}.log"
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: "./readerTest-${env.BUILD_NUMBER}.log", fingerprint: true
+                    sh "rm -rf ./readerTest-${env.BUILD_NUMBER}.log"
+                }
             }
         }
     }
