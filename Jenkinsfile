@@ -26,6 +26,7 @@ pipeline {
             agent {
                 docker {
                     image "snap-build-server.tilaa.cloud/maven:3.6.0-jdk-8"
+                    label "snap"
                     args "-v /data/ssd/testData/:/data/ssd/testData/ -e MAVEN_CONFIG=/var/maven/.m2 -v /opt/maven/.m2/settings.xml:/var/maven/.m2/settings.xml"
                 }
             }
@@ -39,7 +40,7 @@ pipeline {
             }
             post {
                 always {
-                    archiveArtifacts artifacts: "./readerTest-${env.BUILD_NUMBER}.log", fingerprint: true
+                    archiveArtifacts artifacts: "readerTest-${env.BUILD_NUMBER}.log", fingerprint: true
                     sh "rm -rf readerTest-${env.BUILD_NUMBER}.log"
                 }
             }
