@@ -25,6 +25,7 @@
         <snap.test.version>7.0.0-SNAPSHOT</snap.test.version>
         <s3tbx.test.version>7.0.0-SNAPSHOT</s3tbx.test.version>
         <s2tbx.test.version>7.0.0-SNAPSHOT</s2tbx.test.version>
+		<s1tbx.test.version>7.0.0-SNAPSHOT</s1tbx.test.version>
         <seadas-reader.test.version>1.8-SNAPSHOT</seadas-reader.test.version>
         <smos.test.version>5.6.0-SNAPSHOT</smos.test.version>
     </properties>
@@ -492,6 +493,21 @@
             <type>test-jar</type>
         </dependency>
 
+		<!-- s1tbx dependencies for snap reader tests-->
+		<dependency>
+            <groupId>org.esa.s1tbx</groupId>
+            <artifactId>s1tbx-io</artifactId>
+            <version>${s1tbx.test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.esa.s1tbx</groupId>
+            <artifactId>s1tbx-io</artifactId>
+            <version>${s1tbx.test.version}</version>
+            <scope>test</scope>
+			<type>test-jar</type>
+        </dependency>
+		
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-reader</artifactId>
@@ -689,6 +705,11 @@
                             <name>smos.test.version</name>
                             <banSnapshots>false</banSnapshots>
                             <version>[5.0.0,5.9.9)</version>
+                        </property>
+                        <property>
+                            <name>s1tbx.test.version</name>
+                            <banSnapshots>false</banSnapshots>
+                            <version>[7.0.0,7.9.9)</version>
                         </property>
                         <property>
                             <name>s2tbx.test.version</name>
