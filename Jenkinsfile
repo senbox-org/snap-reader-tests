@@ -36,7 +36,7 @@ pipeline {
                 sh "mvn versions:update-properties -Dincludes=org.esa.* | tee -a ./readerTest-${env.BUILD_NUMBER}.log"
                 sh "echo ######### Launch reader tests ######### | tee -a ./readerTest-${env.BUILD_NUMBER}.log"
                 sh "/opt/scripts/setUpLibraries.sh"
-                sh "export LD_LIBRARY_PATH=. && mvn -Duser.home=/var/maven -Dsnap.userdir=/home/snap -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${params.dataPath} -Dsnap.reader.tests.class.name=${params.classPathFilter} -Dsnap.reader.tests.failOnMissingData=true clean test | tee -a ./readerTest-${env.BUILD_NUMBER}.log  && [ ${PIPESTATUS[0]} -eq 0 ]"
+                sh "export LD_LIBRARY_PATH=. && mvn -Duser.home=/var/maven -Dsnap.userdir=/home/snap -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${params.dataPath} -Dsnap.reader.tests.class.name=${params.classPathFilter} -Dsnap.reader.tests.failOnMissingData=true clean test | tee -a ./readerTest-${env.BUILD_NUMBER}.log " + ' && [ $PIPESTATUS[0] -eq 0 ]'
             }
             post {
                 always {
