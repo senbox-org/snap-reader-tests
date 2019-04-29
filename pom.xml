@@ -5,7 +5,7 @@
 
     <groupId>org.esa.snap</groupId>
     <artifactId>snap-reader-tests</artifactId>
-    <version>7.0.0-rc1</version>
+    <version>7.0.0-rc2</version>
 
     <packaging>nbm</packaging>
 
@@ -26,8 +26,8 @@
         <s3tbx.test.version>${project.version}</s3tbx.test.version>
         <s2tbx.test.version>${project.version}</s2tbx.test.version>
 		<s1tbx.test.version>${project.version}</s1tbx.test.version>
-        <seadas-reader.test.version>1.8-rc1</seadas-reader.test.version>
-        <smos.test.version>5.6.0-rc1</smos.test.version>
+        <seadas-reader.test.version>1.8-rc2</seadas-reader.test.version>
+        <smos.test.version>5.6.0-rc2</smos.test.version>
     </properties>
 
     <dependencies>
