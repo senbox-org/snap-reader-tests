@@ -26,6 +26,7 @@
         <s3tbx.test.version>7.0.0-SNAPSHOT</s3tbx.test.version>
         <s2tbx.test.version>7.0.0-SNAPSHOT</s2tbx.test.version>
 		<s1tbx.test.version>7.0.0-SNAPSHOT</s1tbx.test.version>
+        <rstb.test.version>7.5.0-SNAPSHOT</rstb.test.version>
         <seadas-reader.test.version>1.8-SNAPSHOT</seadas-reader.test.version>
         <smos.test.version>5.6.0-SNAPSHOT</smos.test.version>
     </properties>
@@ -507,6 +508,19 @@
             <scope>test</scope>
 			<type>test-jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.csa.rstb</groupId>
+            <artifactId>rstb-io</artifactId>
+            <version>${rstb.test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.csa.rstb</groupId>
+            <artifactId>rstb-io</artifactId>
+            <version>${rstb.test.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
 		
         <dependency>
             <groupId>org.esa.smostbx</groupId>
@@ -710,6 +724,11 @@
                             <name>s1tbx.test.version</name>
                             <banSnapshots>false</banSnapshots>
                             <version>[7.0.0,7.9.9)</version>
+                        </property>
+                        <property>
+                            <name>rstb.test.version</name>
+                            <banSnapshots>false</banSnapshots>
+                            <version>[7.5.0,7.9.9)</version>
                         </property>
                         <property>
                             <name>s2tbx.test.version</name>
