@@ -284,16 +284,22 @@
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-spot-vgt-reader</artifactId>
+            <artifactId>s3tbx-sentinel3-reader</artifactId>
             <version>${s3tbx.test.version}</version>
             <scope>test</scope>
+            <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-sentinel3-reader</artifactId>
             <version>${s3tbx.test.version}</version>
             <scope>test</scope>
-            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.esa.s3tbx</groupId>
+            <artifactId>s3tbx-spot-vgt-reader</artifactId>
+            <version>${s3tbx.test.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
