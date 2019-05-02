@@ -514,7 +514,7 @@
             <scope>test</scope>
 			<type>test-jar</type>
         </dependency>
-		
+
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-reader</artifactId>
