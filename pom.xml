@@ -285,16 +285,22 @@
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-spot-vgt-reader</artifactId>
+            <artifactId>s3tbx-sentinel3-reader</artifactId>
             <version>${s3tbx.test.version}</version>
             <scope>test</scope>
+            <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
             <artifactId>s3tbx-sentinel3-reader</artifactId>
             <version>${s3tbx.test.version}</version>
             <scope>test</scope>
-            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.esa.s3tbx</groupId>
+            <artifactId>s3tbx-spot-vgt-reader</artifactId>
+            <version>${s3tbx.test.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
@@ -715,51 +721,51 @@
                 <version>2.8.2</version>
             </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <allowSnapshots>true</allowSnapshots> <!-- in general allow them -->
-                    <properties>
-                        <property>
-                            <name>smos.test.version</name>
-                            <banSnapshots>false</banSnapshots>
-                            <version>[5.0.0,5.9.9)</version>
-                        </property>
-                        <property>
-                            <name>s1tbx.test.version</name>
-                            <banSnapshots>false</banSnapshots>
-                            <version>[7.0.0,7.9.9)</version>
-                        </property>
-                        <property>
-                            <name>rstb.test.version</name>
-                            <banSnapshots>false</banSnapshots>
-                            <version>[7.5.0,7.9.9)</version>
-                        </property>
-                        <property>
-                            <name>s2tbx.test.version</name>
-                            <banSnapshots>false</banSnapshots>
-                            <version>[7.0.0,7.9.9)</version>
-                        </property>
-                        <property>
-                            <name>s3tbx.test.version</name>
-                            <banSnapshots>false</banSnapshots>
-                            <version>[7.0.0,7.9.9)</version>
-                        </property>
-                        <property>
-                            <name>snap.test.version</name>
-                            <banSnapshots>false</banSnapshots>
-                            <version>[7.0.0,7.9.9)</version>
-                        </property>
-                        <property>
-                            <name>snap.version</name>
-                            <banSnapshots>false</banSnapshots>
-                            <version>[7.0.0-SNAPSHOT]</version>
-                        </property>
-                    </properties>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>versions-maven-plugin</artifactId>-->
+<!--                <version>2.7</version>-->
+<!--                <configuration>-->
+<!--                    <allowSnapshots>true</allowSnapshots> &lt;!&ndash; in general allow them &ndash;&gt;-->
+<!--                    <properties>-->
+<!--                        <property>-->
+<!--                            <name>smos.test.version</name>-->
+<!--                            <banSnapshots>false</banSnapshots>-->
+<!--                            <version>[5.0.0,5.9.9)</version>-->
+<!--                        </property>-->
+<!--                        <property>-->
+<!--                            <name>s1tbx.test.version</name>-->
+<!--                            <banSnapshots>false</banSnapshots>-->
+<!--                            <version>[7.0.0,7.9.9)</version>-->
+<!--                        </property>-->
+<!--                        <property>-->
+<!--                            <name>rstb.test.version</name>-->
+<!--                            <banSnapshots>false</banSnapshots>-->
+<!--                            <version>[7.5.0,7.9.9)</version>-->
+<!--                        </property>-->
+<!--                        <property>-->
+<!--                            <name>s2tbx.test.version</name>-->
+<!--                            <banSnapshots>false</banSnapshots>-->
+<!--                            <version>[7.0.0,7.9.9)</version>-->
+<!--                        </property>-->
+<!--                        <property>-->
+<!--                            <name>s3tbx.test.version</name>-->
+<!--                            <banSnapshots>false</banSnapshots>-->
+<!--                            <version>[7.0.0,7.9.9)</version>-->
+<!--                        </property>-->
+<!--                        <property>-->
+<!--                            <name>snap.test.version</name>-->
+<!--                            <banSnapshots>false</banSnapshots>-->
+<!--                            <version>[7.0.0,7.9.9)</version>-->
+<!--                        </property>-->
+<!--                        <property>-->
+<!--                            <name>snap.version</name>-->
+<!--                            <banSnapshots>false</banSnapshots>-->
+<!--                            <version>[7.0.0-SNAPSHOT]</version>-->
+<!--                        </property>-->
+<!--                    </properties>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>
