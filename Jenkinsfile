@@ -43,8 +43,10 @@ pipeline {
                 always {
                     archiveArtifacts artifacts: "readerTest-${env.BUILD_NUMBER}.log", fingerprint: true
                     sh "rm -rf readerTest-${env.BUILD_NUMBER}.log"
+                    junit "target/surefire-reports/*.xml"
                 }
             }
+    }
         }
     }
     /*post {
