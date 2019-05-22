@@ -656,6 +656,10 @@
                 <version>3.0.0-M3</version>
                 <configuration>
                     <!--
+                         Force reader tests to run with minimum recommended configuration : 5G RAM
+                    -->
+                    <argLine>-Xmx5g</argLine>
+                    <!--
                          If enabled some assertions in GeoTools fail.
                          Disabling helps to have a successful build.
                          But it might indicate some problem.

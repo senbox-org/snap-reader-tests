@@ -27,7 +27,7 @@ pipeline {
                 docker {
                     image "snap-build-server.tilaa.cloud/maven:3.6.0-jdk-8"
                     label "snap"
-                    args "-v /data/ssd/testData/:/data/ssd/testData/ -e MAVEN_OPTS=\"-Xmx5G\" -e MAVEN_CONFIG=/var/maven/.m2 -v /opt/maven/.m2/settings.xml:/var/maven/.m2/settings.xml"
+                    args "-v /data/ssd/testData/:/data/ssd/testData/ -e MAVEN_CONFIG=/var/maven/.m2 -v /opt/maven/.m2/settings.xml:/var/maven/.m2/settings.xml"
                 }
             }
             steps {
@@ -36,7 +36,6 @@ pipeline {
                 sh "mvn versions:update-properties -Dincludes=org.esa.* | tee -a ./readerTest-${env.BUILD_NUMBER}.log"
                 sh "echo ######### Launch reader tests ######### | tee -a ./readerTest-${env.BUILD_NUMBER}.log"
                 sh "/opt/scripts/setUpLibraries.sh"
-                //sh "export LD_LIBRARY_PATH=. && mvn -Duser.home=/var/maven -Dsnap.userdir=/home/snap -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${params.dataPath} -Dsnap.reader.tests.class.name=${params.classPathFilter} -Dsnap.reader.tests.failOnMissingData=true clean test | tee -a ./readerTest-${env.BUILD_NUMBER}.log " + ' && [ ${PIPESTATUS[0]} -eq 0 ]'
                 sh "/opt/scripts/launchReaderTests.sh ${params.dataPath} ${params.classPathFilter} ${env.BUILD_NUMBER}"
             }
             post {
