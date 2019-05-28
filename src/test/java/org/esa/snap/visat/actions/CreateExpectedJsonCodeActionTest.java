@@ -1,7 +1,6 @@
 package org.esa.snap.visat.actions;
 
 import com.fasterxml.jackson.databind.ObjectWriter;
-import org.esa.snap.HeadlessTestRunner;
 import org.esa.snap.core.dataio.DecodeQualification;
 import org.esa.snap.core.dataio.ProductReader;
 import org.esa.snap.core.dataio.ProductReaderPlugIn;
@@ -17,14 +16,15 @@ import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.ProductData;
 import org.esa.snap.dataio.ExpectedMetadata;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.stubbing.OngoingStubbing;
 
 import javax.media.jai.operator.ConstantDescriptor;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -35,13 +35,14 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.Random;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Marco Peters
  */
-@RunWith(HeadlessTestRunner.class)
 public class CreateExpectedJsonCodeActionTest {
 
     private static final String JSON_CODE_RESOURCE = "EXPECTED_JSON_CODE.json";
@@ -64,6 +65,7 @@ public class CreateExpectedJsonCodeActionTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Assume.assumeFalse("Cannot run in headless", GraphicsEnvironment.isHeadless());
         EXPECTED_JSON_CODE = loadJSONCode(JSON_CODE_RESOURCE);
         EXPECTED_JSON_PINS_CODE = loadJSONCode(JSON_CODE_PINS_RESOURCE);
     }
