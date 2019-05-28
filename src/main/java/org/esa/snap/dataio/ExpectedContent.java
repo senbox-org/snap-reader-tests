@@ -208,4 +208,22 @@ public class ExpectedContent {
         return metadata;
     }
 
+    public String getShortDescription() {
+        String description = String.format("Dimension(%d,%d). [%d bands, %d masks, %d tiepoint grids].Bands:%s",
+                      getSceneWidth(),
+                      getSceneHeight(),
+                      getBands() != null ? getBands().length : 0,
+                      getMasks() != null ? getMasks().length : 0,
+                      getTiePointGrids() != null ? getTiePointGrids().length : 0,
+                      getBandNamesString());
+        return description;
+    }
+
+    private String getBandNamesString () {
+        String bandString = "";
+        for(ExpectedBand expectedBand : bands) {
+            bandString = bandString + expectedBand.getName() + ",";
+        }
+        return bandString.substring(0,bandString.length()-1);
+    }
 }
