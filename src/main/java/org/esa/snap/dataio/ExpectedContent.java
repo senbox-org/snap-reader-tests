@@ -208,7 +208,7 @@ public class ExpectedContent {
         return metadata;
     }
 
-    public String getShortDescription() {
+    /*public String getShortDescription() {
         String description = String.format("Dimension(%d,%d). [%d bands, %d masks, %d tiepoint grids].Bands:%s",
                       getSceneWidth(),
                       getSceneHeight(),
@@ -225,5 +225,5 @@ public class ExpectedContent {
             bandString = bandString + expectedBand.getName() + ",";
         }
         return bandString.substring(0,bandString.length()-1);
-    }
+    }*/
 }
