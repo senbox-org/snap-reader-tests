@@ -534,6 +534,13 @@
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
+        <dependency>
+            <groupId>com.iceye.esa.snap</groupId>
+            <artifactId>iceye-slc-reader</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
 		
         <dependency>
             <groupId>org.esa.smostbx</groupId>
