@@ -29,6 +29,8 @@
         <rstb.test.version>7.5.0-SNAPSHOT</rstb.test.version>
         <seadas-reader.test.version>1.8-SNAPSHOT</seadas-reader.test.version>
         <smos.test.version>5.6.0-SNAPSHOT</smos.test.version>
+
+        <max.memory>-Xmx5g</max.memory>
     </properties>
 
     <dependencies>
@@ -665,7 +667,7 @@
                     <!--
                          Force reader tests to run with minimum recommended configuration : 5G RAM
                     -->
-                    <argLine>-Xmx5g</argLine>
+                    <argLine>${max.memory}</argLine>
                     <!--
                          If enabled some assertions in GeoTools fail.
                          Disabling helps to have a successful build.
