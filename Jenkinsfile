@@ -15,6 +15,33 @@
  * with this program; if not, see http://www.gnu.org/licenses/
  */
 
+
+/**
+ * Launch jobs in parallel for every json file listed in jsonString separated by '\n'
+ */
+ 
+/**
+ * Return the email corresponding to given classpath filter
+ */
+def getEmailFromClassPathFilter(classPathFilter) {
+
+    def mailMap = [:]
+    def email = ""
+    mailMap['org.esa.s1tbx'] = 'luis@skywatch.co'
+    mailMap['com.iceye'] = 'luis@skywatch.co'
+    mailMap['org.csa.rstb'] = 'luis@skywatch.co'
+    mailMap['org.esa.s2tbx'] = 'omar.barrilero@c-s.fr, jean.seyral@c-s.fr'
+    mailMap['org.esa.s3tbx'] = 'marco.peters@brockmann-consult.de'
+    mailMap['org.esa.smos'] = 'marco.peters@brockmann-consult.de'
+    if (mailMap.containsKey(classPathFilter)) {
+        email = mailMap[classPathFilter]
+    } else {
+        email = 'stb-internal@step-email.net'
+    }
+    return email
+}
+
+
 pipeline {
     agent { label 'snap-test' }
     parameters {
@@ -47,7 +74,7 @@ pipeline {
             }
         }
     }
-    /*post {
+    post {
         failure {
             step (
                 emailext(
@@ -57,9 +84,9 @@ Check console output at ${env.BUILD_URL}
 ${env.JOB_NAME} [${env.BUILD_NUMBER}]""",
                     attachLog: true,
                     compressLog: true,
-                    recipientProviders: [[$class: 'CulpritsRecipientProvider'], [$class:'DevelopersRecipientProvider']]
+                    to: getEmailFromClassPathFilter(${params.classPathFilter})
                 )
             )
         }
-    }*/
+    }
 }
