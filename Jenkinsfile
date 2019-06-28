@@ -33,6 +33,7 @@ def getEmailFromClassPathFilter(classPathFilter) {
     mailMap["org.esa.s2tbx"] = 'omar.barrilero@c-s.fr, jean.seyral@c-s.fr'
     mailMap['org.esa.s3tbx'] = 'marco.peters@brockmann-consult.de'
     mailMap['org.esa.smos'] = 'marco.peters@brockmann-consult.de'
+    mailMap[classPathFilter] = 'test'
     echo "Class path filter : " + classPathFilter
     echo "Map : " + mailMap.toMapString()
     if (mailMap.containsKey(classPathFilter)) {
