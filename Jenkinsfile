@@ -25,7 +25,6 @@
  */
 def getEmailFromClassPathFilter(classPathFilter) {
 
-
     def email = ""
     if (classPathFilter == "org.esa.s1tbx") {
         email = 'luis@skywatch.co'
