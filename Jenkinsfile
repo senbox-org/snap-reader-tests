@@ -33,12 +33,16 @@ def getEmailFromClassPathFilter(classPathFilter) {
     mailMap['org.esa.s2tbx'] = 'omar.barrilero@c-s.fr, jean.seyral@c-s.fr'
     mailMap['org.esa.s3tbx'] = 'marco.peters@brockmann-consult.de'
     mailMap['org.esa.smos'] = 'marco.peters@brockmann-consult.de'
+    echo "Class path filter : " + classPathFilter
     if (mailMap.containsKey(classPathFilter)) {
+        echo "found key in map"
         email = mailMap[classPathFilter]
     } else {
+        echo "key not found in map"
         email = 'stb-internal@step-email.net'
     }
-    return email
+    // return email
+     return ""
 }
 
 
