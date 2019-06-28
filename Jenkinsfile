@@ -34,6 +34,7 @@ def getEmailFromClassPathFilter(classPathFilter) {
     mailMap['org.esa.s3tbx'] = 'marco.peters@brockmann-consult.de'
     mailMap['org.esa.smos'] = 'marco.peters@brockmann-consult.de'
     echo "Class path filter : " + classPathFilter
+    echo "Map : " + mailMap.toMapString()
     if (mailMap.containsKey(classPathFilter)) {
         echo "found key in map"
         email = mailMap[classPathFilter]
