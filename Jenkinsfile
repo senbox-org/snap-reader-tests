@@ -36,7 +36,7 @@ def getEmailFromClassPathFilter(classPathFilter) {
     mailMap[classPathFilter] = 'test'
     echo "Class path filter : " + classPathFilter
     echo "Map : " + mailMap.toMapString()
-    if (mailMap.containsKey(classPathFilter)) {
+    if (mailMap.containsKey(classPathFilter + "")) {
         echo "found key in map"
         email = mailMap[classPathFilter]
     } else {
