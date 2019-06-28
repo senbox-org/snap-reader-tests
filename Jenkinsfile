@@ -25,26 +25,26 @@
  */
 def getEmailFromClassPathFilter(classPathFilter) {
 
-    def mailMap = [:]
+
     def email = ""
-    mailMap['org.esa.s1tbx'] = 'luis@skywatch.co'
-    mailMap['com.iceye'] = 'luis@skywatch.co'
-    mailMap['org.csa.rstb'] = 'luis@skywatch.co'
-    mailMap["org.esa.s2tbx"] = 'omar.barrilero@c-s.fr, jean.seyral@c-s.fr'
-    mailMap['org.esa.s3tbx'] = 'marco.peters@brockmann-consult.de'
-    mailMap['org.esa.smos'] = 'marco.peters@brockmann-consult.de'
-    mailMap[classPathFilter] = 'test'
-    echo "Class path filter : " + classPathFilter
-    echo "Map : " + mailMap.toMapString()
-    if (mailMap.containsKey(classPathFilter + "")) {
-        echo "found key in map"
-        email = mailMap[classPathFilter]
+    if (classPathFilter == "org.esa.s1tbx") {
+        email = 'luis@skywatch.co'
+    } else if (classPathFilter == "com.iceye") {
+        email = 'luis@skywatch.co'
+    } else if (classPathFilter == "org.csa.rstb") {
+        email = 'luis@skywatch.co'
+    } else if (classPathFilter == "org.esa.s2tbx") {
+        email = 'omar.barrilero@c-s.fr, jean.seyral@c-s.fr, oana.hogoiu@c-s.ro'
+    } else if (classPathFilter == "org.esa.s3tbx") {
+        email = 'marco.peters@brockmann-consult.de'
+    } else if (classPathFilter == "org.esa.smos") {
+        email = 'marco.peters@brockmann-consult.de'
     } else {
-        echo "key not found in map"
         email = 'stb-internal@step-email.net'
     }
+    echo "email : " + email
     // return email
-     return ""
+    return ""
 }
 
 
