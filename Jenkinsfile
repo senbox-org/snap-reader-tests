@@ -84,7 +84,7 @@ Check console output at ${env.BUILD_URL}
 ${env.JOB_NAME} [${env.BUILD_NUMBER}]""",
                     attachLog: true,
                     compressLog: true,
-                    to: getEmailFromClassPathFilter(${params.classPathFilter})
+                    to: getEmailFromClassPathFilter("${params.classPathFilter}")
                 )
             )
         }
