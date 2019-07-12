@@ -52,6 +52,7 @@ pipeline {
     parameters {
         string(name: 'classPathFilter', defaultValue: 'org.esa.s2tbx', description: 'Class path filter of the Test class to launch')
         string(name: 'dataPath', defaultValue: '/data/ssd/testData/s2tbx', description: 'Path of the data used by the reader tests')
+        choice(name: 'maxMemory', choices: [ '5G', '1G', '2G', '3G', '4G', '6G', '7G', '8G', '9G', '10G', '11G', '12G', '13G', '14G', '15G'], description: 'Max memory used by JVM')
     }
     stages {
         stage('Reader Tests') {
@@ -68,7 +69,7 @@ pipeline {
                 sh "mvn versions:update-properties -Dincludes=org.esa.* | tee -a ./readerTest-${env.BUILD_NUMBER}.log"
                 sh "echo ######### Launch reader tests ######### | tee -a ./readerTest-${env.BUILD_NUMBER}.log"
                 sh "/opt/scripts/setUpLibraries.sh"
-                sh "/opt/scripts/launchReaderTests.sh ${params.dataPath} ${params.classPathFilter} ${env.BUILD_NUMBER}"
+                sh "/opt/scripts/launchReaderTests.sh ${params.dataPath} ${params.classPathFilter} ${env.BUILD_NUMBER} ${params.maxMemory}"
             }
             post {
                 always {
