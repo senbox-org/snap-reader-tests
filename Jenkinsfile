@@ -52,7 +52,7 @@ pipeline {
     parameters {
         string(name: 'classPathFilter', defaultValue: 'org.esa.s2tbx', description: 'Class path filter of the Test class to launch')
         string(name: 'dataPath', defaultValue: '/data/ssd/testData/s2tbx', description: 'Path of the data used by the reader tests')
-        choice(name: 'maxMemory', choices: [ '5G', '1G', '2G', '3G', '4G', '6G', '7G', '8G', '9G', '10G', '11G', '12G', '13G', '14G', '15G'], description: 'Max memory used by JVM')
+        string(name: 'maxMemory', defaultValue: '5G', description: 'Max memory used by JVM')
     }
     stages {
         stage('Reader Tests') {
