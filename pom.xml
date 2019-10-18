@@ -777,6 +777,11 @@
                             <banSnapshots>false</banSnapshots>
                             <version>[7.0.0,7.9.9)</version>
                         </property>
+                        <property>
+                            <name>snap.version</name>
+                            <banSnapshots>true</banSnapshots>
+                            <version>[7.0.0]</version>
+                        </property>
                     </properties>
                 </configuration>
             </plugin>
