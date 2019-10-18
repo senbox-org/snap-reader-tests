@@ -66,7 +66,7 @@ pipeline {
             steps {
                 echo "Launch reader tests from ${env.JOB_NAME} from ${env.GIT_BRANCH}"
                 sh "echo ######### Launch mvn version ######### | tee -a ./readerTest-${env.BUILD_NUMBER}.log"
-                sh "mvn versions:update-properties -Dincludes=org.esa.* | tee -a ./readerTest-${env.BUILD_NUMBER}.log"
+                //sh "mvn versions:update-properties -Dincludes=org.esa.* | tee -a ./readerTest-${env.BUILD_NUMBER}.log"
                 sh "echo ######### Launch reader tests ######### | tee -a ./readerTest-${env.BUILD_NUMBER}.log"
                 sh "/opt/scripts/setUpLibraries.sh"
                 sh "/opt/scripts/launchReaderTests.sh ${params.dataPath} ${params.classPathFilter} ${env.BUILD_NUMBER} ${params.maxMemory}"
