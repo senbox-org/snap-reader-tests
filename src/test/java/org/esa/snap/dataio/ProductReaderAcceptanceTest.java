@@ -59,8 +59,10 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.StreamHandler;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.fail;
 
 @RunWith(ReaderTestRunner.class)
 public class ProductReaderAcceptanceTest {
@@ -98,7 +100,7 @@ public class ProductReaderAcceptanceTest {
     }
 
     @AfterClass
-    public static void tearDown() throws Exception {
+    public static void tearDown() {
         logInfoWithStars("Finished / " + DATE_FORMAT.format(CALENDAR.getTime()));
     }
 
@@ -132,7 +134,7 @@ public class ProductReaderAcceptanceTest {
     }
 
     @Test
-    public void testPluginDecodeQualifications() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public void testPluginDecodeQualifications() {
         logInfoWithStars("Testing DecodeQualification");
         final StopWatch stopWatchTotal = new StopWatch();
         stopWatchTotal.start();
@@ -193,22 +195,21 @@ public class ProductReaderAcceptanceTest {
             for (String productId : intendedProductIds) {
                 final TestProduct testProduct = testProductList.getById(productId);
                 String reason = "Test file not defined for ID=" + productId;
-                logger.info("Test file for ID=" + productId + " is " + testProduct);
                 errorCollector.checkThat(reason, testProduct, is(notNullValue()));
-
+                if (testProduct == null) {
+                    break;
+                }
                 if (testProduct.exists()) {
                     final File testProductFile = getTestProductFile(testProduct);
 
-                    final ProductReader productReader =testDefinition.getProductReaderPlugin().createReaderInstance();
+                    final ProductReader productReader = testDefinition.getProductReaderPlugin().createReaderInstance();
 
                     stopWatch.start();
                     final Product product = productReader.readProductNodes(testProductFile, null);
                     try {
                         assertExpectedContent(testDefinition, productId, product);
                     } catch (Throwable t) {
-                        final Throwable error = new Throwable("[" + productId + "] " + t.getMessage());
-                        error.initCause(t);
-                        errorCollector.addError(error);
+                        errorCollector.addError(new Throwable("[" + productId + "] " + t.getMessage(), t));
                     } finally {
                         if (product != null) {
                             product.dispose();
@@ -227,7 +228,7 @@ public class ProductReaderAcceptanceTest {
     }
 
     @Test
-    public void testProductIO_readProduct() throws Exception {
+    public void testProductIO_readProduct() {
         logInfoWithStars("Testing ProductIO.readProduct");
         final StopWatch stopWatchTotal = new StopWatch();
         stopWatchTotal.start();
@@ -262,7 +263,7 @@ public class ProductReaderAcceptanceTest {
     }
 
     @Test
-    public void testProductReadTimes() throws Exception {
+    public void testProductReadTimes() {
         logInfoWithStars("Testing product read times");
         logger.info(String.format("%s%s - %s - %s - %s", INDENT,
                                   " findReader ",
