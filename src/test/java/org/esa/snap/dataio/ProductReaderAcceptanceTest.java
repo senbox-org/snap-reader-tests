@@ -197,7 +197,7 @@ public class ProductReaderAcceptanceTest {
                 String reason = "Test file not defined for ID=" + productId;
                 errorCollector.checkThat(reason, testProduct, is(notNullValue()));
                 if (testProduct == null) {
-                    break;
+                    continue;
                 }
                 if (testProduct.exists()) {
                     final File testProductFile = getTestProductFile(testProduct);
