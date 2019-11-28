@@ -88,6 +88,7 @@ public class ProductReaderAcceptanceTest {
     @BeforeClass
     public static void initialize() throws Exception {
         initLogger();
+        SystemUtils.init3rdPartyLibs(ProductReaderAcceptanceTest.class);
 
         logFailOnMissingDataMessage();
 
@@ -400,9 +401,6 @@ public class ProductReaderAcceptanceTest {
     }
 
     private static void initLogger() throws Exception {
-        // Suppress ugly (and harmless) JAI error messages saying that a JAI is going to continue in pure Java mode.
-        System.setProperty("com.sun.media.jai.disableMediaLib", "true");  // disable native libraries for JAI
-
         logger = Logger.getLogger(ProductReaderAcceptanceTest.class.getSimpleName());
         removeRootLogHandler();
         final ConsoleHandler consoleHandler = new ConsoleHandler();
