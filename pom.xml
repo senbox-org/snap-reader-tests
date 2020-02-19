@@ -26,7 +26,8 @@
         <s3tbx.test.version>8.0.0-SNAPSHOT</s3tbx.test.version>
         <s2tbx.test.version>8.0.0-SNAPSHOT</s2tbx.test.version>
 		<s1tbx.test.version>8.0.0-SNAPSHOT</s1tbx.test.version>
-        <rstb.test.version>7.6.0-SNAPSHOT</rstb.test.version>
+        <rstb.test.version>8.0.0-SNAPSHOT</rstb.test.version>
+        <iceye.test.version>2.0.7</iceye.test.version>
         <seadas-reader.test.version>1.9-SNAPSHOT</seadas-reader.test.version>
         <smos.test.version>5.7.0-SNAPSHOT</smos.test.version>
 
@@ -539,13 +540,13 @@
 		<dependency>
             <groupId>com.iceye.esa.snap</groupId>
             <artifactId>iceye-slc-reader</artifactId>
-            <version>2.0.7</version>
+            <version>${iceye.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.iceye.esa.snap</groupId>
             <artifactId>iceye-slc-reader</artifactId>
-            <version>2.0.7</version>
+            <version>${iceye.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
