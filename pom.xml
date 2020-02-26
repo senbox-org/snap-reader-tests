@@ -194,6 +194,19 @@
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.esa.snap</groupId>
+            <artifactId>snap-jp2-reader</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.esa.snap</groupId>
+            <artifactId>snap-jp2-reader</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
 
         <dependency>
             <groupId>org.esa.s3tbx</groupId>
@@ -349,19 +362,6 @@
         <dependency>
             <groupId>org.esa.s2tbx</groupId>
             <artifactId>s2tbx-kompsat2-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
-            <scope>test</scope>
-            <type>test-jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-jp2-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-jp2-reader</artifactId>
             <version>${s2tbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
