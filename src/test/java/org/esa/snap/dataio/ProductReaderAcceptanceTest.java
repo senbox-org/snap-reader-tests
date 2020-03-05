@@ -30,6 +30,7 @@ import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.Stx;
 import org.esa.snap.core.util.StopWatch;
 import org.esa.snap.core.util.SystemUtils;
+import org.esa.snap.lib.openjpeg.activator.OpenJPEGInstaller;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -97,6 +98,7 @@ public class ProductReaderAcceptanceTest {
         createGlobalProductList();
 
         GDALDistributionInstaller.install();
+        OpenJPEGInstaller.install();
     }
 
     @AfterClass
