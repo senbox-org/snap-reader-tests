@@ -30,6 +30,7 @@ import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.Stx;
 import org.esa.snap.core.util.StopWatch;
 import org.esa.snap.core.util.SystemUtils;
+import org.esa.snap.dataio.netcdf.NetCdfActivator;
 import org.esa.snap.lib.openjpeg.activator.OpenJPEGInstaller;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -100,6 +101,8 @@ public class ProductReaderAcceptanceTest {
 
         GDALLoader.getInstance().initGDAL();
         OpenJPEGInstaller.install();
+
+        new NetCdfActivator().start();
     }
 
     @AfterClass
