@@ -1,14 +1,17 @@
 package org.esa.snap.gpt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.esa.s2tbx.dataio.gdal.GDALLoader;
 import org.esa.snap.core.dataio.ProductIO;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.gpf.main.GPT;
 import org.esa.snap.core.util.StringUtils;
+import org.esa.snap.core.util.io.FileUtils;
 import org.esa.snap.dataio.ContentAssert;
 import org.esa.snap.dataio.ExpectedContent;
 import org.esa.snap.dataio.ExpectedDataset;
 import org.esa.snap.dataio.ProductReaderAcceptanceTest;
+import org.esa.snap.lib.openjpeg.activator.OpenJPEGInstaller;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,12 +38,18 @@ public class RunGPTProductReaderTest {
     private static final String PROPERTY_NAME_GPT_TEST_RESOURCE_FOLDER_NAME = "gpt.test.resource.dir.name";
     private static final String PROPERTY_NAME_GPT_TEST_RESOURCE_FILE_NAMES = "gpt.test.resource.file.names";
     private static final String PROPERTY_NAME_GRAPH_START_PATH_TO_REMOVE = "graph.start.path.to.remove";
+    private static final String PROPERTY_NAME_FAIL_ON_MISSING_DATA = "gpt.tests.failOnMissingData";
+    private static final String PROPERTY_NAME_FAIL_ON_EXCEPTION = "gpt.tests.failOnException";
+    private static final String PROPERTY_NAME_LOG_EXCEPTION_STACK_TRACE = "gpt.tests.logExceptionStackTrace";
 
     private static Logger logger;
 
     @BeforeClass
     public static void initialize() throws Exception {
         initLogger();
+
+        GDALLoader.getInstance().initGDAL();
+        OpenJPEGInstaller.install();
     }
 
     /**
@@ -53,6 +62,10 @@ public class RunGPTProductReaderTest {
      * Optional parameters:
      * -Dgpt.test.resource.file.names=AlosAV2ReaderTest.json,AlosAV2ReadOpPixelSubsetTest.json,AlosAV2ReadOpGeometrySubsetTest.json
      * -Dgraph.start.path.to.remove=s2tbx/
+     * -Dgpt.tests.failOnMissingData=false
+     * -Dgpt.tests.failOnException=false
+     * -Dgpt.tests.logExceptionStackTrace=false
+     *
      * @throws Exception
      */
     @Test
@@ -69,6 +82,24 @@ public class RunGPTProductReaderTest {
         String gptTestFileNames = System.getProperty(PROPERTY_NAME_GPT_TEST_RESOURCE_FILE_NAMES); // may be null
         String startPathToRemove = System.getProperty(PROPERTY_NAME_GRAPH_START_PATH_TO_REMOVE); // the start path may be null
 
+        boolean failIfMissingSourceData = true;
+        String failOnMissingDataValue = System.getProperty(PROPERTY_NAME_FAIL_ON_MISSING_DATA);
+        if (failOnMissingDataValue != null) {
+            failIfMissingSourceData = Boolean.parseBoolean(failOnMissingDataValue);
+        }
+
+        boolean failIfException = true;
+        String failOnExceptionValue = System.getProperty(PROPERTY_NAME_FAIL_ON_EXCEPTION);
+        if (failOnExceptionValue != null) {
+            failIfException = Boolean.parseBoolean(failOnExceptionValue);
+        }
+
+        boolean logExceptionStackTrace = true;
+        String logExceptionStackTraceValue = System.getProperty(PROPERTY_NAME_LOG_EXCEPTION_STACK_TRACE);
+        if (logExceptionStackTraceValue != null) {
+            logExceptionStackTrace = Boolean.parseBoolean(logExceptionStackTraceValue);
+        }
+
         File resourcesTestsFolder = new File(gptTestResourcesFolderPath, "tests");
         validateFolderOnDisk(resourcesTestsFolder);
 
@@ -76,7 +107,17 @@ public class RunGPTProductReaderTest {
         validateFolderOnDisk(sourceProductsFolder);
 
         File outputProductsFolder = new File(outputProductsFolderPath);
-        validateFolderOnDisk(outputProductsFolder);
+        if (outputProductsFolder.exists()) {
+            // the output folder exists and delete it
+            FileUtils.deleteTree(outputProductsFolder);
+            if (outputProductsFolder.exists()) {
+                throw new IllegalStateException("The output folder '" + outputProductsFolder.getAbsolutePath() + "' could not be deleted.");
+            }
+        }
+        boolean created = outputProductsFolder.mkdirs();
+        if (!created) {
+            throw new IllegalStateException("The output folder '" + outputProductsFolder.getAbsolutePath() + "' could not be created.");
+        }
 
         File resourcesGraphsFolder = new File(gptTestResourcesFolderPath, "graphs");
         validateFolderOnDisk(resourcesGraphsFolder);
@@ -96,9 +137,6 @@ public class RunGPTProductReaderTest {
         if (testFileNames.length == 0) {
             throw new IllegalArgumentException("The test file array is empty.");
         }
-        boolean failIfMissingSourceData = false;
-        boolean failIfException = false;
-        boolean logExceptionStackTrace = false;
 
         logger.info("Test files from folder '" + testFolder.getName() + "'.");
 
@@ -148,14 +186,17 @@ public class RunGPTProductReaderTest {
             logger.log(Level.SEVERE, message, exception);
         } else {
             StringBuilder messageTrace = new StringBuilder(message);
-            messageTrace.append("\n\t")
+            messageTrace.append("\n")
                     .append(extractExceptionMessage(exception, 2));
             logger.log(Level.SEVERE, messageTrace.toString());
         }
     }
 
     private static String extractExceptionMessage(Throwable exception, int elementCountToLog) {
-        StringBuilder message = new StringBuilder(exception.getMessage());
+        StringBuilder message = new StringBuilder();
+        message.append(exception.getClass().getName())
+                .append(": ")
+                .append(exception.getMessage());
         StackTraceElement[] elements = exception.getStackTrace();
         if (elements != null && elements.length > 0) {
             for (int i=0; i<elementCountToLog && i<elements.length; i++) {
@@ -174,12 +215,11 @@ public class RunGPTProductReaderTest {
     }
 
     private static void processFile(File testFile, File sourceProductsFolder, File outputProductsFolder,
-                                   File resourcesGraphsFolder, File resourcesExpectedOutputsFolder,
-                                   String startPathToRemove, boolean failIfMissingSourceData)
-                                   throws Exception {
+                                    File resourcesGraphsFolder, File resourcesExpectedOutputsFolder,
+                                    String startPathToRemove, boolean failIfMissingSourceData)
+                                    throws Exception {
 
-
-        logger.info("Test file '" + testFile.getName() + "'.");
+        logger.info("Test the file '" + testFile.getName() + "' from the folder '" + testFile.getParent()+"'.");
 
         ObjectMapper mapper = new ObjectMapper();
         InputGraphData[] inputGraphData = mapper.readValue(testFile, InputGraphData[].class);
@@ -214,21 +254,34 @@ public class RunGPTProductReaderTest {
                 gptGraphParameters.put(entry.getKey(), entry.getValue());
             }
 
-            if (inputGraphData[i].getOutputs().length > 1) {
+            Map<String, String>[] outputParametersArray = inputGraphData[i].getOutputs();
+            if (outputParametersArray.length > 1) {
                 throw new IllegalStateException("The output count must be 1.");
             }
-            GraphOutputParameters outputParameters = inputGraphData[i].getOutputs()[0];
+            Map<String, String> outputParameters = outputParametersArray[0];
+            String parameterValue = outputParameters.get("parameter");
+            if (StringUtils.isNullOrEmpty(parameterValue)) {
+                throw new NullPointerException("The parameter value is null or empty.");
+            }
+            String outputNameValue = outputParameters.get("outputName");
+            if (StringUtils.isNullOrEmpty(outputNameValue)) {
+                throw new NullPointerException("The output name value is null or empty.");
+            }
+            String expectedValuesRelativeFilePath = outputParameters.get("expected");
+            if (StringUtils.isNullOrEmpty(expectedValuesRelativeFilePath)) {
+                throw new NullPointerException("The expected relative file path is null or empty.");
+            }
 
             File outputFolder = new File(outputProductsFolder, inputGraphData[i].getId());
-            File outputProductFolder = new File(outputFolder, outputParameters.getOutputName());
-            gptGraphParameters.put(outputParameters.getParameter(), outputProductFolder.getAbsolutePath());
+            File outputProductFolder = new File(outputFolder, outputNameValue);
+            gptGraphParameters.put(parameterValue, outputProductFolder.getAbsolutePath());
 
             File graphFile = new File(resourcesGraphsFolder, inputGraphData[i].getGraphPath());
             validateFileOnDisk(graphFile);
 
             runGPT(graphFile, gptGraphParameters);
 
-            File productFile = new File(outputFolder, outputParameters.getOutputName() + ".dim");
+            File productFile = new File(outputFolder, outputNameValue + ".dim");
             Product product = ProductIO.readProduct(productFile);
             if (product == null) {
                 String message = "The product can not be read from file '" + productFile.getAbsolutePath()+"' does not exist.";
@@ -239,7 +292,7 @@ public class RunGPTProductReaderTest {
                     continue;
                 }
             } else {
-                File expectedValuesFile = new File(resourcesExpectedOutputsFolder, outputParameters.getExpected());
+                File expectedValuesFile = new File(resourcesExpectedOutputsFolder, expectedValuesRelativeFilePath);
                 ExpectedDataset expectedDataset = mapper.readValue(expectedValuesFile, ExpectedDataset.class);
                 StringBuilder assertMessagePrefix = new StringBuilder();
                 assertMessagePrefix.append("Test file '")
@@ -247,7 +300,7 @@ public class RunGPTProductReaderTest {
                         .append("', id '")
                         .append(inputGraphData[i].getId())
                         .append("', output name '")
-                        .append(outputParameters.getOutputName())
+                        .append(outputNameValue)
                         .append("': ");
                 assertExpectedContent(product, expectedDataset.getExpectedContent(), assertMessagePrefix.toString());
             }
@@ -261,7 +314,20 @@ public class RunGPTProductReaderTest {
         for (Map.Entry<String, String> entry : gptGraphParameters.entrySet()) {
             args[index++] = "-P"+entry.getKey()+"="+entry.getValue();
         }
-        GPT.run(args);
+
+        PrintStream original = System.out;
+        PrintStream emptyOutputPrintStream = new PrintStream(new OutputStream() {
+            @Override
+            public void write(int b) {
+                // do nothing
+            }
+        });
+        System.setOut(emptyOutputPrintStream);
+        try {
+            GPT.run(args);
+        } finally {
+            System.setOut(original);
+        }
     }
 
     private static void assertExpectedContent(Product product, ExpectedContent expectedContent, String productId) throws IOException {
@@ -338,40 +404,6 @@ public class RunGPTProductReaderTest {
         }
     }
 
-    private static class GraphOutputParameters {
-
-        private String parameter;
-        private String outputName;
-        private String expected;
-
-        public GraphOutputParameters() {
-        }
-
-        public String getParameter() {
-            return parameter;
-        }
-
-        public void setParameter(String parameter) {
-            this.parameter = parameter;
-        }
-
-        public String getOutputName() {
-            return outputName;
-        }
-
-        public void setOutputName(String outputName) {
-            this.outputName = outputName;
-        }
-
-        public String getExpected() {
-            return expected;
-        }
-
-        public void setExpected(String expected) {
-            this.expected = expected;
-        }
-    }
-
     private static class InputGraphData {
 
         private String id;
@@ -381,7 +413,7 @@ public class RunGPTProductReaderTest {
         private String graphPath;
         private Map<String, String> inputs;
         private Map<String, String> parameters;
-        private GraphOutputParameters[] outputs;
+        private Map<String, String>[] outputs;
 
         public InputGraphData() {
         }
@@ -394,11 +426,11 @@ public class RunGPTProductReaderTest {
             this.parameters = parameters;
         }
 
-        public GraphOutputParameters[] getOutputs() {
+        public Map<String, String>[] getOutputs() {
             return outputs;
         }
 
-        public void setOutputs(GraphOutputParameters[] outputs) {
+        public void setOutputs(Map<String, String>[] outputs) {
             this.outputs = outputs;
         }
 
@@ -450,5 +482,4 @@ public class RunGPTProductReaderTest {
             this.inputs = inputs;
         }
     }
-
 }
