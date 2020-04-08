@@ -20,7 +20,6 @@ package org.esa.snap.dataio;
 import com.bc.ceres.glayer.support.ImageLayer;
 import com.bc.ceres.grender.support.DefaultViewport;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.esa.s2tbx.dataio.gdal.GDALLoader;
 import org.esa.snap.core.dataio.DecodeQualification;
 import org.esa.snap.core.dataio.ProductIO;
 import org.esa.snap.core.dataio.ProductReader;
@@ -99,7 +98,6 @@ public class ProductReaderAcceptanceTest {
 
         createGlobalProductList();
 
-        GDALLoader.getInstance().initGDAL();
         OpenJPEGInstaller.install();
 
         new NetCdfActivator().start();

@@ -1,7 +1,6 @@
 package org.esa.snap.gpt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.esa.s2tbx.dataio.gdal.GDALLoader;
 import org.esa.snap.core.dataio.ProductIO;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.gpf.main.GPT;
@@ -12,7 +11,6 @@ import org.esa.snap.dataio.ExpectedContent;
 import org.esa.snap.dataio.ExpectedDataset;
 import org.esa.snap.dataio.ProductReaderAcceptanceTest;
 import org.esa.snap.lib.openjpeg.activator.OpenJPEGInstaller;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -48,7 +46,6 @@ public class RunGPTProductReaderTest {
     public static void initialize() throws Exception {
         initLogger();
 
-        GDALLoader.getInstance().initGDAL();
         OpenJPEGInstaller.install();
     }
 
