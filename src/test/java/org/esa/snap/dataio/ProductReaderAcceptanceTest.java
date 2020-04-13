@@ -100,7 +100,7 @@ public class ProductReaderAcceptanceTest {
 
         OpenJPEGInstaller.install();
 
-        new NetCdfActivator().start();
+        NetCdfActivator.activate();
     }
 
     @AfterClass
