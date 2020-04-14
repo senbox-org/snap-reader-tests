@@ -302,6 +302,7 @@ public class ProductReaderAcceptanceTest {
                         readProductNodesTime = stopWatch.getTimeDiffString();
                         if (product.getNumBands() > 0) {
                             Band band0 = product.getBandAt(0);
+                            logger.info("source image sample model data type (PRA1)" + band0.getSourceImage().getSampleModel().getDataType());
                             stopWatch.start();
                             Stx stx = band0.getStx();
                             errorCollector.checkThat("stx != null:" + testProduct.getId(), stx, is(notNullValue()));
