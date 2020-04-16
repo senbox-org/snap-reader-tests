@@ -27,7 +27,7 @@
         <s2tbx.test.version>8.0.0-SNAPSHOT</s2tbx.test.version>
 		<s1tbx.test.version>8.0.0-SNAPSHOT</s1tbx.test.version>
         <rstb.test.version>8.0.0-SNAPSHOT</rstb.test.version>
-        <iceye.test.version>2.0.7</iceye.test.version>
+        <iceye.test.version>8.0.0-SNAPSHOT</iceye.test.version>
         <seadas-reader.test.version>1.9-SNAPSHOT</seadas-reader.test.version>
         <smos.test.version>5.7.0-SNAPSHOT</smos.test.version>
 
