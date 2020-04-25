@@ -704,10 +704,10 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
+                <groupId>org.apache.netbeans.utilities</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-                <version>4.1</version>
+                <version>4.4</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
