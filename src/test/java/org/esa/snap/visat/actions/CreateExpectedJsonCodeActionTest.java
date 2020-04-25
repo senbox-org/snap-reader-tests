@@ -171,7 +171,7 @@ public class CreateExpectedJsonCodeActionTest {
     }
 
     @Test
-    public void testIdGeneration() throws Exception {
+    public void testIdGeneration() {
         final CreateExpectedJsonCodeAction jsonCodeCommand = new CreateExpectedJsonCodeAction(product);
         final Product testProduct = new Product("blah test.1", "d", 3, 3);
         assertEquals("blah_test_1", jsonCodeCommand.generateID(testProduct));

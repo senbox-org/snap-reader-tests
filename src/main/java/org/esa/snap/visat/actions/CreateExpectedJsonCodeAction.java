@@ -38,7 +38,7 @@ import java.util.logging.Logger;
  * @author Marco Peters
  */
 @ActionID(category = "Testing", id = "org.esa.snap.visat.actions.CreateExpectedJsonCodeAction")
-@ActionRegistration(displayName = "Copy Expected JSON Code to Clipboard", lazy = true)
+@ActionRegistration(displayName = "Copy Expected JSON Code to Clipboard")
 @ActionReference(path = "Menu/Tools/Testing")
 public class CreateExpectedJsonCodeAction implements ActionListener {
 
@@ -54,9 +54,9 @@ public class CreateExpectedJsonCodeAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent event) {
         final Window window = SnapApp.getDefault().getMainFrame();
-        final ProgressMonitorSwingWorker worker = new ProgressMonitorSwingWorker(window, "Extracting Expected Content") {
+        final ProgressMonitorSwingWorker<Void, Void> worker = new ProgressMonitorSwingWorker<Void, Void>(window, "Extracting Expected Content") {
             @Override
-            protected Void doInBackground(ProgressMonitor pm) throws Exception {
+            protected Void doInBackground(ProgressMonitor pm) {
                 pm.beginTask("Collecting data...", ProgressMonitor.UNKNOWN);
                 try {
                     fillClipboardWithJsonCode(new Random(123546));
@@ -125,7 +125,7 @@ public class CreateExpectedJsonCodeAction implements ActionListener {
         mapper.configure(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS, false);
         final VisibilityChecker<?> defaultVisibilityChecker = mapper.getSerializationConfig().getDefaultVisibilityChecker();
         final VisibilityChecker<?> visibilityChecker = defaultVisibilityChecker.withIsGetterVisibility(JsonAutoDetect.Visibility.NONE);
-        mapper.setVisibilityChecker(visibilityChecker);
+        mapper.setVisibility(visibilityChecker);
         final ObjectWriter writer = mapper.writer();
         final MyDefaultPrettyPrinter prettyPrinter = new MyDefaultPrettyPrinter();
         final IdeaLikeIndenter indenter = new IdeaLikeIndenter();
