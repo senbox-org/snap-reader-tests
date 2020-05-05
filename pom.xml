@@ -20,7 +20,7 @@
 
         <snap.version>8.0.0-SNAPSHOT</snap.version>
         <netbeans.version>RELEASE82</netbeans.version>
-        <jackson.version>2.9.10.3</jackson.version>
+        <jackson.version>2.10.0</jackson.version>
 
         <snap.test.version>8.0.0-SNAPSHOT</snap.test.version>
         <s3tbx.test.version>8.0.0-SNAPSHOT</s3tbx.test.version>
@@ -718,10 +718,10 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
+                <groupId>org.apache.netbeans.utilities</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-                <version>4.1</version>
+                <version>4.4</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
