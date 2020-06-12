@@ -23,11 +23,11 @@
         <jackson.version>2.9.10.1</jackson.version>
 
         <snap.test.version>7.0.4-SNAPSHOT</snap.test.version>
-        <s3tbx.test.version>7.0.4-SNAPSHOT</s3tbx.test.version>
+        <s3tbx.test.version>7.0.5-SNAPSHOT</s3tbx.test.version>
         <s2tbx.test.version>7.0.1-SNAPSHOT</s2tbx.test.version>
 		<s1tbx.test.version>7.0.3-SNAPSHOT</s1tbx.test.version>
         <rstb.test.version>7.5.3-SNAPSHOT</rstb.test.version>
-        <seadas-reader.test.version>1.8.4-SNAPSHOT</seadas-reader.test.version>
+        <seadas-reader.test.version>1.8.5-SNAPSHOT</seadas-reader.test.version>
         <smos.test.version>5.6.1-SNAPSHOT</smos.test.version>
 
         <max.memory>-Xmx5g</max.memory>
