@@ -9,16 +9,14 @@ import org.esa.snap.core.util.io.FileUtils;
 import org.esa.snap.dataio.ContentAssert;
 import org.esa.snap.dataio.ExpectedContent;
 import org.esa.snap.dataio.ExpectedDataset;
-import org.esa.snap.dataio.ProductReaderAcceptanceTest;
 import org.esa.snap.lib.openjpeg.activator.OpenJPEGInstaller;
-import org.esa.snap.runtime.Config;
 import org.esa.snap.runtime.EngineConfig;
+import org.esa.snap.runtime.LogUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.*;
 import java.nio.file.NotDirectoryException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.*;
 import java.util.logging.Formatter;
@@ -44,14 +42,14 @@ public class RunGPTProductReaderTest {
     private static final String PROPERTY_NAME_FAIL_ON_EXCEPTION = "gpt.tests.failOnException";
     private static final String PROPERTY_NAME_LOG_EXCEPTION_STACK_TRACE = "gpt.tests.logExceptionStackTrace";
 
-    private static Logger logger;
+    private static final Logger logger = Logger.getLogger(RunGPTProductReaderTest.class.getName());
 
     public RunGPTProductReaderTest() {
     }
 
     @BeforeClass
     public static void initialize() throws Exception {
-        initLogger();
+        LogUtils.initLogger();
 
         OpenJPEGInstaller.install();
     }
@@ -346,71 +344,6 @@ public class RunGPTProductReaderTest {
         contentAssert.assertProductContent();
     }
 
-    private static void initLogger() throws Exception {
-        // Suppress ugly (and harmless) JAI error messages saying that a JAI is going to continue in pure Java mode.
-        System.setProperty("com.sun.media.jai.disableMediaLib", "true");  // disable native libraries for JAI
-
-        EngineConfig engineConfig = EngineConfig.instance();
-        engineConfig.logLevel(Level.INFO);
-        engineConfig.loggerName("org.esa");
-
-        StringBuilder properties = new StringBuilder();
-        Enumeration<?> propertyNames = System.getProperties().propertyNames();
-        while (propertyNames.hasMoreElements()) {
-            String systemPropertyName = (String)propertyNames.nextElement();
-            if (systemPropertyName.endsWith(".level")) {
-                String systemPropertyValue = System.getProperty(systemPropertyName);
-                try {
-                    Level level = Level.parse(systemPropertyValue);
-                    if (properties.length() > 0) {
-                        properties.append(LINE_SEPARATOR);
-                    }
-                    properties.append(systemPropertyName)
-                            .append("=")
-                            .append(level.getName());
-                } catch (IllegalArgumentException exception) {
-                    // ignore exception
-                }
-            }
-        }
-        if (properties.length() > 0) {
-            properties.append(LINE_SEPARATOR)
-                      .append(".level = INFO");
-
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(properties.toString().getBytes());
-            LogManager logManager = LogManager.getLogManager();
-            logManager.readConfiguration(inputStream);
-        }
-
-        Logger rootLogger = Logger.getLogger("");
-        for (Handler handler : rootLogger.getHandlers()) {
-            rootLogger.removeHandler(handler);
-        }
-
-        Logger orgEsaLogger = Logger.getLogger("org.esa");
-        for (Handler handler : rootLogger.getHandlers()) {
-            orgEsaLogger.removeHandler(handler);
-        }
-        ConsoleHandler consoleHandler = new ConsoleHandler() {
-            @Override
-            public synchronized void setLevel(Level newLevel) throws SecurityException {
-                super.setLevel(Level.FINEST);
-            }
-        };
-        consoleHandler.setFormatter(new CustomLogFormatter());
-        orgEsaLogger.addHandler(consoleHandler);
-
-        logger = Logger.getLogger(RunGPTProductReaderTest.class.getName());
-
-        String logFilePath = System.getProperty(PROPERTY_NAME_LOG_FILE_PATH);
-        if (logFilePath != null) {
-            File logFile = new File(logFilePath);
-            FileOutputStream fos = new FileOutputStream(logFile);
-            StreamHandler streamHandler = new StreamHandler(fos, new CustomLogFormatter());
-            logger.addHandler(streamHandler);
-        }
-    }
-
     private static void validateFolderOnDisk(File folderToValidate) throws FileNotFoundException, NotDirectoryException {
         if (folderToValidate.exists()) {
             if (!folderToValidate.isDirectory()) {
@@ -428,27 +361,6 @@ public class RunGPTProductReaderTest {
             }
         } else {
             throw new FileNotFoundException("The file '" + fileToValidate.getAbsolutePath()+"' does not exist.");
-        }
-    }
-
-    private static class CustomLogFormatter extends Formatter {
-
-        @Override
-        public synchronized String format(LogRecord record) {
-            StringBuilder sb = new StringBuilder();
-            String message = formatMessage(record);
-            sb.append(record.getLevel().getName());
-            sb.append(": ");
-            sb.append(message);
-            sb.append(LINE_SEPARATOR);
-            if (record.getThrown() != null) {
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
-                record.getThrown().printStackTrace(pw);
-                pw.close();
-                sb.append(sw.toString());
-            }
-            return sb.toString();
         }
     }
 

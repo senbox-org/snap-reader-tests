@@ -4,22 +4,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.esa.snap.core.dataio.ProductReader;
 import org.esa.snap.core.dataio.ProductReaderPlugIn;
 import org.esa.snap.core.datamodel.Product;
-import org.esa.snap.core.util.StopWatch;
 import org.esa.snap.core.util.SystemUtils;
 import org.esa.snap.gpt.RunGPTProductReaderTest;
 import org.esa.snap.lib.openjpeg.activator.OpenJPEGInstaller;
-import org.esa.snap.runtime.EngineConfig;
+import org.esa.snap.runtime.LogUtils;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.logging.*;
+import java.util.logging.Logger;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -27,12 +26,9 @@ import static org.junit.Assert.fail;
 
 public class RunProductReaderTest {
 
-    private final static String LINE_SEPARATOR = System.getProperty("line.separator", "\r\n");
-
     private static final String PROPERTYNAME_FAIL_ON_MISSING_DATA = "snap.reader.tests.failOnMissingData";
     private static final String PROPERTY_NAME_DATA_DIR = "snap.reader.tests.data.dir";
 
-    private static final String PROPERTY_NAME_LOG_FILE_PATH = "snap.reader.tests.log.file";
     private static final String PROPERTY_NAME_CASS_NAME = "snap.reader.tests.class.name";
     private static final boolean FAIL_ON_MISSING_DATA = Boolean.parseBoolean(System.getProperty(PROPERTYNAME_FAIL_ON_MISSING_DATA, "true"));
     private static final String INDENT = "\t";
@@ -40,7 +36,8 @@ public class RunProductReaderTest {
     private static TestDefinitionList testDefinitionList;
     private static File dataRootDir;
 
-    private static Logger logger;
+    private static final Logger logger = Logger.getLogger(RunProductReaderTest.class.getName());
+
     @Rule
     public ErrorCollector errorCollector = new ErrorCollector();
     private static final ProductList testProductList = new ProductList();
@@ -50,7 +47,7 @@ public class RunProductReaderTest {
 
     @BeforeClass
     public static void initialize() throws Exception {
-        initLogger();
+        LogUtils.initLogger();
 
         logFailOnMissingDataMessage();
 
@@ -239,92 +236,6 @@ public class RunProductReaderTest {
     private static void logFailOnMissingDataMessage() {
         if (!FAIL_ON_MISSING_DATA) {
             logger.warning("Tests will not fail if test data is missing!");
-        }
-    }
-
-    private static void initLogger() throws Exception {
-        // Suppress ugly (and harmless) JAI error messages saying that a JAI is going to continue in pure Java mode.
-        System.setProperty("com.sun.media.jai.disableMediaLib", "true");  // disable native libraries for JAI
-
-        EngineConfig engineConfig = EngineConfig.instance();
-        engineConfig.logLevel(Level.INFO);
-        engineConfig.loggerName("org.esa");
-
-        StringBuilder properties = new StringBuilder();
-        Enumeration<?> propertyNames = System.getProperties().propertyNames();
-        while (propertyNames.hasMoreElements()) {
-            String systemPropertyName = (String)propertyNames.nextElement();
-            if (systemPropertyName.endsWith(".level")) {
-                String systemPropertyValue = System.getProperty(systemPropertyName);
-                try {
-                    Level level = Level.parse(systemPropertyValue);
-                    if (properties.length() > 0) {
-                        properties.append(LINE_SEPARATOR);
-                    }
-                    properties.append(systemPropertyName)
-                            .append("=")
-                            .append(level.getName());
-                } catch (IllegalArgumentException exception) {
-                    // ignore exception
-                }
-            }
-        }
-        if (properties.length() > 0) {
-            properties.append(LINE_SEPARATOR)
-                    .append(".level = INFO");
-
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(properties.toString().getBytes());
-            LogManager logManager = LogManager.getLogManager();
-            logManager.readConfiguration(inputStream);
-        }
-
-        Logger rootLogger = Logger.getLogger("");
-        for (Handler handler : rootLogger.getHandlers()) {
-            rootLogger.removeHandler(handler);
-        }
-
-        Logger orgEsaLogger = Logger.getLogger("org.esa");
-        for (Handler handler : rootLogger.getHandlers()) {
-            orgEsaLogger.removeHandler(handler);
-        }
-        ConsoleHandler consoleHandler = new ConsoleHandler() {
-            @Override
-            public synchronized void setLevel(Level newLevel) throws SecurityException {
-                super.setLevel(Level.FINEST);
-            }
-        };
-        consoleHandler.setFormatter(new CustomLogFormatter());
-        orgEsaLogger.addHandler(consoleHandler);
-
-        logger = Logger.getLogger(RunGPTProductReaderTest.class.getName());
-
-        String logFilePath = System.getProperty(PROPERTY_NAME_LOG_FILE_PATH);
-        if (logFilePath != null) {
-            File logFile = new File(logFilePath);
-            FileOutputStream fos = new FileOutputStream(logFile);
-            StreamHandler streamHandler = new StreamHandler(fos, new CustomLogFormatter());
-            logger.addHandler(streamHandler);
-        }
-    }
-
-    private static class CustomLogFormatter extends Formatter {
-
-        @Override
-        public synchronized String format(LogRecord record) {
-            StringBuilder sb = new StringBuilder();
-            String message = formatMessage(record);
-            sb.append(record.getLevel().getName());
-            sb.append(": ");
-            sb.append(message);
-            sb.append(LINE_SEPARATOR);
-            if (record.getThrown() != null) {
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
-                record.getThrown().printStackTrace(pw);
-                pw.close();
-                sb.append(sw.toString());
-            }
-            return sb.toString();
         }
     }
 }

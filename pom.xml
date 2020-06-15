@@ -101,6 +101,13 @@
             <version>1.10.17</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.esa.snap</groupId>
+            <artifactId>snap-runtime</artifactId>
+            <version>${snap.test.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
 
         <!-- snap reader dependencies -->
         <dependency>
