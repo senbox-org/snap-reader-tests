@@ -11,6 +11,8 @@ import org.esa.snap.dataio.ExpectedContent;
 import org.esa.snap.dataio.ExpectedDataset;
 import org.esa.snap.dataio.ProductReaderAcceptanceTest;
 import org.esa.snap.lib.openjpeg.activator.OpenJPEGInstaller;
+import org.esa.snap.runtime.Config;
+import org.esa.snap.runtime.EngineConfig;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -29,6 +31,8 @@ import static org.junit.Assume.assumeTrue;
  */
 public class RunGPTProductReaderTest {
 
+    private final static String LINE_SEPARATOR = System.getProperty("line.separator", "\r\n");
+
     private static final String PROPERTY_NAME_LOG_FILE_PATH = "gpt.tests.log.file";
     private static final String PROPERTY_NAME_GPT_TEST_RESOURCES_FOLDER_PATH = "gpt.test.resources.dir";
     private static final String PROPERTY_NAME_GPT_SOURCE_PRODUCTS_FOLDER_PATH = "gpt.source.products.dir";
@@ -41,6 +45,9 @@ public class RunGPTProductReaderTest {
     private static final String PROPERTY_NAME_LOG_EXCEPTION_STACK_TRACE = "gpt.tests.logExceptionStackTrace";
 
     private static Logger logger;
+
+    public RunGPTProductReaderTest() {
+    }
 
     @BeforeClass
     public static void initialize() throws Exception {
@@ -216,6 +223,7 @@ public class RunGPTProductReaderTest {
                                     String startPathToRemove, boolean failIfMissingSourceData)
                                     throws Exception {
 
+        long startTime = System.currentTimeMillis();
         logger.info("Test the file '" + testFile.getName() + "' from the folder '" + testFile.getParent()+"'.");
 
         ObjectMapper mapper = new ObjectMapper();
@@ -278,6 +286,9 @@ public class RunGPTProductReaderTest {
 
             runGPT(graphFile, gptGraphParameters);
 
+            double elapsedSeconds = (System.currentTimeMillis() - startTime) / 1000.0d;
+            logger.info("Finish processing the graph file '" + graphFile.getAbsolutePath() +"'. The time elapsed is " + elapsedSeconds + " seconds.");
+
             File productFile = new File(outputFolder, outputNameValue + ".dim");
             Product product = ProductIO.readProduct(productFile);
             if (product == null) {
@@ -302,6 +313,9 @@ public class RunGPTProductReaderTest {
                 assertExpectedContent(product, expectedDataset.getExpectedContent(), assertMessagePrefix.toString());
             }
         }
+
+        double elapsedSeconds = (System.currentTimeMillis() - startTime) / 1000.0d;
+        logger.info("Finish testing the file '" + testFile.getName() + "' from the folder '" + testFile.getParent()+"'. The time elapsed is " + elapsedSeconds + " seconds.");
     }
 
     private static void runGPT(File graphFile, Map<String, String> gptGraphParameters) throws Exception {
@@ -336,25 +350,64 @@ public class RunGPTProductReaderTest {
         // Suppress ugly (and harmless) JAI error messages saying that a JAI is going to continue in pure Java mode.
         System.setProperty("com.sun.media.jai.disableMediaLib", "true");  // disable native libraries for JAI
 
-        logger = Logger.getLogger(ProductReaderAcceptanceTest.class.getSimpleName());
-        removeRootLogHandler();
-        ConsoleHandler consoleHandler = new ConsoleHandler();
+        EngineConfig engineConfig = EngineConfig.instance();
+        engineConfig.logLevel(Level.INFO);
+        engineConfig.loggerName("org.esa");
+
+        StringBuilder properties = new StringBuilder();
+        Enumeration<?> propertyNames = System.getProperties().propertyNames();
+        while (propertyNames.hasMoreElements()) {
+            String systemPropertyName = (String)propertyNames.nextElement();
+            if (systemPropertyName.endsWith(".level")) {
+                String systemPropertyValue = System.getProperty(systemPropertyName);
+                try {
+                    Level level = Level.parse(systemPropertyValue);
+                    if (properties.length() > 0) {
+                        properties.append(LINE_SEPARATOR);
+                    }
+                    properties.append(systemPropertyName)
+                            .append("=")
+                            .append(level.getName());
+                } catch (IllegalArgumentException exception) {
+                    // ignore exception
+                }
+            }
+        }
+        if (properties.length() > 0) {
+            properties.append(LINE_SEPARATOR)
+                      .append(".level = INFO");
+
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(properties.toString().getBytes());
+            LogManager logManager = LogManager.getLogManager();
+            logManager.readConfiguration(inputStream);
+        }
+
+        Logger rootLogger = Logger.getLogger("");
+        for (Handler handler : rootLogger.getHandlers()) {
+            rootLogger.removeHandler(handler);
+        }
+
+        Logger orgEsaLogger = Logger.getLogger("org.esa");
+        for (Handler handler : rootLogger.getHandlers()) {
+            orgEsaLogger.removeHandler(handler);
+        }
+        ConsoleHandler consoleHandler = new ConsoleHandler() {
+            @Override
+            public synchronized void setLevel(Level newLevel) throws SecurityException {
+                super.setLevel(Level.FINEST);
+            }
+        };
         consoleHandler.setFormatter(new CustomLogFormatter());
-        logger.addHandler(consoleHandler);
+        orgEsaLogger.addHandler(consoleHandler);
+
+        logger = Logger.getLogger(RunGPTProductReaderTest.class.getName());
+
         String logFilePath = System.getProperty(PROPERTY_NAME_LOG_FILE_PATH);
         if (logFilePath != null) {
             File logFile = new File(logFilePath);
             FileOutputStream fos = new FileOutputStream(logFile);
             StreamHandler streamHandler = new StreamHandler(fos, new CustomLogFormatter());
             logger.addHandler(streamHandler);
-        }
-    }
-
-    private static void removeRootLogHandler() {
-        Logger rootLogger = LogManager.getLogManager().getLogger("");
-        Handler[] handlers = rootLogger.getHandlers();
-        for (Handler handler : handlers) {
-            rootLogger.removeHandler(handler);
         }
     }
 
@@ -379,8 +432,6 @@ public class RunGPTProductReaderTest {
     }
 
     private static class CustomLogFormatter extends Formatter {
-
-        private final static String LINE_SEPARATOR = System.getProperty("line.separator", "\r\n");
 
         @Override
         public synchronized String format(LogRecord record) {
