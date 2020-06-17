@@ -38,29 +38,18 @@ public class ContentAssert {
         this.product = product;
     }
 
-    public void assertProductContent() {
-        assertExpectedProductProperties(expectedContent, productId, product);
-        testExpectedGeoCoding(expectedContent, productId, product);
-        testExpectedFlagCoding(expectedContent, productId, product);
-        testExpectedIndexCoding(expectedContent, productId, product);
-        testExpectedTiePointGrids(expectedContent, productId, product);
-        testExpectedBands(expectedContent, productId, product);
-        testExpectedMasks(expectedContent, productId, product);
-        testExpectedMetadata(expectedContent, productId, product);
-    }
-
     private static void assertExpectedProductProperties(ExpectedContent expectedContent, String productId, Product product) {
         if (expectedContent.isSceneWidthSet()) {
-            Assert.assertEquals(productId + " SceneWidth", expectedContent.getSceneWidth(), product.getSceneRasterWidth());
+            Assert.assertEquals(productId + " product properties: SceneWidth", expectedContent.getSceneWidth(), product.getSceneRasterWidth());
         }
         if (expectedContent.isSceneHeightSet()) {
-            Assert.assertEquals(productId + " SceneHeight", expectedContent.getSceneHeight(), product.getSceneRasterHeight());
+            Assert.assertEquals(productId + " product properties:  SceneHeight", expectedContent.getSceneHeight(), product.getSceneRasterHeight());
         }
         if (expectedContent.isStartTimeSet()) {
-            Assert.assertEquals(productId + " StartTime", expectedContent.getStartTime(), product.getStartTime().format());
+            Assert.assertEquals(productId + " product properties:  StartTime", expectedContent.getStartTime(), product.getStartTime().format());
         }
         if (expectedContent.isEndTimeSet()) {
-            Assert.assertEquals(productId + " EndTime", expectedContent.getEndTime(), product.getEndTime().format());
+            Assert.assertEquals(productId + " product properties:  EndTime", expectedContent.getEndTime(), product.getEndTime().format());
         }
     }
 
@@ -79,16 +68,16 @@ public class ContentAssert {
                 final PixelPos expectedPixelPos = coordinate.getPixelPos();
                 final GeoPos expectedGeoPos = coordinate.getGeoPos();
                 final GeoPos actualGeoPos = geoCoding.getGeoPos(expectedPixelPos, null);
-                final String message = productId + " GeoPos at Pixel(" + expectedPixelPos.getX() + "," + expectedPixelPos.getY() + ")";
+                final String message = productId + " geo-coding: GeoPos at Pixel(" + expectedPixelPos.getX() + "," + expectedPixelPos.getY() + ")";
                 Assert.assertEquals(message, expectedGeoPos.getLat(), actualGeoPos.getLat(), computeAssertDelta(expectedGeoPos.getLat()));
                 Assert.assertEquals(message, expectedGeoPos.getLon(), actualGeoPos.getLon(), computeAssertDelta(expectedGeoPos.getLon()));
 
                 if (reverseAccuracy >= 0) {
                     final PixelPos actualPixelPos = geoCoding.getPixelPos(actualGeoPos, null);
-                    Assert.assertEquals(productId + " Pixel.X at GeoPos(" + actualGeoPos.getLat() + "," + actualGeoPos.getLon() + ")",
-                                        expectedPixelPos.getX(), actualPixelPos.getX(), reverseAccuracy);
-                    Assert.assertEquals(productId + " Pixel.Y at GeoPos(" + actualGeoPos.getLat() + "," + actualGeoPos.getLon() + ")",
-                                        expectedPixelPos.getY(), actualPixelPos.getY(), reverseAccuracy);
+                    Assert.assertEquals(productId + " geo-coding: Pixel.X at GeoPos(" + actualGeoPos.getLat() + "," + actualGeoPos.getLon() + ")",
+                            expectedPixelPos.getX(), actualPixelPos.getX(), reverseAccuracy);
+                    Assert.assertEquals(productId + " geo-coding: Pixel.Y at GeoPos(" + actualGeoPos.getLat() + "," + actualGeoPos.getLon() + ")",
+                            expectedPixelPos.getY(), actualPixelPos.getY(), reverseAccuracy);
                 }
             }
         }
@@ -99,7 +88,7 @@ public class ContentAssert {
         for (ExpectedSampleCoding expectedFlagCoding : expectedContent.getFlagCodings()) {
             final String name = expectedFlagCoding.getName();
             final FlagCoding actualFlagCoding = flagCodingGroup.get(name);
-            final String msgPrefix = productId + " FlagCoding '" + name +"'";
+            final String msgPrefix = productId + " FlagCoding '" + name + "'";
             Assert.assertTrue(msgPrefix + " does not exist", flagCodingGroup.contains(name));
             assertEqualSampleCodings(msgPrefix, expectedFlagCoding, actualFlagCoding);
         }
@@ -113,12 +102,12 @@ public class ContentAssert {
             final MetadataAttribute actualSample = actualSampleCoding.getAttribute(expectedSampleName);
             Assert.assertNotNull(msgPrefix + " sample '" + expectedSampleName + "' does not exist", actualSample);
             Assert.assertEquals(msgPrefix + " sample '" + expectedSampleName + "' Value",
-                                expectedSample.getValue(), actualSample.getData().getElemUInt());
+                    expectedSample.getValue(), actualSample.getData().getElemUInt());
 
             final String expectedSampleDescription = expectedSample.getDescription();
             if (StringUtils.isNotNullAndNotEmpty(expectedSampleDescription)) {
                 Assert.assertEquals(msgPrefix + " sample '" + expectedSampleName + "' Description",
-                                    expectedSampleDescription, actualSample.getDescription());
+                        expectedSampleDescription, actualSample.getDescription());
             }
         }
     }
@@ -152,7 +141,7 @@ public class ContentAssert {
         final TiePointGrid tiePointGrid = product.getTiePointGrid(expectedTiePointGrid.getName());
         Assert.assertNotNull("missing tie-point grid '" + expectedTiePointGrid.getName() + " in product '" + product.getFileLocation(), tiePointGrid);
 
-        final String assertMessagePrefix = productId + " " + tiePointGrid.getName();
+        final String assertMessagePrefix = productId + " tie-point grid: " + tiePointGrid.getName();
 
         if (expectedTiePointGrid.isDescriptionSet()) {
             Assert.assertEquals(assertMessagePrefix + " Description", expectedTiePointGrid.getDescription(), tiePointGrid.getDescription());
@@ -187,7 +176,7 @@ public class ContentAssert {
         final Band band = product.getBand(expectedBand.getName());
         Assert.assertNotNull("missing band '" + expectedBand.getName() + " in product '" + productId, band);
 
-        final String messagePrefix = productId + " " + band.getName();
+        final String messagePrefix = productId + " band/variable: " + band.getName();
         if (expectedBand.isDescriptionSet()) {
             Assert.assertEquals(messagePrefix + " Description", expectedBand.getDescription(), band.getDescription());
         }
@@ -204,12 +193,12 @@ public class ContentAssert {
             String expected = expectedBand.getGeophysicalUnit();
             String actual = band.getUnit();
             //remove no-breakable whitespace
-            expected = expected.replace("\u00A0","");
-            expected = expected.replace("\u2007","");
-            expected = expected.replace("\u202F","");
-            actual = actual.replace("\u00A0","");
-            actual = actual.replace("\u2007","");
-            actual = actual.replace("\u202F","");
+            expected = expected.replace("\u00A0", "");
+            expected = expected.replace("\u2007", "");
+            expected = expected.replace("\u202F", "");
+            actual = actual.replace("\u00A0", "");
+            actual = actual.replace("\u2007", "");
+            actual = actual.replace("\u202F", "");
             Assert.assertEquals(messagePrefix + " Unit", expected, actual);
         }
 
@@ -250,7 +239,7 @@ public class ContentAssert {
                 final StringWriter stackTraceWriter = new StringWriter();
                 e.printStackTrace(new PrintWriter(stackTraceWriter));
                 Assert.fail(messagePrefix + pixelString + "- caused " + e.getClass().getSimpleName() + "\n" +
-                                    stackTraceWriter.toString());
+                        stackTraceWriter.toString());
             }
         }
     }
@@ -335,13 +324,12 @@ public class ContentAssert {
             final MetadataAttribute attribute = getMetadataAttribute(msgPrefix, currentElement, attributeName);
             Assert.assertNotNull(msgPrefix + " Attribute '" + attributeName + "' not found", attribute);
             Assert.assertEquals(msgPrefix + " Value", expectedMetadata.getValue(), attribute.getData().getElemString());
-
         }
     }
 
     private static String[] getPathTokens(String path) {
         String[] splits = path.split("/");
-        ArrayList<String> tokens = new ArrayList<String>();
+        ArrayList<String> tokens = new ArrayList<>();
         for (int i = 0; i < splits.length; i++) {
             String currentSplit = splits[i];
             if (currentSplit.isEmpty()) {
@@ -350,16 +338,26 @@ public class ContentAssert {
                 tokens.add(currentSplit);
             }
         }
-        return tokens.toArray(new String[tokens.size()]);
+        return tokens.toArray(new String[0]);
     }
 
-
     static double computeAssertDelta(double expectedValue) {
-        if((!Double.isFinite(expectedValue)) || Math.abs(expectedValue) < 1) {
+        if ((!Double.isFinite(expectedValue)) || Math.abs(expectedValue) < 1) {
             return 1e-6; //default value of delta
         }
         double delta = Math.abs(expectedValue) / 1e+6;
         long rounded = Math.round((delta * 10e6));
         return rounded / 10e6;
+    }
+
+    public void assertProductContent() {
+        assertExpectedProductProperties(expectedContent, productId, product);
+        testExpectedGeoCoding(expectedContent, productId, product);
+        testExpectedFlagCoding(expectedContent, productId, product);
+        testExpectedIndexCoding(expectedContent, productId, product);
+        testExpectedTiePointGrids(expectedContent, productId, product);
+        testExpectedBands(expectedContent, productId, product);
+        testExpectedMasks(expectedContent, productId, product);
+        testExpectedMetadata(expectedContent, productId, product);
     }
 }
