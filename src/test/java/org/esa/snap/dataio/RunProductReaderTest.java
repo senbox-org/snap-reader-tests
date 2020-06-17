@@ -82,7 +82,7 @@ public class RunProductReaderTest {
 
                     final Product product = productReader.readProductNodes(testProductFile, null);
                     try {
-                        //assertExpectedContent(testDefinition, productId, product);
+                        assertExpectedContent(testDefinition, productId, product);
                     } catch (Throwable t) {
                         errorCollector.addError(new Throwable("[" + productId + "] " + t.getMessage(), t));
                     } finally {
@@ -154,18 +154,6 @@ public class RunProductReaderTest {
 
         errorCollector.checkThat("testProductFile exist " + testProduct.getId(), testProductFile.exists(), is(true));
         return testProductFile;
-    }
-
-    private static void logInfoWithStars(final String text) {
-        final String msg = "  " + text + "  ";
-        final char[] stars = new char[msg.length()];
-        Arrays.fill(stars, '*');
-        final String starString = new String(stars);
-        logger.info("");
-        logger.info(starString);
-        logger.info(msg);
-        logger.info(starString);
-        logger.info("");
     }
 
     private static TestDefinitionList loadProductReaderTestDefinitions() throws IOException {
