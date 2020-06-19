@@ -1,25 +1,30 @@
 package org.esa.snap.gpt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.esa.s2tbx.dataio.gdal.GDALLibraryInstaller;
 import org.esa.snap.core.dataio.ProductIO;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.gpf.main.GPT;
 import org.esa.snap.core.util.StringUtils;
+import org.esa.snap.core.util.SystemUtils;
 import org.esa.snap.core.util.io.FileUtils;
 import org.esa.snap.dataio.ContentAssert;
 import org.esa.snap.dataio.ExpectedContent;
 import org.esa.snap.dataio.ExpectedDataset;
-import org.esa.snap.lib.openjpeg.activator.OpenJPEGInstaller;
-import org.esa.snap.runtime.EngineConfig;
+import org.esa.snap.dataio.netcdf.NetCdfActivator;
+import org.esa.snap.jp2.reader.OpenJPEGLibraryInstaller;
 import org.esa.snap.runtime.LogUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.*;
 import java.nio.file.NotDirectoryException;
-import java.util.*;
-import java.util.logging.*;
-import java.util.logging.Formatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeTrue;
@@ -29,9 +34,8 @@ import static org.junit.Assume.assumeTrue;
  */
 public class RunGPTProductReaderTest {
 
-    private final static String LINE_SEPARATOR = System.getProperty("line.separator", "\r\n");
+    private static final Logger logger = Logger.getLogger(RunGPTProductReaderTest.class.getName());
 
-    private static final String PROPERTY_NAME_LOG_FILE_PATH = "gpt.tests.log.file";
     private static final String PROPERTY_NAME_GPT_TEST_RESOURCES_FOLDER_PATH = "gpt.test.resources.dir";
     private static final String PROPERTY_NAME_GPT_SOURCE_PRODUCTS_FOLDER_PATH = "gpt.source.products.dir";
     private static final String PROPERTY_NAME_GPT_OUTPUT_PRODUCTS_FOLDER_PATH = "gpt.output.products.dir";
@@ -42,8 +46,6 @@ public class RunGPTProductReaderTest {
     private static final String PROPERTY_NAME_FAIL_ON_EXCEPTION = "gpt.tests.failOnException";
     private static final String PROPERTY_NAME_LOG_EXCEPTION_STACK_TRACE = "gpt.tests.logExceptionStackTrace";
 
-    private static final Logger logger = Logger.getLogger(RunGPTProductReaderTest.class.getName());
-
     public RunGPTProductReaderTest() {
     }
 
@@ -51,7 +53,11 @@ public class RunGPTProductReaderTest {
     public static void initialize() throws Exception {
         LogUtils.initLogger();
 
-        OpenJPEGInstaller.install();
+        SystemUtils.init3rdPartyLibs(RunGPTProductReaderTest.class);
+
+        OpenJPEGLibraryInstaller.install();
+        GDALLibraryInstaller.install();
+        NetCdfActivator.activate();
     }
 
     /**
@@ -76,13 +82,28 @@ public class RunGPTProductReaderTest {
         String sourceProductsFolderPath = System.getProperty(PROPERTY_NAME_GPT_SOURCE_PRODUCTS_FOLDER_PATH);
         String outputProductsFolderPath = System.getProperty(PROPERTY_NAME_GPT_OUTPUT_PRODUCTS_FOLDER_PATH);
         String gptTestFolderName = System.getProperty(PROPERTY_NAME_GPT_TEST_RESOURCE_FOLDER_NAME);
-        if (gptTestResourcesFolderPath == null || sourceProductsFolderPath == null
-                || outputProductsFolderPath == null || gptTestFolderName == null) {
-
-            assumeTrue("Missing properties", false);
+        if (gptTestResourcesFolderPath == null || sourceProductsFolderPath == null || outputProductsFolderPath == null || gptTestFolderName == null) {
+            fail("Missing properties.");
         }
+
         String gptTestFileNames = System.getProperty(PROPERTY_NAME_GPT_TEST_RESOURCE_FILE_NAMES); // may be null
         String startPathToRemove = System.getProperty(PROPERTY_NAME_GRAPH_START_PATH_TO_REMOVE); // the start path may be null
+
+        if (logger.isLoggable(Level.FINE)) {
+            StringBuilder message = new StringBuilder();
+            message.append("Input test parameters: gpt resources folder path: ")
+                    .append(gptTestResourcesFolderPath)
+                    .append(", source products folder path: ")
+                    .append(sourceProductsFolderPath)
+                    .append(", output products folder path: ")
+                    .append(outputProductsFolderPath)
+                    .append(", gpt folder name: ")
+                    .append(gptTestFolderName)
+                    .append(", gpt file names: ")
+                    .append(gptTestFileNames)
+                    .append(".");
+            logger.log(Level.FINE, message.toString());
+        }
 
         boolean failIfMissingSourceData = true;
         String failOnMissingDataValue = System.getProperty(PROPERTY_NAME_FAIL_ON_MISSING_DATA);
@@ -161,12 +182,12 @@ public class RunGPTProductReaderTest {
                     throw e;
                 } else {
                     String message = "Failed to run the test file '" + testFile.getName() +"' from the folder '" + gptTestFolderName +"'.";
-                    logException(message.toString(), e, logExceptionStackTrace);
+                    logException(message, e, logExceptionStackTrace);
                 }
             } catch (AssertionError e) {
                 assertErrors.add(e);
                 String message = "Failed to test the values of the file '" + testFile.getName() +"' from the folder '" + gptTestFolderName +"'.";
-                logException(message.toString(), e, logExceptionStackTrace);
+                logException(message, e, logExceptionStackTrace);
             }
         }
 
@@ -221,8 +242,8 @@ public class RunGPTProductReaderTest {
                                     String startPathToRemove, boolean failIfMissingSourceData)
                                     throws Exception {
 
-        long startTime = System.currentTimeMillis();
         logger.info("Test the file '" + testFile.getName() + "' from the folder '" + testFile.getParent()+"'.");
+        long startTime = System.currentTimeMillis();
 
         ObjectMapper mapper = new ObjectMapper();
         InputGraphData[] inputGraphData = mapper.readValue(testFile, InputGraphData[].class);
@@ -298,17 +319,13 @@ public class RunGPTProductReaderTest {
                     continue;
                 }
             } else {
-                File expectedValuesFile = new File(resourcesExpectedOutputsFolder, expectedValuesRelativeFilePath);
-                ExpectedDataset expectedDataset = mapper.readValue(expectedValuesFile, ExpectedDataset.class);
-                StringBuilder assertMessagePrefix = new StringBuilder();
-                assertMessagePrefix.append("Test file '")
-                        .append(testFile.getName())
-                        .append("', id '")
-                        .append(inputGraphData[i].getId())
-                        .append("', output name '")
-                        .append(outputNameValue)
-                        .append("': ");
-                assertExpectedContent(product, expectedDataset.getExpectedContent(), assertMessagePrefix.toString());
+                try {
+                    File expectedValuesFile = new File(resourcesExpectedOutputsFolder, expectedValuesRelativeFilePath);
+                    ExpectedDataset expectedDataset = mapper.readValue(expectedValuesFile, ExpectedDataset.class);
+                    assertExpectedContent(testFile, inputGraphData[i], outputNameValue, product, expectedDataset.getExpectedContent());
+                } finally {
+                    product.dispose();
+                }
             }
         }
 
@@ -339,9 +356,35 @@ public class RunGPTProductReaderTest {
         }
     }
 
-    private static void assertExpectedContent(Product product, ExpectedContent expectedContent, String productId) throws IOException {
-        ContentAssert contentAssert = new ContentAssert(expectedContent, productId, product);
+    private static void assertExpectedContent(File testFile, InputGraphData inputGraphData, String outputNameValue, Product product, ExpectedContent expectedContent) {
+        StringBuilder assertMessagePrefix = new StringBuilder();
+        assertMessagePrefix.append("Test file '")
+                .append(testFile.getName())
+                .append("', id '")
+                .append(inputGraphData.getId())
+                .append("', output name '")
+                .append(outputNameValue)
+                .append("': ");
+
+        long startTime = System.currentTimeMillis();
+
+        ContentAssert contentAssert = new ContentAssert(expectedContent, assertMessagePrefix.toString(), product);
         contentAssert.assertProductContent();
+
+        if (logger.isLoggable(Level.FINE)) {
+            double elapsedSeconds = (System.currentTimeMillis() - startTime) / 1000.0d;
+            StringBuilder message = new StringBuilder();
+            message.append("Finish testing expected content: file: ")
+                    .append(testFile.getName())
+                    .append(", id: ")
+                    .append(inputGraphData.getId())
+                    .append(", output name: ")
+                    .append(outputNameValue)
+                    .append(", elapsed time: ")
+                    .append(elapsedSeconds)
+                    .append(" seconds.");
+            logger.log(Level.FINE, message.toString());
+        }
     }
 
     private static void validateFolderOnDisk(File folderToValidate) throws FileNotFoundException, NotDirectoryException {
