@@ -58,7 +58,7 @@ pipeline {
         stage('Reader Tests') {
             agent {
                 docker {
-                    image "snap-build-server.tilaa.cloud/maven:3.6.0-jdk-8"
+                    image "snap-build-server.tilaa.cloud/maven:openjdk-7.x"
                     label "snap"
                     args "-v /data/ssd/testData/:/data/ssd/testData/ -e MAVEN_CONFIG=/var/maven/.m2 -v /opt/maven/.m2/settings.xml:/var/maven/.m2/settings.xml"
                 }
