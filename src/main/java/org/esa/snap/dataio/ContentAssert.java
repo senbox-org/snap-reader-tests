@@ -24,8 +24,6 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.junit.Assert.*;
-
 public class ContentAssert {
 
     private final ExpectedContent expectedContent;
@@ -74,10 +72,12 @@ public class ContentAssert {
 
                 if (reverseAccuracy >= 0) {
                     final PixelPos actualPixelPos = geoCoding.getPixelPos(actualGeoPos, null);
-                    Assert.assertEquals(productId + " geo-coding: Pixel.X at GeoPos(" + actualGeoPos.getLat() + "," + actualGeoPos.getLon() + ")",
-                            expectedPixelPos.getX(), actualPixelPos.getX(), reverseAccuracy);
-                    Assert.assertEquals(productId + " geo-coding: Pixel.Y at GeoPos(" + actualGeoPos.getLat() + "," + actualGeoPos.getLon() + ")",
-                            expectedPixelPos.getY(), actualPixelPos.getY(), reverseAccuracy);
+                    final double accuracyX = Math.abs(actualPixelPos.getX() - expectedPixelPos.getX());
+                    final double accuracyY = Math.abs(actualPixelPos.getY() - expectedPixelPos.getY());
+                    Assert.assertTrue(productId + " geo-coding: reverseAccuracy.X " + accuracyX + " at GeoPos(" + actualGeoPos.getLat() + "," + actualGeoPos.getLon() + ")",
+                                      accuracyX <=reverseAccuracy);
+                    Assert.assertTrue(productId + " geo-coding: reverseAccuracy.Y "+ accuracyY +" at GeoPos(" + actualGeoPos.getLat() + "," + actualGeoPos.getLon() + ")",
+                                      accuracyY <= reverseAccuracy);
                 }
             }
         }
@@ -102,12 +102,12 @@ public class ContentAssert {
             final MetadataAttribute actualSample = actualSampleCoding.getAttribute(expectedSampleName);
             Assert.assertNotNull(msgPrefix + " sample '" + expectedSampleName + "' does not exist", actualSample);
             Assert.assertEquals(msgPrefix + " sample '" + expectedSampleName + "' Value",
-                    expectedSample.getValue(), actualSample.getData().getElemUInt());
+                                expectedSample.getValue(), actualSample.getData().getElemUInt());
 
             final String expectedSampleDescription = expectedSample.getDescription();
             if (StringUtils.isNotNullAndNotEmpty(expectedSampleDescription)) {
                 Assert.assertEquals(msgPrefix + " sample '" + expectedSampleName + "' Description",
-                        expectedSampleDescription, actualSample.getDescription());
+                                    expectedSampleDescription, actualSample.getDescription());
             }
         }
     }
@@ -239,7 +239,7 @@ public class ContentAssert {
                 final StringWriter stackTraceWriter = new StringWriter();
                 e.printStackTrace(new PrintWriter(stackTraceWriter));
                 Assert.fail(messagePrefix + pixelString + "- caused " + e.getClass().getSimpleName() + "\n" +
-                        stackTraceWriter.toString());
+                                    stackTraceWriter.toString());
             }
         }
     }
