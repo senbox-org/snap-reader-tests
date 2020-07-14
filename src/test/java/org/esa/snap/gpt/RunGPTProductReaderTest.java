@@ -13,11 +13,14 @@ import org.esa.snap.dataio.ExpectedContent;
 import org.esa.snap.dataio.ExpectedDataset;
 import org.esa.snap.dataio.netcdf.NetCdfActivator;
 import org.esa.snap.jp2.reader.OpenJPEGLibraryInstaller;
-import org.esa.snap.runtime.LogUtils;
+import org.esa.snap.runtime.LogUtils4Tests;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.nio.file.NotDirectoryException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +30,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.junit.Assert.fail;
-import static org.junit.Assume.assumeTrue;
 
 /**
  * Created by jcoravu on 1/4/2020.
@@ -51,7 +53,7 @@ public class RunGPTProductReaderTest {
 
     @BeforeClass
     public static void initialize() throws Exception {
-        LogUtils.initLogger();
+        LogUtils4Tests.initLogger();
 
         SystemUtils.init3rdPartyLibs(RunGPTProductReaderTest.class);
 

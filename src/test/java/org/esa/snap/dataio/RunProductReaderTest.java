@@ -8,13 +8,12 @@ import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.util.SystemUtils;
 import org.esa.snap.dataio.netcdf.NetCdfActivator;
 import org.esa.snap.jp2.reader.OpenJPEGLibraryInstaller;
-import org.esa.snap.runtime.LogUtils;
+import org.esa.snap.runtime.LogUtils4Tests;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -44,7 +43,7 @@ public class RunProductReaderTest {
 
     @BeforeClass
     public static void initialize() throws Exception {
-        LogUtils.initLogger();
+        LogUtils4Tests.initLogger();
 
         String dataDirPropertyValue = System.getProperty(PROPERTY_NAME_DATA_DIR);
         if (dataDirPropertyValue == null) {
