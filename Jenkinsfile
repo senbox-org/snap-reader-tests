@@ -68,8 +68,8 @@ pipeline {
                 sh script:"echo ######### Launch mvn version ######### | tee -a ./readerTest-${env.BUILD_NUMBER}.log", label: "initialize log"
                 sh script: "mvn versions:update-properties -Dincludes=org.esa.* | tee -a ./readerTest-${env.BUILD_NUMBER}.log", label: "add maven version to log"
                 sh script: "echo ######### Launch reader tests ######### | tee -a ./readerTest-${env.BUILD_NUMBER}.log", label: "ready to launch tests"
-                sh script: "/opt/scripts/setUpLibraries.sh", label: "prepare libraries"
-                sh script: "/opt/scripts/launchReaderTests.sh ${params.dataPath} ${params.classPathFilter} ${env.BUILD_NUMBER} ${params.maxMemory}", label: "execute tests"
+                sh script: "sh scripts/setUpLibraries.sh", label: "prepare libraries"
+                sh script: "sh scripts/launchReaderTests.sh ${params.dataPath} ${params.classPathFilter} ${env.BUILD_NUMBER} ${params.maxMemory}", label: "execute tests"
             }
             post {
                 always {
