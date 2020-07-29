@@ -1,9 +1,10 @@
 #! /bin/bash
 
 # Run maven to download jar containing libraries
-mvn -Duser.home=/var/maven -Dsnap.userdir=/home/snap install deploy -DskipTests=true
+mvn -s /var/maven/.m2/settings.xml -Duser.home=/var/maven -Dsnap.userdir=/home/snap install deploy -DskipTests=true
 
 export WORKSPACE_PATH=`pwd`
+echo $WORKSPACE_PATH
 
 # Set up OpenJPEG
 export OPENJPEG_VERSION=`ls /var/tmp/repository/org/esa/snap/lib-openjpeg/`
