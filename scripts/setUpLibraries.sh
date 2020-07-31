@@ -19,13 +19,13 @@ chmod 755 -R /home/snap/auxdata/openjpeg/${OPENJPEG_VERSION}/*/bin
 export GDAL_VERSION=`ls /var/tmp/repository/org/esa/s2tbx/lib-gdal/`
 cd /var/tmp/repository/org/esa/s2tbx/lib-gdal/${GDAL_VERSION}
 unzip lib-gdal-${GDAL_VERSION}.jar
-mkdir -p /home/snap/auxdata/openjpeg/${OPENJPEG_VERSION}
-cp -r auxdata/gdal /home/snap/auxdata/
-cd /home/snap/auxdata/gdal/gdal-*linux
+mkdir -p /home/snap/auxdata/gdal
+cp auxdata/gdal/Linux/x64/gdal-*-*-0.zip /home/snap/auxdata/gdal
+cd /home/snap/auxdata/gdal/
 unzip *.zip
 chmod 755 -R bin/*
 
 # Update LD_LIBRARY_PATH Library
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/lib/:/lib/x86_64-linux-gnu/:/usr/lib/:/home/snap/auxdata/gdal/:/home/snap/auxdata/gdal/gdal-2.2.0-linux/lib/:/home/snap/auxdata/gdal/gdal-2.2.0-linux/lib/jni/
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/lib/:/lib/x86_64-linux-gnu/:/usr/lib/:/home/snap/auxdata/gdal/:/home/snap/auxdata/gdal/lib/:/home/snap/auxdata/gdal/lib/jni/
 
 cd ${WORKSPACE_PATH}
