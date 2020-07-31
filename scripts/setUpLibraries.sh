@@ -29,3 +29,4 @@ chmod 755 -R bin/*
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/lib/:/lib/x86_64-linux-gnu/:/usr/lib/:/home/snap/auxdata/gdal/:/home/snap/auxdata/gdal/lib/:/home/snap/auxdata/gdal/lib/jni/
 
 cd ${WORKSPACE_PATH}
+pwd
