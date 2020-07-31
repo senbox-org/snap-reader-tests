@@ -1,4 +1,5 @@
 #! /bin/bash
+set -e
 
 # Run maven to download jar containing libraries
 mvn -s /var/maven/.m2/settings.xml -Duser.home=/var/maven -Dsnap.userdir=/home/snap install deploy -DskipTests=true
