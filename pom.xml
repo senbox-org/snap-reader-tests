@@ -28,7 +28,7 @@
         <s1tbx.test.version>9.0.0-SNAPSHOT</s1tbx.test.version>
         <rstb.test.version>9.0.0-SNAPSHOT</rstb.test.version>
         <iceye.test.version>9.0.0-SNAPSHOT</iceye.test.version>
-        <seadas-reader.test.version>1.9.1-SNAPSHOT</seadas-reader.test.version>
+        <seadas-reader.test.version>1.10.0-SNAPSHOT</seadas-reader.test.version>
         <smos.test.version>5.9.0-SNAPSHOT</smos.test.version>
 
         <max.memory>-Xmx5g</max.memory>
