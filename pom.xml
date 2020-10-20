@@ -5,7 +5,7 @@
 
     <groupId>org.esa.snap</groupId>
     <artifactId>snap-reader-tests</artifactId>
-    <version>8.0.0</version>
+    <version>8.0.1-SNAPSHOT</version>
 
     <packaging>nbm</packaging>
 
@@ -18,18 +18,18 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <snap.version>8.0.0</snap.version>
+        <snap.version>8.0.1-SNAPSHOT</snap.version>
         <netbeans.version>RELEASE82</netbeans.version>
         <jackson.version>2.10.0</jackson.version>
 
-        <snap.test.version>8.0.0</snap.test.version>
-        <s3tbx.test.version>8.0.0</s3tbx.test.version>
-        <s2tbx.test.version>8.0.0</s2tbx.test.version>
-        <s1tbx.test.version>8.0.0</s1tbx.test.version>
-        <rstb.test.version>8.0.0</rstb.test.version>
-        <iceye.test.version>8.0.0</iceye.test.version>
-        <seadas-reader.test.version>1.9</seadas-reader.test.version>
-        <smos.test.version>5.8.0</smos.test.version>
+        <snap.test.version>8.0.1-SNAPSHOT</snap.test.version>
+        <s3tbx.test.version>8.0.1-SNAPSHOT</s3tbx.test.version>
+        <s2tbx.test.version>8.0.1-SNAPSHOT</s2tbx.test.version>
+        <s1tbx.test.version>8.0.1-SNAPSHOT</s1tbx.test.version>
+        <rstb.test.version>8.0.1-SNAPSHOT</rstb.test.version>
+        <iceye.test.version>8.0.1-SNAPSHOT</iceye.test.version>
+        <seadas-reader.test.version>1.9.1-SNAPSHOT</seadas-reader.test.version>
+        <smos.test.version>5.8.1-SNAPSHOT</smos.test.version>
 
         <max.memory>-Xmx5g</max.memory>
     </properties>
