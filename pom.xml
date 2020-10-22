@@ -757,32 +757,32 @@
                         <property>
                             <name>s1tbx.test.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[8.0.0,8.9.9)</version>
+                            <version>[9.0.0,9.9.9)</version>
                         </property>
                         <property>
                             <name>rstb.test.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[8.0.0,8.9.9)</version>
+                            <version>[9.0.0,9.9.9)</version>
                         </property>
                         <property>
                             <name>s2tbx.test.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[8.0.0,8.9.9)</version>
+                            <version>[9.0.0,9.9.9)</version>
                         </property>
                         <property>
                             <name>s3tbx.test.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[8.0.0,8.9.9)</version>
+                            <version>[9.0.0,9.9.9)</version>
                         </property>
                         <property>
                             <name>snap.test.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[8.0.0,8.9.9)</version>
+                            <version>[9.0.0,9.9.9)</version>
                         </property>
                         <property>
                             <name>snap.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[8.0.0-SNAPSHOT]</version>
+                            <version>[9.0.0-SNAPSHOT]</version>
                         </property>
                     </properties>
                 </configuration>
