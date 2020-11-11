@@ -18,11 +18,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <snap.version>8.0.1-SNAPSHOT</snap.version>
+        <snap.version>8.0.2-SNAPSHOT</snap.version>
         <netbeans.version>RELEASE82</netbeans.version>
         <jackson.version>2.10.0</jackson.version>
 
-        <snap.test.version>8.0.1-SNAPSHOT</snap.test.version>
+        <snap.test.version>8.0.2-SNAPSHOT</snap.test.version>
         <s3tbx.test.version>8.0.1-SNAPSHOT</s3tbx.test.version>
         <s2tbx.test.version>8.0.0</s2tbx.test.version>
         <s1tbx.test.version>8.0.1-SNAPSHOT</s1tbx.test.version>
