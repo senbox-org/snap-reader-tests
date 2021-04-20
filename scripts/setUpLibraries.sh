@@ -8,6 +8,7 @@ export WORKSPACE_PATH=`pwd`
 echo $WORKSPACE_PATH
 
 # Set up OpenJPEG
+echo `ls /var/tmp/repository/org/esa/snap/lib-openjpeg/`
 export OPENJPEG_VERSION=`ls /var/tmp/repository/org/esa/snap/lib-openjpeg/`
 echo "OPENJPEG_VERSION ${OPENJPEG_VERSION}"
 cd /var/tmp/repository/org/esa/snap/lib-openjpeg/${OPENJPEG_VERSION}
