@@ -24,7 +24,7 @@
 
         <snap.test.version>8.0.4-SNAPSHOT</snap.test.version>
         <s3tbx.test.version>8.0.4-SNAPSHOT</s3tbx.test.version>
-        <s2tbx.test.version>8.0.3-SNAPSHOT</s2tbx.test.version>
+        <s2tbx.test.version>8.0.4-SNAPSHOT</s2tbx.test.version>
         <s1tbx.test.version>8.0.4-SNAPSHOT</s1tbx.test.version>
         <rstb.test.version>8.0.4-SNAPSHOT</rstb.test.version>
         <iceye.test.version>8.0.4-SNAPSHOT</iceye.test.version>
