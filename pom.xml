@@ -752,7 +752,7 @@
                         <property>
                             <name>smos.test.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[5.0.0,5.9.9)</version>
+                            <version>[5.0.0,5.8.9)</version>
                         </property>
                         <property>
                             <name>s1tbx.test.version</name>
@@ -773,6 +773,11 @@
                             <name>s3tbx.test.version</name>
                             <banSnapshots>false</banSnapshots>
                             <version>[8.0.0,8.9.9)</version>
+                        </property>
+                        <property>
+                            <name>seadas-reader.test.version</name>
+                            <banSnapshots>false</banSnapshots>
+                            <version>[1.9.0,1.9.9)</version>
                         </property>
                         <property>
                             <name>snap.test.version</name>
