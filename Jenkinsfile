@@ -49,6 +49,10 @@ def getEmailFromClassPathFilter(classPathFilter) {
 
 pipeline {
     agent { label 'snap-test' }
+    options {
+            buildDiscarder(logRotator(daysToKeepStr: '10', artifactDaysToKeepStr: '10'))
+            timeout(time: 20, unit: 'HOURS')
+    }
     parameters {
         string(name: 'classPathFilter', defaultValue: 'org.esa.s2tbx', description: 'Class path filter of the Test class to launch')
         string(name: 'dataPath', defaultValue: '/data/ssd/testData/s2tbx', description: 'Path of the data used by the reader tests')
