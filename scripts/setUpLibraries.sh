@@ -21,7 +21,7 @@ export GDAL_VERSION=`ls /var/tmp/repository/org/esa/s2tbx/lib-gdal/`
 cd /var/tmp/repository/org/esa/s2tbx/lib-gdal/${GDAL_VERSION}
 unzip lib-gdal-${GDAL_VERSION}.jar
 mkdir -p /home/snap/auxdata/gdal
-cp auxdata/gdal/Linux/x64/gdal-*-*-0.zip /home/snap/auxdata/gdal
+cp auxdata/gdal/Linux/x64/gdal-*-*-*.zip /home/snap/auxdata/gdal
 cd /home/snap/auxdata/gdal/
 unzip *.zip
 chmod 755 -R bin/*
