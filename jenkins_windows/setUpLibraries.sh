@@ -27,7 +27,7 @@ mkdir -p C:/Users/admin/.snap/auxdata/gdal
 cp auxdata/gdal/Windows/x64/gdal-*-*-1.zip C:/Users/admin/.snap/auxdata/gdal
 cd C:/Users/admin/.snap/auxdata/gdal/
 unzip -o *.zip
-chmod 755 -R bin/*
+# chmod 755 -R bin/*
 # Update LD_LIBRARY_PATH Library
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:"C:/Program Files/snap/auxdata/gdal/gdal-3-2-1/":"C:/Users/admin/.snap/auxdata/gdal/":"C:/Users/admin/.snap/auxdata/gdal/lib/":"C:/Users/admin/.snap/auxdata/gdal/lib/jni/"
 
