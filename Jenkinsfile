@@ -27,11 +27,11 @@ def getEmailFromClassPathFilter(classPathFilter) {
 
     def email = ""
     if (classPathFilter == "org.esa.s1tbx") {
-        email = 'luis@skywatch.co'
+        email = 'luis@skywatch.com'
     } else if (classPathFilter == "com.iceye") {
-        email = 'luis@skywatch.co'
+        email = 'luis@skywatch.com'
     } else if (classPathFilter == "org.csa.rstb") {
-        email = 'luis@skywatch.co'
+        email = 'luis@skywatch.com'
     } else if (classPathFilter == "org.esa.s2tbx") {
         email = 'florian.douziech@csgroup.eu, oana.hogoiu@c-s.ro'
     } else if (classPathFilter == "org.esa.s3tbx") {
