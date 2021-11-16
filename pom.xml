@@ -18,16 +18,16 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <snap.version>8.0.6-SNAPSHOT</snap.version>
+        <snap.version>8.0.9-SNAPSHOT</snap.version>
         <netbeans.version>RELEASE82</netbeans.version>
         <jackson.version>2.10.0</jackson.version>
 
-        <snap.test.version>8.0.6-SNAPSHOT</snap.test.version>
-        <s3tbx.test.version>8.0.4-SNAPSHOT</s3tbx.test.version>
+        <snap.test.version>8.0.9-SNAPSHOT</snap.test.version>
+        <s3tbx.test.version>8.0.5-SNAPSHOT</s3tbx.test.version>
         <s2tbx.test.version>8.0.5-SNAPSHOT</s2tbx.test.version>
-        <s1tbx.test.version>8.0.5-SNAPSHOT</s1tbx.test.version>
-        <rstb.test.version>8.0.5-SNAPSHOT</rstb.test.version>
-        <iceye.test.version>8.0.5-SNAPSHOT</iceye.test.version>
+        <s1tbx.test.version>8.0.6-SNAPSHOT</s1tbx.test.version>
+        <rstb.test.version>8.0.6-SNAPSHOT</rstb.test.version>
+        <iceye.test.version>8.0.6-SNAPSHOT</iceye.test.version>
         <seadas-reader.test.version>1.9.4-SNAPSHOT</seadas-reader.test.version>
         <smos.test.version>5.8.1</smos.test.version>
 
