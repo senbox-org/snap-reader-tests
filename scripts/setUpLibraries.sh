@@ -10,7 +10,7 @@ echo $WORKSPACE_PATH
 # Set up OpenJPEG
 echo 'ls /var/tmp/repository/org/esa/snap/lib-openjpeg/'
 ls /var/tmp/repository/org/esa/snap/lib-openjpeg/
-export OPENJPEG_VERSION=`ls /var/tmp/repository/org/esa/snap/lib-openjpeg/`
+export OPENJPEG_VERSION='9.0.0-SNAPSHOT'
 cd /var/tmp/repository/org/esa/snap/lib-openjpeg/${OPENJPEG_VERSION}
 unzip lib-openjpeg-${OPENJPEG_VERSION}.jar
 mkdir -p /home/snap/auxdata/openjpeg/${OPENJPEG_VERSION}
