@@ -10,7 +10,7 @@ echo $WORKSPACE_PATH
 # Set up OpenJPEG
 echo 'ls /var/tmp/repository/org/esa/snap/lib-openjpeg/'
 ls /var/tmp/repository/org/esa/snap/lib-openjpeg/
-export OPENJPEG_VERSION='9.0.0-SNAPSHOT'
+export OPENJPEG_VERSION=`ls /var/tmp/repository/org/esa/snap/lib-openjpeg/ | grep SNAPSHOT`
 cd /var/tmp/repository/org/esa/snap/lib-openjpeg/${OPENJPEG_VERSION}
 unzip lib-openjpeg-${OPENJPEG_VERSION}.jar
 mkdir -p /home/snap/auxdata/openjpeg/${OPENJPEG_VERSION}
@@ -18,8 +18,9 @@ cp -r auxdata/openjpeg/* /home/snap/auxdata/openjpeg/${OPENJPEG_VERSION}
 chmod 755 -R /home/snap/auxdata/openjpeg/${OPENJPEG_VERSION}/*/bin
 
 # Set up GDAL
-
-export GDAL_VERSION=`ls /var/tmp/repository/org/esa/s2tbx/lib-gdal/`
+echo `ls /var/tmp/repository/org/esa/s2tbx/lib-gdal/`
+ls /var/tmp/repository/org/esa/s2tbx/lib-gdal/
+export GDAL_VERSION=`ls /var/tmp/repository/org/esa/s2tbx/lib-gdal/ | grep SNAPSHOT`
 cd /var/tmp/repository/org/esa/s2tbx/lib-gdal/${GDAL_VERSION}
 unzip lib-gdal-${GDAL_VERSION}.jar
 mkdir -p /home/snap/auxdata/gdal
