@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 set -e
 
 # Run maven to download jar containing libraries
@@ -8,6 +8,8 @@ export WORKSPACE_PATH=`pwd`
 echo $WORKSPACE_PATH
 
 # Set up OpenJPEG
+echo 'ls /var/tmp/repository/org/esa/snap/lib-openjpeg/'
+ls /var/tmp/repository/org/esa/snap/lib-openjpeg/
 export OPENJPEG_VERSION=`ls /var/tmp/repository/org/esa/snap/lib-openjpeg/`
 cd /var/tmp/repository/org/esa/snap/lib-openjpeg/${OPENJPEG_VERSION}
 unzip lib-openjpeg-${OPENJPEG_VERSION}.jar
