@@ -20,7 +20,7 @@ chmod 755 -R /home/snap/auxdata/openjpeg/${OPENJPEG_VERSION}/*/bin
 # Set up GDAL
 echo 'ls /var/tmp/repository/org/esa/s2tbx/lib-gdal/'
 ls /var/tmp/repository/org/esa/s2tbx/lib-gdal/
-export GDAL_VERSION=`ls /var/tmp/repository/org/esa/s2tbx/lib-gdal/ | grep SNAPSHOT`
+export GDAL_VERSION=`ls /var/tmp/repository/org/esa/s2tbx/lib-gdal/`
 cd /var/tmp/repository/org/esa/s2tbx/lib-gdal/${GDAL_VERSION}
 unzip lib-gdal-${GDAL_VERSION}.jar
 mkdir -p /home/snap/auxdata/gdal
