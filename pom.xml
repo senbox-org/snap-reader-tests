@@ -765,32 +765,32 @@
                         <property>
                             <name>smos.test.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[5.0.0,5.9.9)</version>
+                            <version>[5.9.0,5.10.9)</version>
                         </property>
                         <property>
                             <name>s1tbx.test.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[9.0.0,9.9.9)</version>
+                            <version>[10.0.0,10.9.9)</version>
                         </property>
                         <property>
                             <name>rstb.test.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[9.0.0,9.9.9)</version>
+                            <version>[10.0.0,10.9.9)</version>
                         </property>
                         <property>
                             <name>s2tbx.test.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[9.0.0,9.9.9)</version>
+                            <version>[10.0.0,10.9.9)</version>
                         </property>
                         <property>
                             <name>s3tbx.test.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[9.0.0,9.9.9)</version>
+                            <version>[10.0.0,10.9.9)</version>
                         </property>
                         <property>
                             <name>snap.test.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[9.0.0,9.9.9)</version>
+                            <version>[10.0.0,10.9.9)</version>
                         </property>
                         <property>
                             <name>snap.version</name>
