@@ -1,6 +1,6 @@
 package org.esa.snap.dataio;
 
-import org.esa.s3tbx.dataio.landsat.geotiff.LandsatGeotiffReaderPlugin;
+import eu.esa.opt.dataio.landsat.geotiff.LandsatGeotiffReaderPlugin;
 import org.junit.Before;
 import org.junit.Test;
 

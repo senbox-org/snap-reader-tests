@@ -5,7 +5,7 @@
 
     <groupId>org.esa.snap</groupId>
     <artifactId>snap-reader-tests</artifactId>
-    <version>10.0.0-SNAPSHOT</version>
+    <version>10.0.0-JDK11SHOT</version>
 
     <packaging>nbm</packaging>
 
@@ -18,18 +18,17 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <snap.version>10.0.0-SNAPSHOT</snap.version>
-        <netbeans.version>RELEASE82</netbeans.version>
+        <snap.version>10.0.0-JDK11SHOT</snap.version>
+        <netbeans.version>RELEASE113</netbeans.version>
         <jackson.version>2.11.3</jackson.version>
 
-        <snap.test.version>10.0.0-SNAPSHOT</snap.test.version>
-        <s3tbx.test.version>10.0.0-SNAPSHOT</s3tbx.test.version>
-        <s2tbx.test.version>10.0.0-SNAPSHOT</s2tbx.test.version>
-        <s1tbx.test.version>10.0.0-SNAPSHOT</s1tbx.test.version>
-        <rstb.test.version>10.0.0-SNAPSHOT</rstb.test.version>
-        <iceye.test.version>10.0.0-SNAPSHOT</iceye.test.version>
-        <seadas-reader.test.version>1.10.0-SNAPSHOT</seadas-reader.test.version>
-        <smos.test.version>5.10.0-SNAPSHOT</smos.test.version>
+        <snap.test.version>10.0.0-JDK11SHOT</snap.test.version>
+        <opttbx.test.version>10.0.0-JDK11SHOT</opttbx.test.version>
+        <mwvtbx.test.version>10.0.0-JDK11SHOT</mwvtbx.test.version>
+        <rstb.test.version>10.0.0-JDK11SHOT</rstb.test.version>
+        <iceye.test.version>10.0.0-JDK11SHOT</iceye.test.version>
+        <seadas-reader.test.version>1.10.0-JDK11SHOT</seadas-reader.test.version>
+        <smos.test.version>10.0.0-JDK11SHOT</smos.test.version>
 
         <max.memory>-Xmx5g</max.memory>
     </properties>
@@ -97,8 +96,8 @@
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.10.17</version>
+            <artifactId>mockito-core</artifactId>
+            <version>5.3.1</version>
             <scope>test</scope>
         </dependency>
 
@@ -130,14 +129,14 @@
             <type>test-jar</type>
         </dependency>
         <dependency>
-            <groupId>org.esa.snap.seadas</groupId>
-            <artifactId>seadas-reader</artifactId>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-seadas-reader</artifactId>
             <version>${seadas-reader.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.snap.seadas</groupId>
-            <artifactId>seadas-reader</artifactId>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-seadas-reader</artifactId>
             <version>${seadas-reader.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
@@ -236,307 +235,294 @@
 
         <!-- s3tbx dependencies for snap reader tests -->
         <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-alos-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-alos-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-alos-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
-            <scope>test</scope>
-            <type>test-jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-atsr-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-atsr-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-alos-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-avhrr-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-atsr-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-avhrr-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
-            <scope>test</scope>
-            <type>test-jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-landsat-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-landsat-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-atsr-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-merisl3-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-avhrr-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-merisl3-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
-            <scope>test</scope>
-            <type>test-jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-modis-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-modis-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-avhrr-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-sentinel3-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-landsat-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-landsat-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-sentinel3-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-merisl3-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-spot-vgt-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-merisl3-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-modis-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.s3tbx</groupId>
-            <artifactId>s3tbx-spot-vgt-reader</artifactId>
-            <version>${s3tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-modis-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-sentinel3-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-sentinel3-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-spot-vgt-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-spot-vgt-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
 
         <!-- s2tbx dependencies for snap reader tests-->
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-s2msi-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-s2msi-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-s2msi-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
-            <scope>test</scope>
-            <type>test-jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-gdal-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-gdal-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-s2msi-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-kompsat2-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-gdal-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-kompsat2-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
-            <scope>test</scope>
-            <type>test-jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-muscate-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-muscate-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-gdal-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-ikonos-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-kompsat2-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-ikonos-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
-            <scope>test</scope>
-            <type>test-jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-pleiades-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-pleiades-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-kompsat2-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-spot6-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-muscate-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-spot6-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
-            <scope>test</scope>
-            <type>test-jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-alosAV2-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-alosAV2-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-muscate-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-spot-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-ikonos-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-spot-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
-            <scope>test</scope>
-            <type>test-jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-worldview2-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-worldview2-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-ikonos-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-rapideye-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-pleiades-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-rapideye-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
-            <scope>test</scope>
-            <type>test-jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-deimos-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-deimos-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-pleiades-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-alosPRI-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-spot6-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-alosPRI-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-spot6-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-worldview2esa-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-alos-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.s2tbx</groupId>
-            <artifactId>s2tbx-worldview2esa-reader</artifactId>
-            <version>${s2tbx.test.version}</version>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-alos-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-spot-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-spot-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-worldview2-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-worldview2-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-rapideye-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-rapideye-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-deimos-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-deimos-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-worldview2esa-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-worldview2esa-reader</artifactId>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
 
 		<!-- s1tbx dependencies for snap reader tests-->
-		<dependency>
-            <groupId>org.esa.s1tbx</groupId>
-            <artifactId>s1tbx-io</artifactId>
-            <version>${s1tbx.test.version}</version>
+        <dependency>
+            <groupId>eu.esa.microwavetbx</groupId>
+            <artifactId>sar-io</artifactId>
+            <version>${mwvtbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.esa.s1tbx</groupId>
-            <artifactId>s1tbx-io</artifactId>
-            <version>${s1tbx.test.version}</version>
+            <groupId>eu.esa.microwavetbx</groupId>
+            <artifactId>sar-io</artifactId>
+            <version>${mwvtbx.test.version}</version>
             <scope>test</scope>
-			<type>test-jar</type>
+            <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.csa.rstb</groupId>
@@ -551,16 +537,16 @@
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
-		<dependency>
+        <dependency>
             <groupId>com.iceye.esa.snap</groupId>
-            <artifactId>iceye-slc-reader</artifactId>
-            <version>${iceye.test.version}</version>
+            <artifactId>sar-io-iceye-reader</artifactId>
+            <version>${mwvtbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.iceye.esa.snap</groupId>
-            <artifactId>iceye-slc-reader</artifactId>
-            <version>${iceye.test.version}</version>
+            <artifactId>sar-io-iceye-reader</artifactId>
+            <version>${mwvtbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
@@ -600,7 +586,7 @@
         <repository>
             <id>snap-repo-public</id>
             <name>Public Maven Repository for SNAP</name>
-            <url>https://snap-build-server.tilaa.cloud/nexus/repository/snap-maven-public/</url>
+            <url>https://nexus.snap-ci.ovh/repository/snap-maven-public/</url>
             <releases>
                 <enabled>true</enabled>
                 <checksumPolicy>warn</checksumPolicy>
@@ -610,13 +596,34 @@
                 <checksumPolicy>warn</checksumPolicy>
             </snapshots>
         </repository>
+
+        <repository>
+            <id>osgeo</id>
+            <url>https://repo.osgeo.org/repository/geotools-releases/</url>
+        </repository>
     </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>snap-repo-public</id>
+            <name>Public Maven Repository for SNAP</name>
+            <url>https://nexus.snap-ci.ovh/repository/snap-maven-releases/</url>
+            <uniqueVersion>false</uniqueVersion>
+        </repository>
+        <snapshotRepository>
+            <id>snap-repo-public</id>
+            <name>Public Maven Snapshot Repository for SNAP</name>
+            <url>https://nexus.snap-ci.ovh/repository/snap-maven-snapshot/</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+
 
     <pluginRepositories>
         <pluginRepository>
             <id>snap-repo-public</id>
             <name>Public Maven Repository for SNAP</name>
-            <url>https://snap-build-server.tilaa.cloud/nexus/repository/snap-maven-public/</url>
+            <url>https://nexus.snap-ci.ovh/repository/snap-maven-public/</url>
             <releases>
                 <enabled>true</enabled>
                 <checksumPolicy>warn</checksumPolicy>
@@ -628,29 +635,14 @@
         </pluginRepository>
     </pluginRepositories>
 
-    <distributionManagement>
-        <repository>
-            <id>snap-repo-public</id>
-            <name>Public Maven Repository for SNAP</name>
-            <url>https://snap-build-server.tilaa.cloud/nexus/repository/snap-maven-releases/</url>
-            <uniqueVersion>false</uniqueVersion>
-        </repository>
-        <snapshotRepository>
-            <id>snap-repo-public</id>
-            <name>Public Maven Snapshot Repository for SNAP</name>
-            <url>https://snap-build-server.tilaa.cloud/nexus/repository/snap-maven-snapshot/</url>
-            <uniqueVersion>false</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement>
-
     <build>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.2</version>
+                <version>3.11.0</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>11</source>
+                    <target>11</target>
                     <debug>true</debug>
                     <encoding>UTF-8</encoding>
                     <excludes>
@@ -661,7 +653,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0-M2</version>
+                <version>3.0.0</version>
                 <executions>
                     <execution>
                         <id>enforce-versions</id>
@@ -674,7 +666,7 @@
                                     <version>[3.2.5,)</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>1.8</version>
+                                    <version>11</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
@@ -683,7 +675,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M3</version>
+                <version>3.0.0</version>
                 <configuration>
                     <!--
                          Force reader tests to run with minimum recommended configuration : 5G RAM
@@ -700,7 +692,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.10</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <id>regex-property</id>
@@ -710,7 +702,7 @@
                         <configuration>
                             <name>snap.nbmSpecVersion</name>
                             <value>${project.version}</value>
-                            <regex>-SNAPSHOT</regex>
+                            <regex>(-JDK11SHOT)|(-SNAPSHOT)</regex>
                             <replacement>.0</replacement>
                             <failIfNoMatch>false</failIfNoMatch>
                         </configuration>
@@ -737,7 +729,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.5</version>
+                <version>3.3.0</version>
                 <configuration>
                     <useDefaultManifestFile>true</useDefaultManifestFile>
                 </configuration>
@@ -749,10 +741,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.2</version>
             </plugin>
 
             <plugin>
@@ -778,7 +766,7 @@
                             <version>[9.0.0,9.9.9)</version>
                         </property>
                         <property>
-                            <name>s2tbx.test.version</name>
+                            <name>opttbx.test.version</name>
                             <banSnapshots>false</banSnapshots>
                             <version>[9.0.0,9.9.9)</version>
                         </property>
@@ -795,7 +783,7 @@
                         <property>
                             <name>snap.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[10.0.0-SNAPSHOT]</version>
+                            <version>[10.0.0-JDK11SHOT]</version>
                         </property>
                     </properties>
                 </configuration>
@@ -808,7 +796,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.0.0-M1</version>
+                <version>3.0.0</version>
                 <configuration>
                     <showSuccess>true</showSuccess>
                 </configuration>
