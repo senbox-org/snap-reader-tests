@@ -5,7 +5,7 @@
 
     <groupId>org.esa.snap</groupId>
     <artifactId>snap-reader-tests</artifactId>
-    <version>10.0.0-JDK11SHOT</version>
+    <version>10.0.0-SNAPSHOT</version>
 
     <packaging>nbm</packaging>
 
@@ -18,17 +18,17 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <snap.version>10.0.0-JDK11SHOT</snap.version>
+        <snap.version>10.0.0-SNAPSHOT</snap.version>
         <netbeans.version>RELEASE113</netbeans.version>
         <jackson.version>2.11.3</jackson.version>
 
-        <snap.test.version>10.0.0-JDK11SHOT</snap.test.version>
-        <opttbx.test.version>10.0.0-JDK11SHOT</opttbx.test.version>
-        <mwvtbx.test.version>10.0.0-JDK11SHOT</mwvtbx.test.version>
-        <rstb.test.version>10.0.0-JDK11SHOT</rstb.test.version>
-        <iceye.test.version>10.0.0-JDK11SHOT</iceye.test.version>
-        <seadas-reader.test.version>1.10.0-JDK11SHOT</seadas-reader.test.version>
-        <smos.test.version>10.0.0-JDK11SHOT</smos.test.version>
+        <snap.test.version>10.0.0-SNAPSHOT</snap.test.version>
+        <opttbx.test.version>10.0.0-SNAPSHOT</opttbx.test.version>
+        <mwvtbx.test.version>10.0.0-SNAPSHOT</mwvtbx.test.version>
+        <rstb.test.version>10.0.0-SNAPSHOT</rstb.test.version>
+        <iceye.test.version>10.0.0-SNAPSHOT</iceye.test.version>
+        <seadas-reader.test.version>1.10.0-SNAPSHOT</seadas-reader.test.version>
+        <smos.test.version>10.0.0-SNAPSHOT</smos.test.version>
 
         <max.memory>-Xmx5g</max.memory>
     </properties>
@@ -702,7 +702,7 @@
                         <configuration>
                             <name>snap.nbmSpecVersion</name>
                             <value>${project.version}</value>
-                            <regex>(-JDK11SHOT)|(-SNAPSHOT)</regex>
+                            <regex>(-SNAPSHOT)</regex>
                             <replacement>.0</replacement>
                             <failIfNoMatch>false</failIfNoMatch>
                         </configuration>
@@ -783,7 +783,7 @@
                         <property>
                             <name>snap.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[10.0.0-JDK11SHOT]</version>
+                            <version>[10.0.0-SNAPSHOT]</version>
                         </property>
                     </properties>
                 </configuration>
