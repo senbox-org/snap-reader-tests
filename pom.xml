@@ -348,15 +348,15 @@
             <type>test-jar</type>
         </dependency>
         <dependency>
-            <groupId>eu.esa.opt</groupId>
-            <artifactId>opttbx-gdal-reader</artifactId>
-            <version>${opttbx.test.version}</version>
+            <groupId>org.esa.snap</groupId>
+            <artifactId>snap-gdal-reader</artifactId>
+            <version>${snap.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>eu.esa.opt</groupId>
-            <artifactId>opttbx-gdal-reader</artifactId>
-            <version>${opttbx.test.version}</version>
+            <groupId>org.esa.snap</groupId>
+            <artifactId>snap-gdal-reader</artifactId>
+            <version>${snap.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
