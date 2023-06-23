@@ -427,19 +427,6 @@
         </dependency>
         <dependency>
             <groupId>eu.esa.opt</groupId>
-            <artifactId>opttbx-alos-reader</artifactId>
-            <version>${opttbx.test.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>eu.esa.opt</groupId>
-            <artifactId>opttbx-alos-reader</artifactId>
-            <version>${opttbx.test.version}</version>
-            <scope>test</scope>
-            <type>test-jar</type>
-        </dependency>
-        <dependency>
-            <groupId>eu.esa.opt</groupId>
             <artifactId>opttbx-spot-reader</artifactId>
             <version>${opttbx.test.version}</version>
             <scope>test</scope>
@@ -531,20 +518,7 @@
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
-        <dependency>
-            <groupId>com.iceye.esa.snap</groupId>
-            <artifactId>sar-io-iceye-reader</artifactId>
-            <version>${mwvtbx.test.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.iceye.esa.snap</groupId>
-            <artifactId>sar-io-iceye-reader</artifactId>
-            <version>${mwvtbx.test.version}</version>
-            <scope>test</scope>
-            <type>test-jar</type>
-        </dependency>
-		
+
         <dependency>
             <groupId>org.esa.smostbx</groupId>
             <artifactId>smos-reader</artifactId>
@@ -792,7 +766,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.0.0-M3</version>
                 <configuration>
                     <showSuccess>true</showSuccess>
                 </configuration>
