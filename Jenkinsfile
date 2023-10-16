@@ -33,13 +33,13 @@ def getEmailFromClassPathFilter(classPathFilter) {
     } else if (classPathFilter == "org.csa.rstb") {
         email = 'luis@skywatch.com'
     } else if (classPathFilter == "org.esa.s2tbx") {
-        email = 'florian.douziech@csgroup.eu, oana.hogoiu@c-s.ro'
+        email = 'diana.harosa@c-s.ro'
     } else if (classPathFilter == "org.esa.s3tbx") {
-        email = 'marco.peters@brockmann-consult.de'
+        email = 'tom.block@brockmann-consult.de'
     } else if (classPathFilter == "org.esa.smos") {
-        email = 'marco.peters@brockmann-consult.de'
+        email = 'tom.block@brockmann-consult.de'
     } else {
-        email = 'stb-internal@step-email.net'
+        email = 'stb-internal@snap-ci.ovh'
     }
     echo "classPathFilter : " + classPathFilter
     echo "email : " + email
