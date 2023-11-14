@@ -1,8 +1,20 @@
 #!/bin/bash
 set -e
 
+export 
+export MAVEN_SETTINGS_FILE=$1
+export SETTINGS_FILE="/var/maven/.m2/settings.xml"
+
+if [ -z ${MAVEN_SETTINGS_FILE} ];
+    then
+        SETTINGS_FILE="/var/maven/.m2/settings.xml"
+    else
+        SETTINGS_FILE=$MAVEN_SETTINGS_FILE
+fi
+
 # Run maven to download jar containing libraries
-mvn -s /var/maven/.m2/settings.xml -Duser.home=/var/maven -Dsnap.userdir=/home/snap install deploy -DskipTests=true
+mvn -s $SETTINGS_FILE -Duser.home=/var/maven -Dsnap.userdir=/home/snap install package \
+    -DskipTests=true --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false
 
 export WORKSPACE_PATH=`pwd`
 echo $WORKSPACE_PATH
@@ -30,7 +42,7 @@ unzip *.zip
 chmod 755 -R bin/*
 
 # Update LD_LIBRARY_PATH Library
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/lib/:/lib/x86_64-linux-gnu/:/usr/lib/:/home/snap/auxdata/gdal/:/home/snap/auxdata/gdal/lib/:/home/snap/auxdata/gdal/lib/jni/
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/lib/:/lib/x86_64-linux-gnu/:/usr/lib/:/home/snap/.snap/auxdata/gdal/:/home/snap/.snap/auxdata/gdal/lib/:/home/snap/.snap/auxdata/gdal/lib/jni/
 
 cd ${WORKSPACE_PATH}
 pwd
