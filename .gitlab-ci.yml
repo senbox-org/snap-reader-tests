@@ -9,7 +9,7 @@ variables:
     -Dncsa.hdf.hdflib.HDFLibrary.hdflib=${SNAP_DIR}/snap/modules/lib/amd64/libjhdf.so
     -Dncsa.hdf.hdf5lib.H5.hdf5lib=${SNAP_DIR}/snap/modules/lib/amd64/libjhdf5.so
 
-reader_tests_linux:
+linux:
   # image: docker-hosted.snap-ci.ovh/snap-installer:unix-pRC10
   stage: test
   tags: [kube]
@@ -72,17 +72,26 @@ reader_tests_linux:
 #         mvn $MAVEN_CLI_OPTS -s $MAVEN_SETTINGS_FILE test
 #       done
 
-# reader_tests_windows:
-#   stage: test
-#   tags: [windows]
-#   variables:
-#     DATA_PATH: 'D:\\testData'
-#     CLASS_PATH: org.esa.s2tbx
-#     MAX_MEMORY: 5G
-#   script:
-#     - sh scripts/setUpLibraries.sh
-#     - sh scripts/launchReaderTest.sh $CLASS_PATH $DATA_PATH $CI_COMMI_BRANCH $MAX_MEMORY $MAVEN_SETTINGS_FILE
-#   parallel:
-#     matrix:
-#       - CLASS_PATH: [org.esa.s1tbx, org.esa.s2tbx, org.esa.s3tbx, com.iceye, org.csa.rstb, org.esa.smos]
-#         MAVEN_SETTINGS_FILE: C:\Users\Administrator\AppData\Roaming\apache-maven\conf\settings.xml
+windows:
+  stage: test
+  tags: [windows]
+  variables:
+    DATA_PATH: 'D:\\testData'
+    CLASS_PATH: org.esa.s2tbx
+    LIB_HDF_ARGS: >-
+      -Dncsa.hdf.hdflib.HDFLibrary.hdflib=%SNAP_DIR%\\snap\\modules\\lib\\amd64\\jhdf.dll
+      -Dncsa.hdf.hdf5lib.H5.hdf5lib=%SNAP_DIR%\\snap\modules\\lib\amd64\\jhdf5.dll
+      -Dfile.encoding=Windows-1252
+    MAVEN_CLI_OPTS: >-
+      --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false
+      %LIB_HDF_ARGS%
+      -Dsnap.userdir=%SNAP_DIR%
+      -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=%DATA_PATH%
+      -Dsnap.reader.tests.class.name=%CLASS_PATH%
+      -Dsnap.reader.tests.failOnMissingData=true
+    MAVEN_SETTINGS_FILE: C:\Users\Administrator\AppData\Roaming\apache-maven\conf\settings.xml
+  script:
+    - mvn %MAVEN_CLI_OPTS% test
+  parallel:
+    matrix:
+      - CLASS_PATH: [org.esa.s1tbx, org.esa.s2tbx, org.esa.s3tbx, com.iceye, org.csa.rstb, org.esa.smos]
