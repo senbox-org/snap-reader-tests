@@ -10,7 +10,6 @@ variables:
     -Dncsa.hdf.hdf5lib.H5.hdf5lib=${SNAP_DIR}/snap/modules/lib/amd64/libjhdf5.so
 
 linux:
-  # image: docker-hosted.snap-ci.ovh/snap-installer:unix-pRC10
   stage: test
   tags: [kube]
   extends: mvn-build
@@ -28,49 +27,26 @@ linux:
     matrix:
       - CLASS_PATH: [org.esa.s1tbx, org.esa.s2tbx, org.esa.s3tbx, com.iceye, org.csa.rstb, org.esa.smos]
 
-# macos:
-#   stage: test
-#   tags: [mac]
-#   rules:
-#     - if: $BUILD_FOR_INSTALLER == "false"
-#   variables:
-#     DATA_PATH: /Users/otb/builds/Gy2pGfRN/0/senbox-org/snap-gpt-tests/testData
-#     JAVA_HOME: /Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home
-#     MAVEN_CLI_OPTS: >-
-#       --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false
-#       ${LIB_HDF_ARGS}
-#       -Duser.home=/Users/otb/apache-maven-3.9.2 -Dsnap.userdir=/Users/otb
-#       -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${DATA_PATH}
-#       -Dsnap.reader.tests.class.name=${CLASS_PATH}
-#       -Dsnap.reader.tests.failOnMissingData=true
-#     MAVEN_SETTINGS_FILE: /Users/otb/apache-maven-3.9.2/conf/settings.xml
-#   allow_failure: true
-#   needs: []
-#   script:
-#     - mvn clean package $MAVEN_CLI_OPTS
-#   parallel:
-#     matrix:
-#       - CLASS_PATH: [org.esa.s1tbx, org.esa.s2tbx, org.esa.s3tbx, com.iceye, org.csa.rstb, org.esa.smos]
-  
-# reader_tests_mac:
-#   stage: test
-#   tags: [mac]
-#   extends: mvn-build
-#   variables:
-#     MAVEN_CLI_OPTS: >-
-#       --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false
-#       -Dmax.memory=5G ${LIB_HDF_ARGS}
-#       -Duser.home=/Users/otb/apache-maven-3.9.2 -Dsnap.userdir=/home/snap
-#       -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${DATA_PATH}
-#       -Dsnap.reader.tests.class.name=${CLASS_PATH}
-#       -Dsnap.reader.tests.failOnMissingData=true
-#     MAVEN_SETTINGS_FILE: /Users/otb/apache-maven-3.9.2/conf/settings.xml
-#   script:
-#     - |
-#       for CLASS_PATH in org.esa.s1tbx org.esa.s2tb org.esa.s3tbx, com.iceye org.csa.rstb org.esa.smos
-#       do
-#         mvn $MAVEN_CLI_OPTS -s $MAVEN_SETTINGS_FILE test
-#       done
+macos:
+  stage: test
+  tags: [mac]
+  variables:
+    DATA_PATH: /Volumes/snap-ext/SNAP/testData
+    JAVA_HOME: /Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home
+    MAVEN_CLI_OPTS: >-
+      --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false
+      ${LIB_HDF_ARGS}
+      -Duser.home=/Users/otb/apache-maven-3.9.2 -Dsnap.userdir=/Users/otb
+      -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${DATA_PATH}
+      -Dsnap.reader.tests.class.name=${CLASS_PATH}
+      -Dsnap.reader.tests.failOnMissingData=true
+    MAVEN_SETTINGS_FILE: /Users/otb/apache-maven-3.9.2/conf/settings.xml
+  needs: []
+  script:
+    - mvn -q $MAVEN_CLI_OPTS test
+  parallel:
+    matrix:
+      - CLASS_PATH: [org.esa.s1tbx, org.esa.s2tbx, org.esa.s3tbx, com.iceye, org.csa.rstb, org.esa.smos]
 
 windows:
   stage: test
