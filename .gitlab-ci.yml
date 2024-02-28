@@ -68,7 +68,7 @@ windows:
       -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=%DATA_PATH%
       -Dsnap.reader.tests.class.name=%CLASS_PATH%
       -Dsnap.reader.tests.failOnMissingData=true
-    MAVEN_SETTINGS_FILE: C:\\Users\Administrator\\AppData\\Roaming\\apache-maven\\conf\\settings.xml
+    MAVEN_SETTINGS_FILE: C:\\Users\\Administrator\\AppData\\Roaming\\apache-maven\\conf\\settings.xml
   script:
     - mvn %MAVEN_CLI_OPTS% test
   parallel:
