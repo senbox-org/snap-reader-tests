@@ -491,7 +491,7 @@
             <type>test-jar</type>
         </dependency>
 
-		<!-- s1tbx dependencies for snap reader tests-->
+		<!-- microwave toolbox dependencies for snap reader tests-->
         <dependency>
             <groupId>eu.esa.microwavetbx</groupId>
             <artifactId>sar-io</artifactId>
@@ -501,6 +501,19 @@
         <dependency>
             <groupId>eu.esa.microwavetbx</groupId>
             <artifactId>sar-io</artifactId>
+            <version>${mwvtbx.test.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.microwavetbx</groupId>
+            <artifactId>sar-io-gdal</artifactId>
+            <version>${mwvtbx.test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.microwavetbx</groupId>
+            <artifactId>sar-io-gdal</artifactId>
             <version>${mwvtbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
