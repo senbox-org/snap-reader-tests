@@ -490,6 +490,19 @@
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-enmap-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-enmap-reader</artifactId>
+            <version>${opttbx.test.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
 
 		<!-- microwave toolbox dependencies for snap reader tests-->
         <dependency>
