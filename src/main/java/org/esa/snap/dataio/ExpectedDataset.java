@@ -13,6 +13,9 @@ public class ExpectedDataset {
     private String decodeQualification;
 
     @JsonProperty
+    private String readerFormatName;
+
+    @JsonProperty
     private ExpectedContent expectedContent;
 
     public String getId() {
@@ -25,6 +28,14 @@ public class ExpectedDataset {
 
     public void setDecodeQualification(String decodeQualification) {
         this.decodeQualification = decodeQualification;
+    }
+
+    public void setReaderFormatName(String readerFormatName) {
+        this.readerFormatName = readerFormatName;
+    }
+
+    public String getReaderFormatName() {
+        return readerFormatName;
     }
 
     public ExpectedContent getExpectedContent() {
