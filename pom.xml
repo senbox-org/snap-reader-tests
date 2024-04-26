@@ -659,7 +659,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.4.1</version>
                 <executions>
                     <execution>
                         <id>enforce-versions</id>
@@ -681,7 +681,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.2.5</version>
                 <configuration>
                     <!--
                          Force reader tests to run with minimum recommended configuration : 5G RAM
@@ -698,7 +698,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <id>regex-property</id>
