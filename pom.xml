@@ -5,7 +5,7 @@
 
     <groupId>org.esa.snap</groupId>
     <artifactId>snap-reader-tests</artifactId>
-    <version>9.0.3-SNAPSHOT</version>
+    <version>9.0.8</version>
 
     <packaging>nbm</packaging>
 
@@ -18,18 +18,18 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <snap.version>9.0.3-SNAPSHOT</snap.version>
+        <snap.version>9.0.8</snap.version>
         <netbeans.version>RELEASE82</netbeans.version>
         <jackson.version>2.11.3</jackson.version>
 
-        <snap.test.version>9.0.3-SNAPSHOT</snap.test.version>
+        <snap.test.version>9.0.8</snap.test.version>
         <s3tbx.test.version>9.0.4-SNAPSHOT</s3tbx.test.version>
-        <s2tbx.test.version>9.0.1-SNAPSHOT</s2tbx.test.version>
-        <s1tbx.test.version>9.0.1-SNAPSHOT</s1tbx.test.version>
-        <rstb.test.version>9.0.1-SNAPSHOT</rstb.test.version>
-        <iceye.test.version>9.0.1-SNAPSHOT</iceye.test.version>
+        <s2tbx.test.version>9.0.1</s2tbx.test.version>
+        <s1tbx.test.version>9.0.1</s1tbx.test.version>
+        <rstb.test.version>9.0.1</rstb.test.version>
+        <iceye.test.version>9.0.1</iceye.test.version>
         <seadas-reader.test.version>1.10.0</seadas-reader.test.version>
-        <smos.test.version>5.10.0-SNAPSHOT</smos.test.version>
+        <smos.test.version>5.9.0-SNAPSHOT</smos.test.version>
 
         <max.memory>-Xmx5g</max.memory>
     </properties>
@@ -538,7 +538,7 @@
             <scope>test</scope>
 			<type>test-jar</type>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>org.csa.rstb</groupId>
             <artifactId>rstb-io</artifactId>
             <version>${rstb.test.version}</version>
@@ -550,7 +550,7 @@
             <version>${rstb.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
-        </dependency>
+        </dependency> -->
 		<dependency>
             <groupId>com.iceye.esa.snap</groupId>
             <artifactId>iceye-slc-reader</artifactId>
