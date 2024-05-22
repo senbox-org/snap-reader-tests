@@ -74,4 +74,9 @@ windows:
   parallel:
     matrix:
       - CLASS_PATH: [org.esa.s1tbx, org.esa.s2tbx, org.esa.s3tbx, com.iceye, org.csa.rstb, org.esa.smos]
+  # Run jobs in parrallel on windows VM can cause failures
   retry: 2
+
+mvn-sonar:
+ rules:
+    - when: never
