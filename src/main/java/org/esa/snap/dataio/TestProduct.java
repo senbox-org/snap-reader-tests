@@ -47,4 +47,15 @@ class TestProduct {
         }
         return false;
     }
+
+    boolean isEnabled() {
+        if (this.disabledForPlatforms != null) {
+            for (String disabledForPlatform : this.disabledForPlatforms) {
+                if (System.getProperty("os.arch").equalsIgnoreCase(disabledForPlatform)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
