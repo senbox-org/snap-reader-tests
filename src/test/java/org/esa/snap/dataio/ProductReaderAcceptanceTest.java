@@ -103,7 +103,9 @@ public class ProductReaderAcceptanceTest {
 
         NetCdfActivator.activate();
 
-        HdfActivator.activate();
+        if (!System.getProperty("os.arch").equalsIgnoreCase("aarch64")) {
+            HdfActivator.activate();
+        }
     }
 
     @AfterClass
@@ -116,7 +118,7 @@ public class ProductReaderAcceptanceTest {
         logInfoWithStars("Testing OneIntendedReader");
         boolean duplicates = false;
         for (TestProduct testProduct : testProductList) {
-            if (testProduct.exists()) {
+            if (testProduct.exists() && testProduct.isEnabled()) {
                 List<ProductReaderPlugIn> intendedPlugins = new ArrayList<>();
                 for (TestDefinition testDefinition : testDefinitionList) {
                     if (DecodeQualification.INTENDED == getExpectedDecodeQualification(testDefinition, testProduct)) {
@@ -159,7 +161,7 @@ public class ProductReaderAcceptanceTest {
             logger.info(INDENT + productReaderPlugin.getClass().getName());
 
             for (TestProduct testProduct : testProductList) {
-                if (testProduct.exists()) {
+                if (testProduct.exists() && testProduct.isEnabled()) {
                     final File productFile = getTestProductFile(testProduct);
 
                     final DecodeQualification expected = getExpectedDecodeQualification(testDefinition, testProduct);
@@ -176,7 +178,7 @@ public class ProductReaderAcceptanceTest {
                         testCounter++;
                     } else if (!DecodeQualification.UNABLE.equals(decodeQualification)) {
                         logger.info(INDENT + INDENT + productReaderPlugin.getClass().getSimpleName() + ": " +
-                                            "Can read " + testProduct.getId() + "[" + decodeQualification + "] but it is not defined in tests");
+                                "Can read " + testProduct.getId() + "[" + decodeQualification + "] but it is not defined in tests");
                     }
                 } else {
                     logProductNotExistent(2, testProduct);
@@ -206,7 +208,7 @@ public class ProductReaderAcceptanceTest {
                 if (testProduct == null) {
                     continue;
                 }
-                if (testProduct.exists()) {
+                if (testProduct.exists() && testProduct.isEnabled()) {
                     final File testProductFile = getTestProductFile(testProduct);
 
                     final ProductReader productReader = testDefinition.getProductReaderPlugin().createReaderInstance();
@@ -242,7 +244,7 @@ public class ProductReaderAcceptanceTest {
         int testCounter = 0;
         final StopWatch stopWatch = new StopWatch();
         for (TestProduct testProduct : testProductList) {
-            if (testProduct.exists()) {
+            if (testProduct.exists() && testProduct.isEnabled()) {
                 final File testProductFile = getTestProductFile(testProduct);
                 Product product = null;
                 try {
@@ -273,16 +275,16 @@ public class ProductReaderAcceptanceTest {
     public void testProductReadTimes() {
         logInfoWithStars("Testing product read times");
         logger.info(String.format("%s%s - %s - %s - %s", INDENT,
-                                  " findReader ",
-                                  " readNodes  ",
-                                  "   getStx   ",
-                                  " getViewData"));
+                " findReader ",
+                " readNodes  ",
+                "   getStx   ",
+                " getViewData"));
         final StopWatch stopWatchTotal = new StopWatch();
         stopWatchTotal.start();
         int testCounter = 0;
         final StopWatch stopWatch = new StopWatch();
         for (TestProduct testProduct : testProductList) {
-            if (testProduct.exists()) {
+            if (testProduct.exists() && testProduct.isEnabled()) {
                 final File testProductFile = getTestProductFile(testProduct);
                 Product product = null;
                 try {
@@ -333,11 +335,11 @@ public class ProductReaderAcceptanceTest {
                         }
                     }
                     logger.info(String.format("%s%s - %s - %s - %s - %s", INDENT,
-                                              findProductReaderTime,
-                                              readProductNodesTime,
-                                              getStxTime,
-                                              getViewDataTime,
-                                              testProduct.getId()));
+                            findProductReaderTime,
+                            readProductNodesTime,
+                            getStxTime,
+                            getViewDataTime,
+                            testProduct.getId()));
                 } catch (Exception e) {
                     final String message = "Product reading " + testProduct.getId() + " caused an exception.";
                     logger.log(Level.SEVERE, message, e);

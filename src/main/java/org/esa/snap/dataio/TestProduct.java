@@ -11,6 +11,8 @@ class TestProduct {
     private String relativePath;
     @JsonProperty()
     private String description;
+    @JsonProperty()
+    private String[] disabledForPlatforms;
 
     private transient boolean exists = true;
 
@@ -44,5 +46,16 @@ class TestProduct {
             return true;
         }
         return false;
+    }
+
+    boolean isEnabled() {
+        if (this.disabledForPlatforms != null) {
+            for (String disabledForPlatform : this.disabledForPlatforms) {
+                if (System.getProperty("os.arch").equalsIgnoreCase(disabledForPlatform)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
