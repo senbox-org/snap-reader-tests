@@ -11,6 +11,8 @@ class TestProduct {
     private String relativePath;
     @JsonProperty()
     private String description;
+    @JsonProperty()
+    private String[] disabledForPlatforms;
 
     private transient boolean exists = true;
 
