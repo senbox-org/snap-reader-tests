@@ -36,11 +36,11 @@ macos:
     MAVEN_CLI_OPTS: >-
       --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false
       ${LIB_HDF_ARGS}
-      -Duser.home=/Users/otb/apache-maven-3.9.2 -Dsnap.userdir=/Users/otb
+      -Duser.home=/Users/csro/apache-maven-3.9.2 -Dsnap.userdir=/Users/csro
       -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${DATA_PATH}
       -Dsnap.reader.tests.class.name=${CLASS_PATH}
       -Dsnap.reader.tests.failOnMissingData=true
-    MAVEN_SETTINGS_FILE: /Users/otb/apache-maven-3.9.2/conf/settings.xml
+    MAVEN_SETTINGS_FILE: /Users/csro/apache-maven-3.9.2/conf/settings.xml
   needs: []
   script:
     - mvn -q $MAVEN_CLI_OPTS test
