@@ -34,7 +34,7 @@ macos:
     # DATA_PATH: /Volumes/snap-ext/SNAP/testData
     DATA_PATH: /Users/csro/STEP-Lucian/Satellite_Imagery/SNAP
     # JAVA_HOME: /Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home
-    JAVA_HOME: /Library/Java/JavaVirtualMachines/liberica-11-full.jdk/Contents/Home
+    JAVA_HOME: /Library/Java/JavaVirtualMachines/liberica-jdk-11-full.jdk/Contents/Home
     MAVEN_CLI_OPTS: >-
       --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false
       ${LIB_HDF_ARGS}
