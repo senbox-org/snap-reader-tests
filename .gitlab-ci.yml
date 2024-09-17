@@ -32,7 +32,7 @@ macos:
   tags: [mac]
   variables:
     # DATA_PATH: /Volumes/snap-ext/SNAP/testData
-    DATA_PATH: /Users/csro/STEP-Lucian/Satellite_Imagery/SNAP
+    DATA_PATH: /Users/csro/STEP_Data_S3
     # JAVA_HOME: /Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home
     JAVA_HOME: /Library/Java/JavaVirtualMachines/liberica-jdk-11-full.jdk/Contents/Home
     MAVEN_CLI_OPTS: >-
