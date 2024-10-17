@@ -338,6 +338,19 @@
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-prisma</artifactId>
+            <version>12.0.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.esa.opt</groupId>
+            <artifactId>opttbx-prisma</artifactId>
+            <version>12.0.0-SNAPSHOT</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
 
         <!-- s2tbx dependencies for snap reader tests-->
         <dependency>
