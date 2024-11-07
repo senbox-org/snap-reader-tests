@@ -15,7 +15,7 @@ linux:
   extends: mvn-build
   variables:
     MAVEN_CLI_OPTS: >-
-      --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false
+      --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false -DargLine="-Xmx8G"
       ${LIB_HDF_ARGS}
       -Dsnap.userdir=${SNAP_DIR}
       -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${DATA_PATH}
@@ -36,7 +36,7 @@ macos:
     # JAVA_HOME: /Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home
     JAVA_HOME: /Library/Java/JavaVirtualMachines/liberica-jdk-11-full.jdk/Contents/Home
     MAVEN_CLI_OPTS: >-
-      --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false
+      --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false -DargLine="-Xmx8G"
       ${LIB_HDF_ARGS}
       -Duser.home=/Users/csro/apache-maven-3.9.2 -Dsnap.userdir=/Users/csro
       -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${DATA_PATH}
@@ -64,7 +64,7 @@ windows:
       -Dncsa.hdf.hdf5lib.H5.hdf5lib=%SNAP_DIR%\\snap\modules\\lib\amd64\\jhdf5.dll
       -Dfile.encoding=Windows-1252
     MAVEN_CLI_OPTS: >-
-      --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false
+      --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false -DargLine="-Xmx8G"
       %LIB_HDF_ARGS%
       -Dsnap.userdir=%SNAP_DIR%
       -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=%DATA_PATH%
