@@ -29,8 +29,6 @@
         <iceye.test.version>12.0.0-SNAPSHOT</iceye.test.version>
         <seadas-reader.test.version>1.10.2</seadas-reader.test.version>
         <smos.test.version>12.0.0-SNAPSHOT</smos.test.version>
-
-        <max.memory>-Xmx5g</max.memory>
     </properties>
 
     <dependencies>
@@ -699,7 +697,6 @@
                     <!--
                          Force reader tests to run with minimum recommended configuration : 5G RAM
                     -->
-                    <argLine>${max.memory}</argLine>
                     <!--
                          If enabled some assertions in GeoTools fail.
                          Disabling helps to have a successful build.
