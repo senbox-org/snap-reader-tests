@@ -207,26 +207,26 @@
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-jp2-reader</artifactId>
-            <version>${project.version}</version>
+            <version>${snap.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-jp2-reader</artifactId>
-            <version>${project.version}</version>
+            <version>${snap.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-raster</artifactId>
-            <version>${project.version}</version>
+            <version>${snap.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-raster</artifactId>
-            <version>${project.version}</version>
+            <version>${snap.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
