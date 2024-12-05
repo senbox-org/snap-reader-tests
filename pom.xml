@@ -27,7 +27,7 @@
         <mwvtbx.test.version>11.0.1-SNAPSHOT</mwvtbx.test.version>
         <rstb.test.version>11.0.1-SNAPSHOT</rstb.test.version>
         <iceye.test.version>11.0.1-SNAPSHOT</iceye.test.version>
-        <seadas-reader.test.version>1.10.0-SNAPSHOT</seadas-reader.test.version>
+        <seadas-reader.test.version>1.10.2</seadas-reader.test.version>
         <smos.test.version>11.0.1-SNAPSHOT</smos.test.version>
 
         <max.memory>-Xmx5g</max.memory>
