@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <snap.version>12.0.0-SNAPSHOT</snap.version>
-        <netbeans.version>RELEASE113</netbeans.version>
+        <netbeans.version>RELEASE210</netbeans.version>
         <jackson.version>2.17.2</jackson.version>
 
         <snap.test.version>12.0.0-SNAPSHOT</snap.test.version>
@@ -29,6 +29,10 @@
         <iceye.test.version>12.0.0-SNAPSHOT</iceye.test.version>
         <seadas-reader.test.version>1.10.2</seadas-reader.test.version>
         <smos.test.version>12.0.0-SNAPSHOT</smos.test.version>
+
+        <junit.version>4.13.2</junit.version>
+        <mockito.version>5.3.1</mockito.version>
+        <jvm.version>21</jvm.version>
     </properties>
 
     <dependencies>
@@ -90,12 +94,12 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.2</version>
+            <version>${junit.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.3.1</version>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -207,26 +211,26 @@
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-jp2-reader</artifactId>
-            <version>${project.version}</version>
+            <version>${snap.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-jp2-reader</artifactId>
-            <version>${project.version}</version>
+            <version>${snap.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-raster</artifactId>
-            <version>${project.version}</version>
+            <version>${snap.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.esa.snap</groupId>
             <artifactId>snap-raster</artifactId>
-            <version>${project.version}</version>
+            <version>${snap.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
@@ -339,13 +343,13 @@
         <dependency>
             <groupId>eu.esa.opt</groupId>
             <artifactId>opttbx-prisma</artifactId>
-            <version>12.0.0-SNAPSHOT</version>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>eu.esa.opt</groupId>
             <artifactId>opttbx-prisma</artifactId>
-            <version>12.0.0-SNAPSHOT</version>
+            <version>${opttbx.test.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
@@ -592,7 +596,7 @@
         <dependency>
             <groupId>ncsa.hdf</groupId>
             <artifactId>lib-hdf</artifactId>
-            <version>12.0.0-SNAPSHOT</version>
+            <version>${snap.test.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -656,10 +660,10 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>3.12.1</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>${jvm.version}</source>
+                    <target>${jvm.version}</target>
                     <debug>true</debug>
                     <encoding>UTF-8</encoding>
                     <excludes>
@@ -692,7 +696,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
+                <version>3.5.0</version>
                 <configuration>
                     <!--
                          Force reader tests to run with minimum recommended configuration : 5G RAM
@@ -729,7 +733,7 @@
                 <groupId>org.apache.netbeans.utilities</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-                <version>4.4</version>
+                <version>14.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -745,7 +749,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.4.0</version>
                 <configuration>
                     <archive>
                         <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
