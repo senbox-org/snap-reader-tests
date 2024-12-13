@@ -33,16 +33,16 @@ macos:
   variables:
     # DATA_PATH: /Volumes/snap-ext/SNAP/testData
     DATA_PATH: /Users/csro/STEP_Data_S3
-    # JAVA_HOME: /Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home
-    JAVA_HOME: /Library/Java/JavaVirtualMachines/liberica-jdk-11-full.jdk/Contents/Home
+    # JAVA_HOME: /Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home
+    JAVA_HOME: /Library/Java/JavaVirtualMachines/liberica-jdk-21-full.jdk/Contents/Home
     MAVEN_CLI_OPTS: >-
       --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false -DargLine="-Xmx8G"
       ${LIB_HDF_ARGS}
-      -Duser.home=/Users/csro/apache-maven-3.9.2 -Dsnap.userdir=/Users/csro
+      -Duser.home=/Users/csro/apache-maven-3.9.9 -Dsnap.userdir=/Users/csro
       -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${DATA_PATH}
       -Dsnap.reader.tests.class.name=${CLASS_PATH}
       -Dsnap.reader.tests.failOnMissingData=true
-    MAVEN_SETTINGS_FILE: /Users/csro/apache-maven-3.9.2/conf/settings.xml
+    MAVEN_SETTINGS_FILE: /Users/csro/apache-maven-3.9.9/conf/settings.xml
   needs: []
   script:
     - mvn -q $MAVEN_CLI_OPTS test
