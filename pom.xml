@@ -707,6 +707,7 @@
                          But it might indicate some problem.
                     -->
                     <enableAssertions>false</enableAssertions>
+                    <argLine>--add-exports java.desktop/com.sun.imageio.plugins.jpeg=ALL-UNNAMED --add-exports java.desktop/sun.awt.image.codec=ALL-UNNAMED</argLine>
                 </configuration>
             </plugin>
             <plugin>
