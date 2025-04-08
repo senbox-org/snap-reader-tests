@@ -20,7 +20,7 @@ package org.esa.snap.dataio;
 import com.bc.ceres.glayer.support.ImageLayer;
 import com.bc.ceres.grender.support.DefaultViewport;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.esa.snap.hdf.HdfActivator;
+import eu.esa.snap.hdf.HDFLoader;
 import org.esa.snap.core.dataio.DecodeQualification;
 import org.esa.snap.core.dataio.ProductIO;
 import org.esa.snap.core.dataio.ProductReader;
@@ -103,9 +103,7 @@ public class ProductReaderAcceptanceTest {
 
         NetCdfActivator.activate();
 
-        if (!System.getProperty("os.arch").equalsIgnoreCase("aarch64")) {
-            HdfActivator.activate();
-        }
+        HDFLoader.ensureHDF5Initialised();
     }
 
     @AfterClass
