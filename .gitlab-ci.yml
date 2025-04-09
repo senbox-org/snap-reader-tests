@@ -5,9 +5,6 @@ include:
 variables:
   SNAP_DIR: /home/snap/esa-snap-software
   DATA_PATH: /home/snap/testData
-  LIB_HDF_ARGS: >-
-    -Dncsa.hdf.hdflib.HDFLibrary.hdflib=${SNAP_DIR}/snap/modules/lib/amd64/libjhdf.so
-    -Dncsa.hdf.hdf5lib.H5.hdf5lib=${SNAP_DIR}/snap/modules/lib/amd64/libjhdf5.so
 
 linux:
   stage: test
@@ -16,7 +13,6 @@ linux:
   variables:
     MAVEN_CLI_OPTS: >-
       --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false -DargLine="-Xmx8G"
-      ${LIB_HDF_ARGS}
       -Dsnap.userdir=${SNAP_DIR}
       -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${DATA_PATH}
       -Dsnap.reader.tests.class.name=${CLASS_PATH}
@@ -37,7 +33,6 @@ macos:
     JAVA_HOME: /Library/Java/JavaVirtualMachines/liberica-jdk-21-full.jdk/Contents/Home
     MAVEN_CLI_OPTS: >-
       --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false -DargLine="-Xmx8G"
-      ${LIB_HDF_ARGS}
       -Duser.home=/Users/csro/apache-maven-3.9.9 -Dsnap.userdir=/Users/csro
       -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=${DATA_PATH}
       -Dsnap.reader.tests.class.name=${CLASS_PATH}
@@ -59,12 +54,8 @@ windows:
     FF_USE_WINDOWS_LEGACY_PROCESS_STRATEGY: 'false'
     DATA_PATH: 'D:\\testData'
     CLASS_PATH: org.esa.s2tbx
-    LIB_HDF_ARGS: >-
-      -Dncsa.hdf.hdflib.HDFLibrary.hdflib=%SNAP_DIR%\\snap\\modules\\lib\\amd64\\jhdf.dll
-      -Dncsa.hdf.hdf5lib.H5.hdf5lib=%SNAP_DIR%\\snap\modules\\lib\amd64\\jhdf5.dll
     MAVEN_CLI_OPTS: >-
       --no-transfer-progress --batch-mode --errors --fail-at-end --show-version -DdeployAtEnd=false -DargLine="-Xmx8G"
-      %LIB_HDF_ARGS%
       -Dsnap.userdir=%SNAP_DIR%
       -Dsnap.reader.tests.execute=true -Dsnap.reader.tests.data.dir=%DATA_PATH%
       -Dsnap.reader.tests.class.name=%CLASS_PATH%
