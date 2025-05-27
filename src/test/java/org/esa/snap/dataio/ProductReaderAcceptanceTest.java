@@ -73,7 +73,7 @@ public class ProductReaderAcceptanceTest {
     private static final String PROPERTYNAME_FAIL_ON_MISSING_DATA = "snap.reader.tests.failOnMissingData";
     private static final String PROPERTYNAME_FAIL_ON_INTENDED = "snap.reader.tests.failOnMultipleIntendedReaders";
     private static final String PROPERTYNAME_LOG_FILE_PATH = "snap.reader.tests.log.file";
-    private static final String PROPERTYNAME_CASS_NAME = "snap.reader.tests.class.name";
+    private static final String PROPERTYNAME_CLASS_NAME = "snap.reader.tests.class.name";
     private static final boolean FAIL_ON_MISSING_DATA = Boolean.parseBoolean(System.getProperty(PROPERTYNAME_FAIL_ON_MISSING_DATA, "true"));
     private static final String INDENT = "\t";
     private static final ProductList testProductList = new ProductList();
@@ -474,7 +474,7 @@ public class ProductReaderAcceptanceTest {
         final Iterable<ProductReaderPlugIn> readerPlugIns = SystemUtils.loadServices(ProductReaderPlugIn.class);
         testDefinitionList = new TestDefinitionList();
 
-        final String className = System.getProperty(PROPERTYNAME_CASS_NAME);
+        final String className = System.getProperty(PROPERTYNAME_CLASS_NAME);
 
         for (ProductReaderPlugIn readerPlugIn : readerPlugIns) {
             final Class<? extends ProductReaderPlugIn> readerPlugInClass = readerPlugIn.getClass();
