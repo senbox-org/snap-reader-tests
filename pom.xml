@@ -24,8 +24,8 @@
 
         <snap.test.version>13.0.1-SNAPSHOT</snap.test.version>
         <opttbx.test.version>13.0.1-SNAPSHOT</opttbx.test.version>
-        <mwvtbx.test.version>13.0.1-SNAPSHOT</mwvtbx.test.version>
-        <rstb.test.version>13.0.1-SNAPSHOT</rstb.test.version>
+        <mwvtbx.test.version>13.0.4-SNAPSHOT</mwvtbx.test.version>
+        <rstb.test.version>13.0.4-SNAPSHOT</rstb.test.version>
         <iceye.test.version>13.0.1-SNAPSHOT</iceye.test.version>
         <seadas-reader.test.version>1.10.3</seadas-reader.test.version>
         <smos.test.version>13.0.1-SNAPSHOT</smos.test.version>
