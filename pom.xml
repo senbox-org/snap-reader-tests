@@ -5,7 +5,7 @@
 
     <groupId>org.esa.snap</groupId>
     <artifactId>snap-reader-tests</artifactId>
-    <version>13.0.1-SNAPSHOT</version>
+    <version>13.0.2-SNAPSHOT</version>
 
     <packaging>nbm</packaging>
 
@@ -18,17 +18,17 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <snap.version>13.0.1-SNAPSHOT</snap.version>
+        <snap.version>13.0.2-SNAPSHOT</snap.version>
         <netbeans.version>RELEASE210</netbeans.version>
         <jackson.version>2.19.0</jackson.version>
 
-        <snap.test.version>13.0.1-SNAPSHOT</snap.test.version>
-        <opttbx.test.version>13.0.1-SNAPSHOT</opttbx.test.version>
+        <snap.test.version>13.0.2-SNAPSHOT</snap.test.version>
+        <opttbx.test.version>13.0.2-SNAPSHOT</opttbx.test.version>
         <mwvtbx.test.version>13.0.4-SNAPSHOT</mwvtbx.test.version>
         <rstb.test.version>13.0.4-SNAPSHOT</rstb.test.version>
-        <iceye.test.version>13.0.1-SNAPSHOT</iceye.test.version>
+        <iceye.test.version>13.0.4-SNAPSHOT</iceye.test.version>
         <seadas-reader.test.version>1.10.3</seadas-reader.test.version>
-        <smos.test.version>13.0.1-SNAPSHOT</smos.test.version>
+        <smos.test.version>13.0.2-SNAPSHOT</smos.test.version>
 
         <junit.version>4.13.2</junit.version>
         <mockito.version>5.17.0</mockito.version>
