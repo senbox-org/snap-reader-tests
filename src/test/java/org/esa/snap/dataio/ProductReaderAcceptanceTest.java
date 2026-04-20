@@ -32,6 +32,8 @@ import org.esa.snap.core.util.StopWatch;
 import org.esa.snap.core.util.SystemUtils;
 import org.esa.snap.dataio.netcdf.NetCdfActivator;
 import org.esa.snap.lib.openjpeg.activator.OpenJPEGInstaller;
+import org.esa.snap.vfs.NioPaths;
+import org.esa.snap.vfs.activator.VFSPlugInActivator;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -93,6 +95,8 @@ public class ProductReaderAcceptanceTest {
         SystemUtils.init3rdPartyLibs(ProductReaderAcceptanceTest.class);
 
         logFailOnMissingDataMessage();
+
+        VFSPlugInActivator.activate();
 
         assertTestDataDirectory();
         loadProductReaderTestDefinitions();
@@ -376,7 +380,7 @@ public class ProductReaderAcceptanceTest {
 
     private File getTestProductFile(TestProduct testProduct) {
         final String relativePath = testProduct.getRelativePath();
-        final File testProductFile = new File(dataRootDir, relativePath);
+        final File testProductFile = dataRootDir.toPath().resolve(relativePath).toFile();
 
         errorCollector.checkThat("testProductFile exist " + testProduct.getId(), testProductFile.exists(), is(true));
         return testProductFile;
@@ -401,7 +405,7 @@ public class ProductReaderAcceptanceTest {
         if (dataDirProperty == null) {
             fail("Data directory path not set");
         }
-        dataRootDir = new File(dataDirProperty);
+        dataRootDir = NioPaths.get(dataDirProperty).toFile();
         if (!dataRootDir.isDirectory()) {
             fail("Data directory is not valid: " + dataDirProperty);
         }
@@ -459,7 +463,7 @@ public class ProductReaderAcceptanceTest {
     private static void testIfProductFilesExists(ProductList productList) {
         for (TestProduct testProduct : productList) {
             final String relativePath = testProduct.getRelativePath();
-            final File productFile = new File(dataRootDir, relativePath);
+            final File productFile = dataRootDir.toPath().resolve(relativePath).toFile();
             if (!productFile.exists()) {
                 testProduct.exists(false);
                 if (FAIL_ON_MISSING_DATA) {
