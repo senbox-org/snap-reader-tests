@@ -806,7 +806,7 @@
                         <property>
                             <name>snap.version</name>
                             <banSnapshots>false</banSnapshots>
-                            <version>[13.0.1-SNAPSHOT]</version>
+                            <version>[13.0.2-SNAPSHOT]</version>
                         </property>
                     </properties>
                 </configuration>
