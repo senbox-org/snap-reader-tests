@@ -27,7 +27,7 @@
         <mwvtbx.test.version>13.0.4-SNAPSHOT</mwvtbx.test.version>
         <rstb.test.version>13.0.4-SNAPSHOT</rstb.test.version>
         <iceye.test.version>13.0.4-SNAPSHOT</iceye.test.version>
-        <seadas-reader.test.version>1.10.3</seadas-reader.test.version>
+        <seadas-reader.test.version>1.10.5-SNAPSHOT</seadas-reader.test.version>
         <smos.test.version>13.0.2-SNAPSHOT</smos.test.version>
 
         <junit.version>4.13.2</junit.version>
