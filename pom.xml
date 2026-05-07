@@ -5,7 +5,7 @@
 
     <groupId>org.esa.snap</groupId>
     <artifactId>snap-reader-tests</artifactId>
-    <version>13.0.2</version>
+    <version>13.0.3-SNAPSHOT</version>
 
     <packaging>nbm</packaging>
 
@@ -18,16 +18,16 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <snap.version>13.0.2</snap.version>
+        <snap.version>13.0.3-SNAPSHOT</snap.version>
         <netbeans.version>RELEASE210</netbeans.version>
         <jackson.version>2.19.0</jackson.version>
 
-        <snap.test.version>13.0.2</snap.test.version>
-        <opttbx.test.version>13.0.2</opttbx.test.version>
-        <mwvtbx.test.version>13.0.4</mwvtbx.test.version>
-        <rstb.test.version>13.0.4</rstb.test.version>
-        <iceye.test.version>13.0.4</iceye.test.version>
-        <seadas-reader.test.version>1.10.5</seadas-reader.test.version>
+        <snap.test.version>13.0.3-SNAPSHOT</snap.test.version>
+        <opttbx.test.version>113.0.3-SNAPSHOT</opttbx.test.version>
+        <mwvtbx.test.version>13.0.5-SNAPSHOT</mwvtbx.test.version>
+        <rstb.test.version>13.0.5-SNAPSHOT</rstb.test.version>
+        <iceye.test.version>13.0.5-SNAPSHOT</iceye.test.version>
+        <seadas-reader.test.version>1.10.6-SNAPSHOT</seadas-reader.test.version>
         <smos.test.version>13.0.2-SNAPSHOT</smos.test.version>
 
         <junit.version>4.13.2</junit.version>
