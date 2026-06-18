@@ -193,12 +193,16 @@ public class ContentAssert {
             String expected = expectedBand.getGeophysicalUnit();
             String actual = band.getUnit();
             //remove no-breakable whitespace
-            expected = expected.replace("\u00A0", "");
-            expected = expected.replace("\u2007", "");
-            expected = expected.replace("\u202F", "");
-            actual = actual.replace("\u00A0", "");
-            actual = actual.replace("\u2007", "");
-            actual = actual.replace("\u202F", "");
+            if (StringUtils.isNotNullAndNotEmpty(expected)) {
+                expected = expected.replace("\u00A0", "");
+                expected = expected.replace("\u2007", "");
+                expected = expected.replace("\u202F", "");
+            }
+            if (StringUtils.isNotNullAndNotEmpty(actual)) {
+                actual = actual.replace("\u00A0", "");
+                actual = actual.replace("\u2007", "");
+                actual = actual.replace("\u202F", "");
+            }
             Assert.assertEquals(messagePrefix + " Unit", expected, actual);
         }
 
