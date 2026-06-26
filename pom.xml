@@ -20,7 +20,7 @@
 
         <snap.version>15.0.0-SNAPSHOT</snap.version>
         <netbeans.version>RELEASE210</netbeans.version>
-        <jackson.version>2.19.0</jackson.version>
+        <jackson.version>2.22.0</jackson.version>
 
         <snap.test.version>15.0.0-SNAPSHOT</snap.test.version>
         <opttbx.test.version>15.0.0-SNAPSHOT</opttbx.test.version>
