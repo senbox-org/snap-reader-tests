@@ -1,35 +1,43 @@
 package org.esa.snap.gpt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.esa.s2tbx.dataio.gdal.GDALLibraryInstaller;
 import org.esa.snap.core.dataio.ProductIO;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.gpf.main.GPT;
 import org.esa.snap.core.util.StringUtils;
+import org.esa.snap.core.util.SystemUtils;
 import org.esa.snap.core.util.io.FileUtils;
 import org.esa.snap.dataio.ContentAssert;
 import org.esa.snap.dataio.ExpectedContent;
 import org.esa.snap.dataio.ExpectedDataset;
-import org.esa.snap.dataio.ProductReaderAcceptanceTest;
-import org.esa.snap.lib.openjpeg.activator.OpenJPEGInstaller;
+import org.esa.snap.dataio.netcdf.NetCdfActivator;
+import org.esa.snap.jp2.reader.OpenJPEGLibraryInstaller;
+import org.esa.snap.runtime.LogUtils4Tests;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.nio.file.NotDirectoryException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.logging.*;
-import java.util.logging.Formatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.fail;
-import static org.junit.Assume.assumeTrue;
 
 /**
  * Created by jcoravu on 1/4/2020.
  */
 public class RunGPTProductReaderTest {
 
-    private static final String PROPERTY_NAME_LOG_FILE_PATH = "gpt.tests.log.file";
+    private static final Logger logger = Logger.getLogger(RunGPTProductReaderTest.class.getName());
+
     private static final String PROPERTY_NAME_GPT_TEST_RESOURCES_FOLDER_PATH = "gpt.test.resources.dir";
     private static final String PROPERTY_NAME_GPT_SOURCE_PRODUCTS_FOLDER_PATH = "gpt.source.products.dir";
     private static final String PROPERTY_NAME_GPT_OUTPUT_PRODUCTS_FOLDER_PATH = "gpt.output.products.dir";
@@ -40,13 +48,18 @@ public class RunGPTProductReaderTest {
     private static final String PROPERTY_NAME_FAIL_ON_EXCEPTION = "gpt.tests.failOnException";
     private static final String PROPERTY_NAME_LOG_EXCEPTION_STACK_TRACE = "gpt.tests.logExceptionStackTrace";
 
-    private static Logger logger;
+    public RunGPTProductReaderTest() {
+    }
 
     @BeforeClass
     public static void initialize() throws Exception {
-        initLogger();
+        LogUtils4Tests.initLogger();
 
-        OpenJPEGInstaller.install();
+        SystemUtils.init3rdPartyLibs(RunGPTProductReaderTest.class);
+
+        OpenJPEGLibraryInstaller.install();
+        GDALLibraryInstaller.install();
+        NetCdfActivator.activate();
     }
 
     /**
@@ -71,13 +84,28 @@ public class RunGPTProductReaderTest {
         String sourceProductsFolderPath = System.getProperty(PROPERTY_NAME_GPT_SOURCE_PRODUCTS_FOLDER_PATH);
         String outputProductsFolderPath = System.getProperty(PROPERTY_NAME_GPT_OUTPUT_PRODUCTS_FOLDER_PATH);
         String gptTestFolderName = System.getProperty(PROPERTY_NAME_GPT_TEST_RESOURCE_FOLDER_NAME);
-        if (gptTestResourcesFolderPath == null || sourceProductsFolderPath == null
-                || outputProductsFolderPath == null || gptTestFolderName == null) {
-
-            assumeTrue("Missing properties", false);
+        if (gptTestResourcesFolderPath == null || sourceProductsFolderPath == null || outputProductsFolderPath == null || gptTestFolderName == null) {
+            fail("Missing properties.");
         }
+
         String gptTestFileNames = System.getProperty(PROPERTY_NAME_GPT_TEST_RESOURCE_FILE_NAMES); // may be null
         String startPathToRemove = System.getProperty(PROPERTY_NAME_GRAPH_START_PATH_TO_REMOVE); // the start path may be null
+
+        if (logger.isLoggable(Level.FINE)) {
+            StringBuilder message = new StringBuilder();
+            message.append("Input test parameters: gpt resources folder path: ")
+                    .append(gptTestResourcesFolderPath)
+                    .append(", source products folder path: ")
+                    .append(sourceProductsFolderPath)
+                    .append(", output products folder path: ")
+                    .append(outputProductsFolderPath)
+                    .append(", gpt folder name: ")
+                    .append(gptTestFolderName)
+                    .append(", gpt file names: ")
+                    .append(gptTestFileNames)
+                    .append(".");
+            logger.log(Level.FINE, message.toString());
+        }
 
         boolean failIfMissingSourceData = true;
         String failOnMissingDataValue = System.getProperty(PROPERTY_NAME_FAIL_ON_MISSING_DATA);
@@ -156,12 +184,12 @@ public class RunGPTProductReaderTest {
                     throw e;
                 } else {
                     String message = "Failed to run the test file '" + testFile.getName() +"' from the folder '" + gptTestFolderName +"'.";
-                    logException(message.toString(), e, logExceptionStackTrace);
+                    logException(message, e, logExceptionStackTrace);
                 }
             } catch (AssertionError e) {
                 assertErrors.add(e);
                 String message = "Failed to test the values of the file '" + testFile.getName() +"' from the folder '" + gptTestFolderName +"'.";
-                logException(message.toString(), e, logExceptionStackTrace);
+                logException(message, e, logExceptionStackTrace);
             }
         }
 
@@ -217,6 +245,7 @@ public class RunGPTProductReaderTest {
                                     throws Exception {
 
         logger.info("Test the file '" + testFile.getName() + "' from the folder '" + testFile.getParent()+"'.");
+        long startTime = System.currentTimeMillis();
 
         ObjectMapper mapper = new ObjectMapper();
         InputGraphData[] inputGraphData = mapper.readValue(testFile, InputGraphData[].class);
@@ -278,6 +307,9 @@ public class RunGPTProductReaderTest {
 
             runGPT(graphFile, gptGraphParameters);
 
+            double elapsedSeconds = (System.currentTimeMillis() - startTime) / 1000.0d;
+            logger.info("Finish processing the graph file '" + graphFile.getAbsolutePath() +"'. The time elapsed is " + elapsedSeconds + " seconds.");
+
             File productFile = new File(outputFolder, outputNameValue + ".dim");
             Product product = ProductIO.readProduct(productFile);
             if (product == null) {
@@ -289,19 +321,18 @@ public class RunGPTProductReaderTest {
                     continue;
                 }
             } else {
-                File expectedValuesFile = new File(resourcesExpectedOutputsFolder, expectedValuesRelativeFilePath);
-                ExpectedDataset expectedDataset = mapper.readValue(expectedValuesFile, ExpectedDataset.class);
-                StringBuilder assertMessagePrefix = new StringBuilder();
-                assertMessagePrefix.append("Test file '")
-                        .append(testFile.getName())
-                        .append("', id '")
-                        .append(inputGraphData[i].getId())
-                        .append("', output name '")
-                        .append(outputNameValue)
-                        .append("': ");
-                assertExpectedContent(product, expectedDataset.getExpectedContent(), assertMessagePrefix.toString());
+                try {
+                    File expectedValuesFile = new File(resourcesExpectedOutputsFolder, expectedValuesRelativeFilePath);
+                    ExpectedDataset expectedDataset = mapper.readValue(expectedValuesFile, ExpectedDataset.class);
+                    assertExpectedContent(testFile, inputGraphData[i], outputNameValue, product, expectedDataset.getExpectedContent());
+                } finally {
+                    product.dispose();
+                }
             }
         }
+
+        double elapsedSeconds = (System.currentTimeMillis() - startTime) / 1000.0d;
+        logger.info("Finish testing the file '" + testFile.getName() + "' from the folder '" + testFile.getParent()+"'. The time elapsed is " + elapsedSeconds + " seconds.");
     }
 
     private static void runGPT(File graphFile, Map<String, String> gptGraphParameters) throws Exception {
@@ -327,34 +358,34 @@ public class RunGPTProductReaderTest {
         }
     }
 
-    private static void assertExpectedContent(Product product, ExpectedContent expectedContent, String productId) throws IOException {
-        ContentAssert contentAssert = new ContentAssert(expectedContent, productId, product);
+    private static void assertExpectedContent(File testFile, InputGraphData inputGraphData, String outputNameValue, Product product, ExpectedContent expectedContent) {
+        StringBuilder assertMessagePrefix = new StringBuilder();
+        assertMessagePrefix.append("Test file '")
+                .append(testFile.getName())
+                .append("', id '")
+                .append(inputGraphData.getId())
+                .append("', output name '")
+                .append(outputNameValue)
+                .append("': ");
+
+        long startTime = System.currentTimeMillis();
+
+        ContentAssert contentAssert = new ContentAssert(expectedContent, assertMessagePrefix.toString(), product);
         contentAssert.assertProductContent();
-    }
 
-    private static void initLogger() throws Exception {
-        // Suppress ugly (and harmless) JAI error messages saying that a JAI is going to continue in pure Java mode.
-        System.setProperty("com.sun.media.jai.disableMediaLib", "true");  // disable native libraries for JAI
-
-        logger = Logger.getLogger(ProductReaderAcceptanceTest.class.getSimpleName());
-        removeRootLogHandler();
-        ConsoleHandler consoleHandler = new ConsoleHandler();
-        consoleHandler.setFormatter(new CustomLogFormatter());
-        logger.addHandler(consoleHandler);
-        String logFilePath = System.getProperty(PROPERTY_NAME_LOG_FILE_PATH);
-        if (logFilePath != null) {
-            File logFile = new File(logFilePath);
-            FileOutputStream fos = new FileOutputStream(logFile);
-            StreamHandler streamHandler = new StreamHandler(fos, new CustomLogFormatter());
-            logger.addHandler(streamHandler);
-        }
-    }
-
-    private static void removeRootLogHandler() {
-        Logger rootLogger = LogManager.getLogManager().getLogger("");
-        Handler[] handlers = rootLogger.getHandlers();
-        for (Handler handler : handlers) {
-            rootLogger.removeHandler(handler);
+        if (logger.isLoggable(Level.FINE)) {
+            double elapsedSeconds = (System.currentTimeMillis() - startTime) / 1000.0d;
+            StringBuilder message = new StringBuilder();
+            message.append("Finish testing expected content: file: ")
+                    .append(testFile.getName())
+                    .append(", id: ")
+                    .append(inputGraphData.getId())
+                    .append(", output name: ")
+                    .append(outputNameValue)
+                    .append(", elapsed time: ")
+                    .append(elapsedSeconds)
+                    .append(" seconds.");
+            logger.log(Level.FINE, message.toString());
         }
     }
 
@@ -375,29 +406,6 @@ public class RunGPTProductReaderTest {
             }
         } else {
             throw new FileNotFoundException("The file '" + fileToValidate.getAbsolutePath()+"' does not exist.");
-        }
-    }
-
-    private static class CustomLogFormatter extends Formatter {
-
-        private final static String LINE_SEPARATOR = System.getProperty("line.separator", "\r\n");
-
-        @Override
-        public synchronized String format(LogRecord record) {
-            StringBuilder sb = new StringBuilder();
-            String message = formatMessage(record);
-            sb.append(record.getLevel().getName());
-            sb.append(": ");
-            sb.append(message);
-            sb.append(LINE_SEPARATOR);
-            if (record.getThrown() != null) {
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
-                record.getThrown().printStackTrace(pw);
-                pw.close();
-                sb.append(sw.toString());
-            }
-            return sb.toString();
         }
     }
 
