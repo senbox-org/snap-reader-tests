@@ -32,6 +32,7 @@ import org.esa.snap.core.util.StopWatch;
 import org.esa.snap.core.util.SystemUtils;
 import org.esa.snap.dataio.netcdf.NetCdfActivator;
 import org.esa.snap.lib.openjpeg.activator.OpenJPEGInstaller;
+import org.esa.snap.runtime.Config;
 import org.esa.snap.vfs.NioPaths;
 import org.esa.snap.vfs.activator.VFSPlugInActivator;
 import org.junit.AfterClass;
@@ -63,6 +64,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.StreamHandler;
 
+import static org.esa.snap.core.dataio.geocoding.ComponentGeoCoding.SYSPROP_SNAP_PIXEL_CODING_FRACTION_ACCURACY;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -93,6 +95,9 @@ public class ProductReaderAcceptanceTest {
     public static void initialize() throws Exception {
         initLogger();
         SystemUtils.init3rdPartyLibs(ProductReaderAcceptanceTest.class);
+
+        // ensure that we do not use fraction accuracy for Pixel GeoCoding tb 2026-11-17
+        Config.instance().preferences().putBoolean(SYSPROP_SNAP_PIXEL_CODING_FRACTION_ACCURACY, false);
 
         logFailOnMissingDataMessage();
 
